@@ -16,17 +16,17 @@ A UGC-first marketplace built around trust, escrow, and real-world workflow. Des
 
 ## Documentation Index
 
-| Document                                                 | Description                                | Status      |
-| -------------------------------------------------------- | ------------------------------------------ | ----------- |
-| [raw_requirements.md](./raw_requirements.md)             | Full platform specification                | Complete    |
-| [user-personas.md](./user-personas.md)                   | 7 user personas (Brand, Creator, Admin)    | Complete    |
-| [user-flows.md](./user-flows.md)                         | Mermaid diagrams for Brand & Creator flows | Complete    |
-| [features.md](./features.md)                             | Feature breakdown (MVP vs Phase 2)         | Complete    |
-| [trust-system.md](./trust-system.md)                     | Trust scores, badges, levels, decay rules  | Complete    |
-| [subscription-tiers.md](./subscription-tiers.md)         | Pricing, features, limits per tier         | Complete    |
-| [data-model.md](./data-model.md)                         | Convex database schema specification       | Complete    |
-| [technical-architecture.md](./technical-architecture.md) | Monorepo structure, tech stack, CI/CD      | Complete    |
-| [open-questions.md](./open-questions.md)                 | Gaps requiring product sponsor input       | In Progress |
+| Document                                                              | Description                                | Status      |
+| --------------------------------------------------------------------- | ------------------------------------------ | ----------- |
+| [raw_requirements.md](./requirements/raw_requirements.md)             | Full platform specification                | Complete    |
+| [user-personas.md](./requirements/user-personas.md)                   | 7 user personas (Brand, Creator, Admin)    | Complete    |
+| [user-flows.md](./requirements/user-flows.md)                         | Mermaid diagrams for Brand & Creator flows | Complete    |
+| [features.md](./requirements/features.md)                             | Feature breakdown (MVP vs Phase 2)         | Complete    |
+| [trust-system.md](./requirements/trust-system.md)                     | Trust scores, badges, levels, decay rules  | Complete    |
+| [subscription-tiers.md](./requirements/subscription-tiers.md)         | Pricing, features, limits per tier         | Complete    |
+| [data-model.md](./requirements/data-model.md)                         | Convex database schema specification       | Complete    |
+| [technical-architecture.md](./requirements/technical-architecture.md) | Monorepo structure, tech stack, CI/CD      | Complete    |
+| [open-questions.md](./requirements/open-questions.md)                 | Gaps requiring product sponsor input       | In Progress |
 
 ---
 
@@ -42,7 +42,7 @@ A UGC-first marketplace built around trust, escrow, and real-world workflow. Des
 - User personas (7 defined)
 - Feature prioritization (MVP vs Phase 2)
 
-**Open Questions:** See [open-questions.md](./open-questions.md)
+**Open Questions:** See [open-questions.md](./requirements/open-questions.md)
 
 **Next Steps:**
 
