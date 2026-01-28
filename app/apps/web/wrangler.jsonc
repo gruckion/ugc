@@ -16,5 +16,11 @@
   "vars": {
     "NEXT_PUBLIC_CONVEX_URL": "https://qualified-dachshund-719.convex.cloud",
     "NEXT_PUBLIC_CONVEX_SITE_URL": "https://qualified-dachshund-719.convex.site"
-  }
+  },
+  "routes": [
+    {
+      "pattern": "ugp.gruckion.com",
+      "custom_domain": true
+    }
+  ]
 }
