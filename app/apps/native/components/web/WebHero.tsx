@@ -111,6 +111,7 @@ export function WebHero({
       >
         <View
           style={{
+            width: "100%",
             maxWidth: 900,
             marginHorizontal: "auto",
             alignItems: "center",
