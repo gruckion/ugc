@@ -102,6 +102,8 @@ export function SearchBar({
               borderRightWidth: 1,
               borderRightColor: THEME_COLORS.border,
               backgroundColor: "#fafafa",
+              borderTopLeftRadius: 10,
+              borderBottomLeftRadius: 10,
             }}
           >
             {selectedCategoryOption?.icon && (
@@ -236,6 +238,8 @@ export function SearchBar({
           alignItems: "center",
           justifyContent: "center",
           opacity: pressed ? 0.9 : 1,
+          borderTopRightRadius: 10,
+          borderBottomRightRadius: 10,
         })}
       >
         <Ionicons

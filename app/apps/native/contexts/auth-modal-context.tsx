@@ -11,7 +11,8 @@ export type AuthModalView =
   | "signin"
   | "signup"
   | "email-signin"
-  | "email-signup";
+  | "email-signup"
+  | "forgot-password";
 
 interface AuthModalContextType {
   isOpen: boolean;

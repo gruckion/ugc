@@ -3,31 +3,18 @@ import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 
-// Sophisticated color foundation - cool tones for trust
-const COLORS = {
-  // Foreground hierarchy
-  foreground: "#0f172a",
-  secondary: "#475569",
-  muted: "#94a3b8",
-  faint: "#cbd5e1",
-
-  // Backgrounds
-  background: "#ffffff",
-  surfaceSubtle: "#f8fafc",
-  surfaceElevated: "#ffffff",
-
-  // Borders
-  border: "rgba(15, 23, 42, 0.08)",
-  borderStrong: "rgba(15, 23, 42, 0.12)",
-
-  // Accent - indigo for modern feel
-  accent: "#6366f1",
-  accentSubtle: "rgba(99, 102, 241, 0.08)",
-  accentForeground: "#ffffff",
-
-  // Semantic
-  success: "#10b981",
-  successSubtle: "rgba(16, 185, 129, 0.08)",
+// Fiverr-style theme colors (consistent with rest of app)
+const THEME_COLORS = {
+  primary: "#1DBF73",
+  primaryForeground: "#FFFFFF",
+  foreground: "#222325",
+  muted: "#62646a",
+  border: "#e4e5e7",
+  background: "#FFFFFF",
+  sectionBackground: "#fafafa",
+  // Semantic colors
+  success: "#1DBF73",
+  successSubtle: "#f0fdf4",
 };
 
 // Browse options data
@@ -81,21 +68,23 @@ function BrowseCard({
   isMobile: boolean;
 }) {
   return (
-    <Link asChild href={option.href as any}>
-      <Pressable
-        style={({ hovered }) => ({
-          flex: isMobile ? undefined : 1,
-          width: isMobile ? "100%" : undefined,
-          backgroundColor: COLORS.surfaceElevated,
-          borderRadius: 12,
-          padding: 24,
-          borderWidth: 1,
-          borderColor: hovered ? COLORS.accent : COLORS.border,
-          boxShadow: hovered
-            ? "0 4px 12px rgba(15, 23, 42, 0.08)"
-            : "0 1px 3px rgba(15, 23, 42, 0.04)",
-        })}
-      >
+    <View style={{ flex: isMobile ? undefined : 1, width: isMobile ? "100%" : undefined }}>
+      <Link asChild href={option.href as any}>
+        <Pressable
+          style={({ hovered }) => ({
+            flex: 1,
+            backgroundColor: THEME_COLORS.background,
+            borderRadius: 12,
+            padding: 24,
+            borderWidth: 1,
+            borderColor: hovered ? THEME_COLORS.primary : THEME_COLORS.border,
+            shadowColor: "#000",
+            shadowOffset: { width: 0, height: hovered ? 4 : 2 },
+            shadowOpacity: hovered ? 0.1 : 0.05,
+            shadowRadius: hovered ? 8 : 4,
+            transform: hovered ? [{ translateY: -2 }] : [],
+          })}
+        >
         {/* Header row */}
         <View
           style={{
@@ -110,16 +99,16 @@ function BrowseCard({
               width: 40,
               height: 40,
               borderRadius: 10,
-              backgroundColor: COLORS.accentSubtle,
+              backgroundColor: THEME_COLORS.successSubtle,
               alignItems: "center",
               justifyContent: "center",
             }}
           >
-            <Ionicons color={COLORS.accent} name={option.icon} size={20} />
+            <Ionicons color={THEME_COLORS.primary} name={option.icon} size={20} />
           </View>
           <View
             style={{
-              backgroundColor: COLORS.surfaceSubtle,
+              backgroundColor: THEME_COLORS.sectionBackground,
               paddingHorizontal: 10,
               paddingVertical: 4,
               borderRadius: 6,
@@ -129,7 +118,7 @@ function BrowseCard({
               style={{
                 fontSize: 12,
                 fontWeight: "500",
-                color: COLORS.secondary,
+                color: THEME_COLORS.muted,
               }}
             >
               {option.subtitle}
@@ -142,7 +131,7 @@ function BrowseCard({
           style={{
             fontSize: 20,
             fontWeight: "600",
-            color: COLORS.foreground,
+            color: THEME_COLORS.foreground,
             marginBottom: 8,
             letterSpacing: -0.3,
           }}
@@ -154,7 +143,7 @@ function BrowseCard({
         <Text
           style={{
             fontSize: 14,
-            color: COLORS.secondary,
+            color: THEME_COLORS.muted,
             lineHeight: 21,
             marginBottom: 20,
           }}
@@ -169,7 +158,7 @@ function BrowseCard({
             gap: 24,
             paddingTop: 16,
             borderTopWidth: 1,
-            borderTopColor: COLORS.border,
+            borderTopColor: THEME_COLORS.border,
           }}
         >
           {option.stats.map((stat) => (
@@ -178,7 +167,7 @@ function BrowseCard({
                 style={{
                   fontSize: 16,
                   fontWeight: "600",
-                  color: COLORS.foreground,
+                  color: THEME_COLORS.foreground,
                   marginBottom: 2,
                 }}
               >
@@ -187,7 +176,7 @@ function BrowseCard({
               <Text
                 style={{
                   fontSize: 12,
-                  color: COLORS.muted,
+                  color: THEME_COLORS.muted,
                 }}
               >
                 {stat.label}
@@ -209,15 +198,16 @@ function BrowseCard({
             style={{
               fontSize: 14,
               fontWeight: "500",
-              color: COLORS.accent,
+              color: THEME_COLORS.primary,
             }}
           >
             Browse {option.id}
           </Text>
-          <Ionicons color={COLORS.accent} name="arrow-forward" size={16} />
+          <Ionicons color={THEME_COLORS.primary} name="arrow-forward" size={16} />
         </View>
       </Pressable>
     </Link>
+    </View>
   );
 }
 
@@ -236,16 +226,19 @@ function CategoryPill({ category }: { category: (typeof CATEGORIES)[0] }) {
           paddingHorizontal: 16,
           paddingVertical: 10,
           borderRadius: 8,
-          backgroundColor: hovered ? COLORS.accent : COLORS.surfaceElevated,
+          backgroundColor: hovered ? THEME_COLORS.primary : THEME_COLORS.background,
           borderWidth: 1,
-          borderColor: hovered ? COLORS.accent : COLORS.border,
-          boxShadow: hovered ? "none" : "0 1px 2px rgba(15, 23, 42, 0.04)",
+          borderColor: hovered ? THEME_COLORS.primary : THEME_COLORS.border,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 1 },
+          shadowOpacity: hovered ? 0 : 0.04,
+          shadowRadius: 2,
         })}
       >
         {({ hovered }) => (
           <>
             <Ionicons
-              color={hovered ? COLORS.accentForeground : COLORS.muted}
+              color={hovered ? THEME_COLORS.primaryForeground : THEME_COLORS.muted}
               name={category.icon}
               size={16}
             />
@@ -253,7 +246,7 @@ function CategoryPill({ category }: { category: (typeof CATEGORIES)[0] }) {
               style={{
                 fontSize: 13,
                 fontWeight: "500",
-                color: hovered ? COLORS.accentForeground : COLORS.foreground,
+                color: hovered ? THEME_COLORS.primaryForeground : THEME_COLORS.foreground,
               }}
             >
               {category.label}
@@ -280,14 +273,14 @@ function TrustIndicator({
           width: 28,
           height: 28,
           borderRadius: 14,
-          backgroundColor: COLORS.successSubtle,
+          backgroundColor: THEME_COLORS.successSubtle,
           alignItems: "center",
           justifyContent: "center",
         }}
       >
-        <Ionicons color={COLORS.success} name={icon} size={14} />
+        <Ionicons color={THEME_COLORS.success} name={icon} size={14} />
       </View>
-      <Text style={{ fontSize: 13, color: COLORS.secondary }}>{text}</Text>
+      <Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>{text}</Text>
     </View>
   );
 }
@@ -298,14 +291,14 @@ export default function BrowseLandingPage() {
   const isMobileLayout = width > 0 && width < 768;
 
   return (
-    <View style={{ flex: 1, backgroundColor: COLORS.background }}>
+    <View style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
       {/* Header Section */}
       <View
         style={{
           paddingTop: 48,
           paddingBottom: 48,
           paddingHorizontal: 24,
-          backgroundColor: COLORS.surfaceSubtle,
+          backgroundColor: THEME_COLORS.sectionBackground,
         }}
       >
         <View
@@ -319,7 +312,7 @@ export default function BrowseLandingPage() {
             style={{
               fontSize: 13,
               fontWeight: "500",
-              color: COLORS.accent,
+              color: THEME_COLORS.primary,
               letterSpacing: 0.5,
               textTransform: "uppercase",
               marginBottom: 12,
@@ -332,7 +325,7 @@ export default function BrowseLandingPage() {
             style={{
               fontSize: isMobileLayout ? 28 : 36,
               fontWeight: "600",
-              color: COLORS.foreground,
+              color: THEME_COLORS.foreground,
               textAlign: "center",
               marginBottom: 12,
               letterSpacing: -0.5,
@@ -343,7 +336,7 @@ export default function BrowseLandingPage() {
           <Text
             style={{
               fontSize: 16,
-              color: COLORS.secondary,
+              color: THEME_COLORS.muted,
               textAlign: "center",
               maxWidth: 480,
               marginHorizontal: "auto",
@@ -390,11 +383,11 @@ export default function BrowseLandingPage() {
           {/* Categories Section */}
           <View
             style={{
-              backgroundColor: COLORS.surfaceSubtle,
+              backgroundColor: THEME_COLORS.sectionBackground,
               borderRadius: 12,
               padding: 24,
               borderWidth: 1,
-              borderColor: COLORS.border,
+              borderColor: THEME_COLORS.border,
             }}
           >
             <View
@@ -409,7 +402,7 @@ export default function BrowseLandingPage() {
                 style={{
                   fontSize: 14,
                   fontWeight: "600",
-                  color: COLORS.foreground,
+                  color: THEME_COLORS.foreground,
                 }}
               >
                 Browse by category
@@ -417,7 +410,7 @@ export default function BrowseLandingPage() {
               <Text
                 style={{
                   fontSize: 13,
-                  color: COLORS.muted,
+                  color: THEME_COLORS.muted,
                 }}
               >
                 {CATEGORIES.length} categories
@@ -444,7 +437,7 @@ export default function BrowseLandingPage() {
           paddingVertical: 32,
           paddingHorizontal: 24,
           borderTopWidth: 1,
-          borderTopColor: COLORS.border,
+          borderTopColor: THEME_COLORS.border,
         }}
       >
         <View

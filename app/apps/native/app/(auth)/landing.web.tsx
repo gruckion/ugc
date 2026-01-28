@@ -180,11 +180,27 @@ export default function WebLandingPage() {
         }}
       >
         By joining, you agree to the UGC Marketplace{" "}
-        <Text style={{ textDecorationLine: "underline" }}>
-          Terms of Service
-        </Text>{" "}
+        <Link href="/termsofservice">
+          <Text
+            style={{
+              textDecorationLine: "underline",
+              color: THEME_COLORS.primary,
+            }}
+          >
+            Terms of Service
+          </Text>
+        </Link>{" "}
         and to occasionally receive emails from us. Please read our{" "}
-        <Text style={{ textDecorationLine: "underline" }}>Privacy Policy</Text>{" "}
+        <Link href="/privacypolicy">
+          <Text
+            style={{
+              textDecorationLine: "underline",
+              color: THEME_COLORS.primary,
+            }}
+          >
+            Privacy Policy
+          </Text>
+        </Link>{" "}
         to learn how we use your personal data.
       </Text>
     </WebSignInPage>

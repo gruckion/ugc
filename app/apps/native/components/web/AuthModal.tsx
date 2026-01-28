@@ -8,6 +8,7 @@ import {
 } from "@/contexts/auth-modal-context";
 import { useResponsive } from "@/hooks/useResponsive";
 import { AuthModalEmailForm } from "./AuthModalEmailForm";
+import { AuthModalForgotPassword } from "./AuthModalForgotPassword";
 import { AuthModalLeftPanel } from "./AuthModalLeftPanel";
 import { AuthModalSignInView } from "./AuthModalSignInView";
 import { AuthModalSignUpView } from "./AuthModalSignUpView";
@@ -54,6 +55,8 @@ export function AuthModal() {
         return <AuthModalEmailForm mode="signin" />;
       case "email-signup":
         return <AuthModalEmailForm mode="signup" />;
+      case "forgot-password":
+        return <AuthModalForgotPassword />;
       default:
         return <AuthModalSignInView />;
     }

@@ -6,7 +6,7 @@ import { config } from "dotenv";
 config({ path: "./.env" });
 config({ path: "../../apps/web/.env" });
 
-const app = await alchemy("convoexpo-and-nextjs-web-bun-better-auth", {
+const app = await alchemy("ugc", {
   stage: process.env.ALCHEMY_STAGE || "production",
   stateStore: (scope) => new CloudflareStateStore(scope),
 });

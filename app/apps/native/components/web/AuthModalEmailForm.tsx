@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useRef, useState } from "react";
 import {
   ActivityIndicator,
@@ -85,7 +86,8 @@ function getSafeSignUpErrorMessage(errorMessage: string | undefined): string {
 }
 
 export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
-  const { setView } = useAuthModal();
+  const { setView, close } = useAuthModal();
+  const router = useRouter();
   const isSignIn = mode === "signin";
 
   const [name, setName] = useState("");
@@ -340,11 +342,11 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
               autoComplete={isSignIn ? "password" : "new-password"}
               onChangeText={setPassword}
               onSubmitEditing={() =>
-                isSignIn
-                  ? handleSubmit()
-                  : confirmPasswordRef.current?.focus()
+                isSignIn ? handleSubmit() : confirmPasswordRef.current?.focus()
               }
-              placeholder={isSignIn ? "Enter your password" : "Create a password"}
+              placeholder={
+                isSignIn ? "Enter your password" : "Create a password"
+              }
               placeholderTextColor={THEME_COLORS.muted}
               ref={passwordRef}
               returnKeyType={isSignIn ? "go" : "next"}
@@ -380,9 +382,7 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
           </View>
           {isSignIn && (
             <Pressable
-              onPress={() => {
-                // TODO: Implement forgot password flow
-              }}
+              onPress={() => setView("forgot-password")}
               style={{ alignSelf: "flex-end", marginTop: 8 }}
             >
               {({ hovered }) => (
@@ -479,11 +479,31 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
         }}
       >
         By joining, you agree to the UGC Marketplace{" "}
-        <Text style={{ textDecorationLine: "underline" }}>
+        <Text
+          onPress={() => {
+            close();
+            router.push("/termsofservice" as any);
+          }}
+          style={{
+            textDecorationLine: "underline",
+            color: THEME_COLORS.primary,
+          }}
+        >
           Terms of Service
         </Text>{" "}
         and to occasionally receive emails from us. Please read our{" "}
-        <Text style={{ textDecorationLine: "underline" }}>Privacy Policy</Text>{" "}
+        <Text
+          onPress={() => {
+            close();
+            router.push("/privacypolicy" as any);
+          }}
+          style={{
+            textDecorationLine: "underline",
+            color: THEME_COLORS.primary,
+          }}
+        >
+          Privacy Policy
+        </Text>{" "}
         to learn how we use your personal data.
       </Text>
     </View>

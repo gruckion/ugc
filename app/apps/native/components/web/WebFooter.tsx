@@ -317,7 +317,7 @@ export function WebFooter() {
                 gap: 24,
               }}
             >
-              <Pressable onPress={() => navigateWithScroll("/about")}>
+              <Pressable onPress={() => navigateWithScroll("/privacypolicy")}>
                 {({ hovered }) => (
                   <Text
                     style={{
@@ -331,7 +331,7 @@ export function WebFooter() {
                   </Text>
                 )}
               </Pressable>
-              <Pressable onPress={() => navigateWithScroll("/about")}>
+              <Pressable onPress={() => navigateWithScroll("/termsofservice")}>
                 {({ hovered }) => (
                   <Text
                     style={{

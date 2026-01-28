@@ -182,7 +182,7 @@ export default function SignUpRoute() {
         }}
       >
         By signing up, you agree to our{" "}
-        <Link asChild href="https://ugc.com/terms">
+        <Link asChild href="/termsofservice">
           <Text
             className="text-foreground"
             style={{ textDecorationLine: "underline" }}
@@ -191,7 +191,7 @@ export default function SignUpRoute() {
           </Text>
         </Link>{" "}
         and{" "}
-        <Link asChild href="https://ugc.com/privacy">
+        <Link asChild href="/privacypolicy">
           <Text
             className="text-foreground"
             style={{ textDecorationLine: "underline" }}

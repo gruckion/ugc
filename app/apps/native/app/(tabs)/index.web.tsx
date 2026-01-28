@@ -2,6 +2,12 @@ import { Ionicons } from "@expo/vector-icons";
 import { Link, useRouter } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { WebHero } from "@/components/web/WebHero";
+import { CategoryCardsSection } from "@/components/web/CategoryCardsSection";
+import { PopularServicesCarousel } from "@/components/web/PopularServicesCarousel";
+import { PromoBanner } from "@/components/web/PromoBanner";
+import { MadeOnUGPGallery } from "@/components/web/MadeOnUGPGallery";
+import { GuidesSection } from "@/components/web/GuidesSection";
+import { JoinCTASection } from "@/components/web/JoinCTASection";
 import { useResponsive } from "@/hooks/useResponsive";
 
 // Fiverr-style theme colors
@@ -467,6 +473,22 @@ export default function WebHomePage() {
       {/* Hero Section */}
       <WebHero onSearch={handleSearch} />
 
+      {/* Category Cards Section */}
+      <CategoryCardsSection />
+
+      {/* Popular Services Carousel */}
+      <PopularServicesCarousel />
+
+      {/* First Promo Banner - UGC Videos */}
+      <PromoBanner
+        backgroundColor="#9d7c93"
+        ctaText="Explore UGC Services"
+        ctaHref="/browse/creators?service=ugc-videos"
+        heading="Need help with UGC videos?"
+        subheading="Connect with talented creators who specialize in authentic user-generated content that converts."
+        videoSrc="/videos/vibe-coding-banner.mp4"
+      />
+
       {/* Ready Briefs Section */}
       <View
         style={{
@@ -536,6 +558,24 @@ export default function WebHomePage() {
           </ScrollView>
         </View>
       </View>
+
+      {/* Second Promo Banner - UGP Pro */}
+      <PromoBanner
+        backgroundColor="#faf5e4"
+        badge="pro"
+        ctaText="Learn More"
+        ctaHref="/pro"
+        heading="Get matched with vetted creators"
+        subheading="UGP Pro connects you with our top-tier creators for premium content that elevates your brand."
+        variant="pro"
+        videoSrc="/videos/ugp-pro-banner.mp4"
+      />
+
+      {/* Made on UGP Gallery */}
+      <MadeOnUGPGallery />
+
+      {/* Guides Section */}
+      <GuidesSection />
 
       {/* How It Works Section */}
       <View
@@ -845,87 +885,8 @@ export default function WebHomePage() {
         </View>
       </View>
 
-      {/* CTA Section */}
-      <View
-        style={{
-          paddingVertical: 80,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.primary,
-        }}
-      >
-        <View
-          style={{
-            maxWidth: 800,
-            marginHorizontal: "auto",
-            alignItems: "center",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: isMobile ? 28 : 36,
-              fontWeight: "700",
-              color: THEME_COLORS.primaryForeground,
-              textAlign: "center",
-              marginBottom: 16,
-            }}
-          >
-            Ready to get started?
-          </Text>
-          <Text
-            style={{
-              fontSize: 18,
-              color: "rgba(255,255,255,0.9)",
-              textAlign: "center",
-              marginBottom: 32,
-            }}
-          >
-            Join thousands of brands and creators building trust together
-          </Text>
-          <View style={{ flexDirection: "row", gap: 16 }}>
-            <Link asChild href="/(auth)/landing">
-              <Pressable
-                style={{
-                  backgroundColor: THEME_COLORS.primaryForeground,
-                  paddingHorizontal: 32,
-                  paddingVertical: 16,
-                  borderRadius: 8,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: "600",
-                    color: THEME_COLORS.primary,
-                  }}
-                >
-                  Get Started
-                </Text>
-              </Pressable>
-            </Link>
-            <Link asChild href={"/how-it-works" as any}>
-              <Pressable
-                style={{
-                  borderWidth: 2,
-                  borderColor: THEME_COLORS.primaryForeground,
-                  paddingHorizontal: 32,
-                  paddingVertical: 16,
-                  borderRadius: 8,
-                }}
-              >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: "600",
-                    color: THEME_COLORS.primaryForeground,
-                  }}
-                >
-                  Learn More
-                </Text>
-              </Pressable>
-            </Link>
-          </View>
-        </View>
-      </View>
+      {/* Join UGP CTA Section */}
+      <JoinCTASection />
     </View>
   );
 }

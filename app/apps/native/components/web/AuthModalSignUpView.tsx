@@ -1,4 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
+import { useRouter } from "expo-router";
 import { useEffect, useState } from "react";
 import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
@@ -15,7 +16,8 @@ const THEME_COLORS = {
 };
 
 export function AuthModalSignUpView() {
-  const { setView } = useAuthModal();
+  const { setView, close } = useAuthModal();
+  const router = useRouter();
   const { signIn: signInWithGoogle, isLoading: isGoogleLoading } =
     useGoogleAuth();
   const { signIn: signInWithApple, isLoading: isAppleLoading } = useAppleAuth();
@@ -170,11 +172,31 @@ export function AuthModalSignUpView() {
         }}
       >
         By joining, you agree to the UGC Marketplace{" "}
-        <Text style={{ textDecorationLine: "underline" }}>
+        <Text
+          onPress={() => {
+            close();
+            router.push("/termsofservice" as any);
+          }}
+          style={{
+            textDecorationLine: "underline",
+            color: THEME_COLORS.primary,
+          }}
+        >
           Terms of Service
         </Text>{" "}
         and to occasionally receive emails from us. Please read our{" "}
-        <Text style={{ textDecorationLine: "underline" }}>Privacy Policy</Text>{" "}
+        <Text
+          onPress={() => {
+            close();
+            router.push("/privacypolicy" as any);
+          }}
+          style={{
+            textDecorationLine: "underline",
+            color: THEME_COLORS.primary,
+          }}
+        >
+          Privacy Policy
+        </Text>{" "}
         to learn how we use your personal data.
       </Text>
     </View>
