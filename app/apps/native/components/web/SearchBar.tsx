@@ -1,6 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
-import { createPortal } from "react-dom";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 
@@ -59,46 +58,19 @@ export function SearchBar({
       : width < 640
         ? "Search creators..."
         : "Search for creators or briefs...");
+
   const [query, setQuery] = useState("");
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
   const [currentCategory, setCurrentCategory] = useState(
     selectedCategory || "all"
   );
-  const [dropdownPosition, setDropdownPosition] = useState({ top: 0, left: 0, width: 0 });
-  const buttonRef = useRef<View>(null);
+
   const dropdownRef = useRef<View>(null);
+  const buttonRef = useRef<View>(null);
 
   const selectedCategoryOption = categories.find(
     (c) => c.id === currentCategory
   );
-
-  // Update dropdown position when opened and on scroll/resize
-  useEffect(() => {
-    if (!isDropdownOpen || !buttonRef.current) return;
-
-    const updatePosition = () => {
-      const node = buttonRef.current as unknown as HTMLElement;
-      if (!node) return;
-      const rect = node.getBoundingClientRect();
-      setDropdownPosition({
-        top: rect.bottom + 4, // 4px gap below button
-        left: rect.left,
-        width: Math.max(rect.width, 200), // Min width 200px
-      });
-    };
-
-    // Initial position
-    updatePosition();
-
-    // Update on scroll and resize
-    window.addEventListener("scroll", updatePosition, true);
-    window.addEventListener("resize", updatePosition);
-
-    return () => {
-      window.removeEventListener("scroll", updatePosition, true);
-      window.removeEventListener("resize", updatePosition);
-    };
-  }, [isDropdownOpen]);
 
   // Close dropdown when clicking outside
   useEffect(() => {
@@ -110,8 +82,9 @@ export function SearchBar({
       const dropdownNode = dropdownRef.current as unknown as HTMLElement;
 
       if (
-        buttonNode && !buttonNode.contains(target) &&
-        dropdownNode && !dropdownNode.contains(target)
+        buttonNode &&
+        !buttonNode.contains(target) &&
+        (!dropdownNode || !dropdownNode.contains(target))
       ) {
         setIsDropdownOpen(false);
       }
@@ -150,8 +123,9 @@ export function SearchBar({
           __html: `.search-bar-container:focus-within { border-color: ${THEME_COLORS.primary} !important; }`,
         }}
       />
+
       {/* Category Dropdown - always visible, icon-only on small screens (<640px) */}
-      <View className="flex" ref={buttonRef}>
+      <View ref={buttonRef} style={{ position: "relative", zIndex: 1000 }}>
         <Pressable
           onPress={() => setIsDropdownOpen(!isDropdownOpen)}
           style={{
@@ -190,18 +164,17 @@ export function SearchBar({
             size={16}
           />
         </Pressable>
-      </View>
 
-      {/* Dropdown Menu - rendered via Portal to escape overflow:hidden */}
-      {isDropdownOpen &&
-        createPortal(
+        {/* Dropdown Menu - simple absolute positioning */}
+        {isDropdownOpen && (
           <View
             ref={dropdownRef}
             style={{
-              position: "fixed",
-              top: dropdownPosition.top,
-              left: dropdownPosition.left,
-              width: dropdownPosition.width,
+              position: "absolute",
+              top: "100%",
+              left: 0,
+              marginTop: 4,
+              minWidth: 200,
               backgroundColor: THEME_COLORS.background,
               borderWidth: 1,
               borderColor: THEME_COLORS.border,
@@ -211,7 +184,7 @@ export function SearchBar({
               shadowOpacity: 0.1,
               shadowRadius: 8,
               elevation: 4,
-              zIndex: 9999,
+              zIndex: 1000,
             }}
           >
             {categories.map((category) => (
@@ -258,9 +231,9 @@ export function SearchBar({
                 </Text>
               </Pressable>
             ))}
-          </View>,
-          document.body
+          </View>
         )}
+      </View>
 
       {/* Search Input */}
       <View

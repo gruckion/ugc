@@ -16,12 +16,12 @@ export function ServiceCard({ name, imageUrl, href }: ServiceCardProps) {
       <Pressable>
         {({ hovered }) => (
           <Card
-            className={`w-[200px] rounded-xl overflow-hidden bg-background ${
+            className={`p-0 w-[200px] rounded-xl overflow-hidden ${
               hovered ? "shadow-lg scale-[1.02]" : "shadow-md"
             } transition-all`}
           >
             {/* Header Section */}
-            <View className="bg-green-900 py-5 px-4 min-h-20 justify-end rounded-t-xl">
+            <View className="bg-green-900 py-5 px-4 min-h-20 justify-end">
               <Text
                 className="text-lg font-semibold text-white leading-6"
                 numberOfLines={2}
@@ -31,7 +31,7 @@ export function ServiceCard({ name, imageUrl, href }: ServiceCardProps) {
             </View>
 
             {/* Image Section */}
-            <View className="h-[200px] bg-gray-100 rounded-b-xl overflow-hidden">
+            <View className="h-[200px] bg-gray-100">
               <img
                 alt={name}
                 src={imageUrl}

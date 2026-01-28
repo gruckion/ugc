@@ -55,7 +55,7 @@ export function WebHero({
 }: WebHeroProps) {
   return (
     <View
-      className="relative overflow-hidden md:min-h-[500px] lg:min-h-[600px]"
+      className="relative z-10 md:min-h-[500px] lg:min-h-[600px]"
       style={{ backgroundColor: THEME_COLORS.heroBackground }}
     >
       {/* Background Video - Web only */}

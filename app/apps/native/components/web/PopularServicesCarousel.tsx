@@ -81,7 +81,6 @@ const POPULAR_SERVICES: Service[] = [
 export function PopularServicesCarousel() {
 	const { isDesktop } = useResponsive();
 	const scrollViewRef = useRef<ScrollViewType>(null);
-	const cardWidth = 200;
 	const gap = 20;
 
 	const scrollLeft = () => {
@@ -180,7 +179,7 @@ export function PopularServicesCarousel() {
 
 				{/* Cards */}
 				<ScrollView
-					contentContainerStyle={{ gap, paddingBottom: 8 }}
+					contentContainerStyle={{ gap, paddingVertical: 8, paddingHorizontal: 4 }}
 					horizontal
 					ref={scrollViewRef}
 					showsHorizontalScrollIndicator={false}
