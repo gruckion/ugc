@@ -35,6 +35,9 @@ jobs:
       - name: Build with OpenNext
         working-directory: app/apps/web
         run: npx @opennextjs/cloudflare build
+        env:
+          NEXT_PUBLIC_CONVEX_URL: ${{ vars.NEXT_PUBLIC_CONVEX_URL }}
+          NEXT_PUBLIC_CONVEX_SITE_URL: ${{ vars.NEXT_PUBLIC_CONVEX_SITE_URL }}
 
       - name: Deploy with Wrangler
         working-directory: app/apps/web
