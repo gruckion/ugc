@@ -1,0 +1,66 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0a0a0a"/>
+      <stop offset="100%" style="stop-color:#1a1a1a"/>
+    </linearGradient>
+    <linearGradient id="greenGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1DBF73"/>
+      <stop offset="100%" style="stop-color:#16a562"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1200" height="630" fill="url(#bgGrad)"/>
+
+  <!-- Decorative elements -->
+  <circle cx="1100" cy="100" r="200" fill="#1DBF73" opacity="0.1"/>
+  <circle cx="100" cy="530" r="150" fill="#1DBF73" opacity="0.08"/>
+
+  <!-- Logo circle -->
+  <circle cx="120" cy="80" r="45" fill="url(#greenGrad)"/>
+  <text x="120" y="92" font-family="Arial, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle">UGC</text>
+
+  <!-- Main Title -->
+  <text x="80" y="280" font-family="Arial, sans-serif" font-size="72" font-weight="700" fill="#FFFFFF">UGC Marketplace</text>
+
+  <!-- Subtitle -->
+  <text x="80" y="350" font-family="Arial, sans-serif" font-size="32" fill="#a1a1aa">Connect Brands with Creators</text>
+
+  <!-- Description -->
+  <text x="80" y="420" font-family="Arial, sans-serif" font-size="24" fill="#71717a">Find authentic user-generated content that converts.</text>
+  <text x="80" y="455" font-family="Arial, sans-serif" font-size="24" fill="#71717a">High-quality creators. Real results.</text>
+
+  <!-- Feature badges -->
+  <rect x="80" y="500" width="180" height="44" rx="22" fill="#1DBF73" opacity="0.2"/>
+  <text x="170" y="528" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#1DBF73" text-anchor="middle">Verified Creators</text>
+
+  <rect x="280" y="500" width="160" height="44" rx="22" fill="#1DBF73" opacity="0.2"/>
+  <text x="360" y="528" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#1DBF73" text-anchor="middle">Brand Safety</text>
+
+  <rect x="460" y="500" width="180" height="44" rx="22" fill="#1DBF73" opacity="0.2"/>
+  <text x="550" y="528" font-family="Arial, sans-serif" font-size="18" font-weight="600" fill="#1DBF73" text-anchor="middle">Fast Turnaround</text>
+
+  <!-- Visual element: Creator icons -->
+  <g transform="translate(850, 200)">
+    <!-- Creator 1 -->
+    <circle cx="0" cy="0" r="60" fill="#2a2a2a" stroke="#1DBF73" stroke-width="3"/>
+    <circle cx="0" cy="-15" r="20" fill="#1DBF73"/>
+    <ellipse cx="0" cy="25" rx="30" ry="20" fill="#1DBF73"/>
+
+    <!-- Creator 2 -->
+    <circle cx="100" cy="60" r="60" fill="#2a2a2a" stroke="#1DBF73" stroke-width="3"/>
+    <circle cx="100" cy="45" r="20" fill="#1DBF73"/>
+    <ellipse cx="100" cy="85" rx="30" ry="20" fill="#1DBF73"/>
+
+    <!-- Creator 3 -->
+    <circle cx="200" cy="0" r="60" fill="#2a2a2a" stroke="#1DBF73" stroke-width="3"/>
+    <circle cx="200" cy="-15" r="20" fill="#1DBF73"/>
+    <ellipse cx="200" cy="25" rx="30" ry="20" fill="#1DBF73"/>
+
+    <!-- Connection lines -->
+    <line x1="60" y1="0" x2="140" y2="0" stroke="#1DBF73" stroke-width="2" opacity="0.5"/>
+    <line x1="60" y1="60" x2="40" y2="60" stroke="#1DBF73" stroke-width="2" opacity="0.5"/>
+    <line x1="160" y1="60" x2="140" y2="0" stroke="#1DBF73" stroke-width="2" opacity="0.5"/>
+  </g>
+</svg>
