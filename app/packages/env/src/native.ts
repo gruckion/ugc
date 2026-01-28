@@ -7,6 +7,10 @@ export const env = createEnv({
     EXPO_PUBLIC_CONVEX_URL: z.url(),
     EXPO_PUBLIC_CONVEX_SITE_URL: z.url(),
   },
-  runtimeEnv: process.env,
+  // Must use explicit property access for Metro to inline values at build time
+  runtimeEnv: {
+    EXPO_PUBLIC_CONVEX_URL: process.env.EXPO_PUBLIC_CONVEX_URL,
+    EXPO_PUBLIC_CONVEX_SITE_URL: process.env.EXPO_PUBLIC_CONVEX_SITE_URL,
+  },
   emptyStringAsUndefined: true,
 });
