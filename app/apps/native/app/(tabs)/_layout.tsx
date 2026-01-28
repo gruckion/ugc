@@ -36,20 +36,29 @@ export default function TabLayout() {
         }}
       />
       <Tabs.Screen
-        name="menu"
+        name="inbox"
         options={{
-          title: "Menu",
+          title: "Inbox",
           tabBarIcon: ({ color }) => (
-            <Ionicons color={color} name="restaurant-outline" size={24} />
+            <Ionicons color={color} name="mail-outline" size={24} />
           ),
         }}
       />
       <Tabs.Screen
-        name="events"
+        name="browse"
         options={{
-          title: "Events",
+          title: "Browse",
           tabBarIcon: ({ color }) => (
-            <Ionicons color={color} name="calendar-outline" size={24} />
+            <Ionicons color={color} name="search-outline" size={24} />
+          ),
+        }}
+      />
+      <Tabs.Screen
+        name="orders"
+        options={{
+          title: "Orders",
+          tabBarIcon: ({ color }) => (
+            <Ionicons color={color} name="receipt-outline" size={24} />
           ),
         }}
       />

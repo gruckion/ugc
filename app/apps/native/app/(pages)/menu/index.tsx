@@ -258,7 +258,7 @@ export default function MenuIndex() {
           <Pressable
             className="mb-4 overflow-hidden rounded-xl bg-surface"
             key={category.id}
-            onPress={() => router.push(`/(tabs)/menu/${category.id}`)}
+            onPress={() => router.push(`/menu/${category.id}`)}
             style={{
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
