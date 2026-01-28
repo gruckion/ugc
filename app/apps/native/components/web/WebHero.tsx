@@ -62,7 +62,8 @@ export function WebHero({
         position: "relative",
         overflow: "hidden",
         backgroundColor: THEME_COLORS.heroBackground,
-        minHeight: isMobile ? 500 : 600,
+        // Mobile-first: let content determine height, only set minHeight on larger screens
+        minHeight: isMobile ? undefined : isTablet ? 500 : 600,
       }}
     >
       {/* Background Video - Web only */}
@@ -102,9 +103,10 @@ export function WebHero({
         style={{
           position: "relative",
           zIndex: 2,
-          paddingTop: isMobile ? 100 : 140,
-          paddingBottom: isMobile ? 48 : 80,
-          paddingHorizontal: 24,
+          // Mobile-first padding: compact on mobile, more spacious on larger screens
+          paddingTop: isMobile ? 60 : isTablet ? 100 : 140,
+          paddingBottom: isMobile ? 32 : isTablet ? 48 : 80,
+          paddingHorizontal: isMobile ? 16 : 24,
         }}
       >
         <View
@@ -117,12 +119,13 @@ export function WebHero({
           {/* Headline */}
           <Text
             style={{
-              fontSize: isMobile ? 32 : isTablet ? 42 : 56,
+              // Mobile-first: smaller font that scales up
+              fontSize: isMobile ? 28 : isTablet ? 42 : 56,
               fontWeight: "700",
               color: THEME_COLORS.foreground,
               textAlign: "center",
-              marginBottom: 16,
-              lineHeight: isMobile ? 40 : isTablet ? 50 : 66,
+              marginBottom: isMobile ? 12 : 16,
+              lineHeight: isMobile ? 36 : isTablet ? 50 : 66,
               textShadowColor: "rgba(0, 0, 0, 0.3)",
               textShadowOffset: { width: 0, height: 2 },
               textShadowRadius: 4,
@@ -134,12 +137,12 @@ export function WebHero({
           {/* Subheadline */}
           <Text
             style={{
-              fontSize: isMobile ? 16 : 18,
+              fontSize: isMobile ? 14 : 18,
               color: THEME_COLORS.muted,
               textAlign: "center",
-              lineHeight: isMobile ? 24 : 28,
-              maxWidth: 600,
-              marginBottom: 32,
+              lineHeight: isMobile ? 22 : 28,
+              maxWidth: isMobile ? "100%" : 600,
+              marginBottom: isMobile ? 24 : 32,
               textShadowColor: "rgba(0, 0, 0, 0.3)",
               textShadowOffset: { width: 0, height: 1 },
               textShadowRadius: 2,
@@ -153,7 +156,7 @@ export function WebHero({
             style={{
               width: "100%",
               alignItems: "center",
-              marginBottom: 24,
+              marginBottom: isMobile ? 16 : 24,
             }}
           >
             <SearchBar
