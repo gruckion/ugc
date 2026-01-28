@@ -13,16 +13,7 @@ import Animated, {
 import { UGCLogo } from "@/components/UGCLogo";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { useResponsive } from "@/hooks/useResponsive";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-};
+import { cn } from "@/lib/utils";
 
 interface NavItem {
 	label: string;
@@ -78,49 +69,14 @@ export function WebHeader() {
 	const showMobileNav = isMobile || isTablet;
 
 	return (
-		<View
-			style={{
-				position: "absolute",
-				top: 0,
-				left: 0,
-				right: 0,
-				zIndex: 1000,
-				backgroundColor: THEME_COLORS.background,
-				borderBottomWidth: 1,
-				borderBottomColor: THEME_COLORS.border,
-				shadowColor: "#000",
-				shadowOffset: { width: 0, height: 2 },
-				shadowOpacity: 0.05,
-				shadowRadius: 4,
-				elevation: 3,
-			}}
-		>
-			<View
-				style={{
-					flexDirection: "row",
-					alignItems: "center",
-					justifyContent: "space-between",
-					paddingHorizontal: 24,
-					paddingVertical: 12,
-					maxWidth: 1200,
-					marginHorizontal: "auto",
-					width: "100%",
-				}}
-			>
+		<View className="absolute top-0 left-0 right-0 z-[1000] border-b border-border bg-background shadow-sm">
+			<View className="flex-row items-center justify-between px-6 py-3 max-w-[1200px] mx-auto w-full">
 				{/* Logo */}
 				<Link asChild href="/">
-					<Pressable
-						style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
-					>
+					<Pressable className="flex-row items-center gap-2">
 						<UGCLogo size={36} />
 						{!isMobile && (
-							<Text
-								style={{
-									fontSize: 18,
-									fontWeight: "600",
-									color: THEME_COLORS.foreground,
-								}}
-							>
+							<Text className="text-lg font-semibold text-foreground">
 								UGC Marketplace
 							</Text>
 						)}
@@ -129,20 +85,17 @@ export function WebHeader() {
 
 				{/* Desktop Navigation */}
 				{!showMobileNav && (
-					<View style={{ flexDirection: "row", alignItems: "center", gap: 32 }}>
+					<View className="flex-row items-center gap-8">
 						{NAV_ITEMS.map((item) => (
 							<Link asChild href={item.href as any} key={item.href}>
 								<Pressable>
 									{({ pressed, hovered }) => (
 										<Text
-											style={{
-												fontSize: 15,
-												fontWeight: "500",
-												color: hovered
-													? THEME_COLORS.primary
-													: THEME_COLORS.foreground,
-												opacity: pressed ? 0.7 : 1,
-											}}
+											className={cn(
+												"text-[15px] font-medium",
+												hovered ? "text-primary" : "text-foreground",
+												pressed && "opacity-70",
+											)}
 										>
 											{item.label}
 										</Text>
@@ -155,18 +108,12 @@ export function WebHeader() {
 
 				{/* Auth Buttons (Desktop) */}
 				{!showMobileNav && (
-					<View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+					<View className="flex-row items-center gap-3">
 						{isAuthenticated ? (
 							<Link asChild href="/(tabs)/more">
-								<Pressable
-									style={{
-										flexDirection: "row",
-										alignItems: "center",
-										gap: 8,
-									}}
-								>
+								<Pressable className="flex-row items-center gap-2">
 									<Ionicons
-										color={THEME_COLORS.foreground}
+										className="text-foreground"
 										name="person-circle-outline"
 										size={28}
 									/>
@@ -177,13 +124,10 @@ export function WebHeader() {
 								<Pressable onPress={() => openAuthModal("signin")}>
 									{({ hovered }) => (
 										<Text
-											style={{
-												fontSize: 15,
-												fontWeight: "500",
-												color: hovered
-													? THEME_COLORS.primary
-													: THEME_COLORS.foreground,
-											}}
+											className={cn(
+												"text-[15px] font-medium",
+												hovered ? "text-primary" : "text-foreground",
+											)}
 										>
 											Sign In
 										</Text>
@@ -191,21 +135,14 @@ export function WebHeader() {
 								</Pressable>
 								<Pressable
 									onPress={() => openAuthModal("signup")}
-									style={{
-										backgroundColor: THEME_COLORS.primary,
-										paddingHorizontal: 20,
-										paddingVertical: 10,
-										borderRadius: 8,
-									}}
+									className="px-5 py-2.5 rounded-lg bg-primary"
 								>
 									{({ pressed }) => (
 										<Text
-											style={{
-												fontSize: 15,
-												fontWeight: "600",
-												color: THEME_COLORS.primaryForeground,
-												opacity: pressed ? 0.8 : 1,
-											}}
+											className={cn(
+												"text-[15px] font-semibold text-primary-foreground",
+												pressed && "opacity-80",
+											)}
 										>
 											Join
 										</Text>
@@ -220,7 +157,7 @@ export function WebHeader() {
 				{showMobileNav && (
 					<Pressable onPress={isMenuOpen ? closeMenu : openMenu}>
 						<Ionicons
-							color={THEME_COLORS.foreground}
+							className="text-foreground"
 							name={isMenuOpen ? "close" : "menu"}
 							size={28}
 						/>
@@ -231,64 +168,29 @@ export function WebHeader() {
 			{/* Mobile Menu Overlay - Slides from RIGHT (not bottom) */}
 			{showMobileNav && isMenuOpen && (
 				<View
+					className="absolute top-0 left-0 right-0 bottom-0 z-[1001]"
 					style={{
 						position: "fixed" as any,
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
-						zIndex: 1001,
 					}}
 				>
 					{/* Backdrop */}
 					<Animated.View
-						style={[
-							{
-								position: "absolute",
-								top: 0,
-								left: 0,
-								right: 0,
-								bottom: 0,
-								backgroundColor: "rgba(0,0,0,0.5)",
-							},
-							backdropStyle,
-						]}
+						className="absolute top-0 left-0 right-0 bottom-0 bg-black/50"
+						style={[backdropStyle]}
 					>
-						<Pressable style={{ flex: 1 }} onPress={closeMenu} />
+						<Pressable className="flex-1" onPress={closeMenu} />
 					</Animated.View>
 
 					{/* Menu Panel - Slides from right */}
 					<Animated.View
-						style={[
-							{
-								position: "absolute",
-								top: 0,
-								right: 0,
-								bottom: 0,
-								width: "80%",
-								maxWidth: 320,
-								backgroundColor: THEME_COLORS.background,
-								shadowColor: "#000",
-								shadowOffset: { width: -2, height: 0 },
-								shadowOpacity: 0.1,
-								shadowRadius: 8,
-							},
-							menuPanelStyle,
-						]}
+						className="absolute top-0 right-0 bottom-0 w-[80%] max-w-[320px] bg-background shadow-lg"
+						style={[menuPanelStyle]}
 					>
 						{/* Close Button */}
-						<View
-							style={{
-								flexDirection: "row",
-								justifyContent: "flex-end",
-								padding: 16,
-								borderBottomWidth: 1,
-								borderBottomColor: THEME_COLORS.border,
-							}}
-						>
+						<View className="flex-row justify-end p-4 border-b border-border">
 							<Pressable onPress={closeMenu}>
 								<Ionicons
-									color={THEME_COLORS.foreground}
+									className="text-foreground"
 									name="close"
 									size={28}
 								/>
@@ -296,25 +198,14 @@ export function WebHeader() {
 						</View>
 
 						{/* Menu Items */}
-						<ScrollView style={{ flex: 1 }}>
+						<ScrollView className="flex-1">
 							{NAV_ITEMS.map((item) => (
 								<Link asChild href={item.href as any} key={item.href}>
 									<Pressable
 										onPress={closeMenu}
-										style={{
-											paddingHorizontal: 24,
-											paddingVertical: 16,
-											borderBottomWidth: 1,
-											borderBottomColor: THEME_COLORS.border,
-										}}
+										className="px-6 py-4 border-b border-border"
 									>
-										<Text
-											style={{
-												fontSize: 16,
-												fontWeight: "500",
-												color: THEME_COLORS.foreground,
-											}}
-										>
+										<Text className="text-base font-medium text-foreground">
 											{item.label}
 										</Text>
 									</Pressable>
@@ -322,25 +213,14 @@ export function WebHeader() {
 							))}
 
 							{/* Auth Section */}
-							<View style={{ padding: 24, gap: 12 }}>
+							<View className="p-6 gap-3">
 								{isAuthenticated ? (
 									<Link asChild href="/(tabs)/more">
 										<Pressable
 											onPress={closeMenu}
-											style={{
-												backgroundColor: THEME_COLORS.primary,
-												paddingVertical: 14,
-												borderRadius: 8,
-												alignItems: "center",
-											}}
+											className="py-3.5 rounded-lg items-center bg-primary"
 										>
-											<Text
-												style={{
-													fontSize: 16,
-													fontWeight: "600",
-													color: THEME_COLORS.primaryForeground,
-												}}
-											>
+											<Text className="text-base font-semibold text-primary-foreground">
 												My Account
 											</Text>
 										</Pressable>
@@ -352,21 +232,9 @@ export function WebHeader() {
 												closeMenu();
 												openAuthModal("signin");
 											}}
-											style={{
-												borderWidth: 1,
-												borderColor: THEME_COLORS.primary,
-												paddingVertical: 14,
-												borderRadius: 8,
-												alignItems: "center",
-											}}
+											className="border border-primary py-3.5 rounded-lg items-center"
 										>
-											<Text
-												style={{
-													fontSize: 16,
-													fontWeight: "600",
-													color: THEME_COLORS.primary,
-												}}
-											>
+											<Text className="text-base font-semibold text-primary">
 												Sign In
 											</Text>
 										</Pressable>
@@ -375,20 +243,9 @@ export function WebHeader() {
 												closeMenu();
 												openAuthModal("signup");
 											}}
-											style={{
-												backgroundColor: THEME_COLORS.primary,
-												paddingVertical: 14,
-												borderRadius: 8,
-												alignItems: "center",
-											}}
+											className="py-3.5 rounded-lg items-center bg-primary"
 										>
-											<Text
-												style={{
-													fontSize: 16,
-													fontWeight: "600",
-													color: THEME_COLORS.primaryForeground,
-												}}
-											>
+											<Text className="text-base font-semibold text-primary-foreground">
 												Join
 											</Text>
 										</Pressable>

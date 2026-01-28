@@ -1,5 +1,4 @@
-import { useThemeColor } from "heroui-native";
-import { Dimensions, Image, StyleSheet, Text, View } from "react-native";
+import { Dimensions, Image, Text, View } from "react-native";
 import Animated, {
   Extrapolation,
   interpolate,
@@ -39,12 +38,6 @@ export function MembershipCard({
   secretaryName = "H. Senanayake",
   disableAnimation = false,
 }: MembershipCardProps) {
-  // Theme colors with fallbacks to handle timing issue where useThemeColor may return "invalid"
-  // Fiverr-style theme colors
-  const foreground = useThemeColor("foreground") || "#222325";
-  const background = useThemeColor("background") || "#FFFFFF";
-  const border = useThemeColor("border") || "#e5e5e5";
-
   // Format member since date to "Month Year" format
   const formattedDate = memberSince
     ? new Date(memberSince).toLocaleDateString("en-GB", {
@@ -145,56 +138,79 @@ export function MembershipCard({
   });
 
   return (
-    <Animated.View style={[styles.cardContainer, animatedShadowStyle]}>
-      <Animated.View style={[styles.cardWrapper, animatedCardStyle]}>
+    <Animated.View
+      className="self-center"
+      style={[
+        {
+          width: CARD_WIDTH,
+          height: CARD_HEIGHT,
+          shadowColor: "#000",
+          shadowOffset: { width: 0, height: 8 },
+          shadowOpacity: 0.25,
+          shadowRadius: 16,
+          elevation: 12,
+        },
+        animatedShadowStyle,
+      ]}
+    >
+      <Animated.View
+        className="flex-1 origin-center"
+        style={animatedCardStyle}
+      >
         {/* Double border effect */}
-        <View
-          style={[
-            styles.outerBorder,
-            { borderColor: border, backgroundColor: background },
-          ]}
-        >
-          <View style={[styles.innerBorder, { borderColor: border }]}>
+        <View className="flex-1 rounded-xl border-[3px] border-border bg-background overflow-hidden">
+          <View
+            className="flex-1 rounded-lg border-[1.5px] border-border overflow-hidden"
+            style={{ margin: 3 }}
+          >
             {/* Card background image */}
-            <View style={styles.cardContent}>
+            <View className="flex-1 relative">
               <Image
                 resizeMode="cover"
                 source={MEMBERSHIP_CARD_BG}
-                style={styles.backgroundImage}
+                className="absolute inset-0 w-full h-full"
               />
 
               {/* Text overlays */}
-              <View style={styles.textOverlay}>
+              <View
+                className="absolute inset-0 justify-between p-4 pb-3"
+                style={{ paddingTop: CARD_HEIGHT * 0.52 }}
+              >
                 {/* Member name - positioned below "This is to introduce" */}
-                <View style={styles.nameContainer}>
-                  <Text style={[styles.memberName, { color: foreground }]}>
+                <View className="items-center">
+                  <Text
+                    className="text-foreground text-base font-bold tracking-widest text-center"
+                    style={{ fontFamily: "serif" }}
+                  >
                     {memberName.toUpperCase()}
                   </Text>
                 </View>
 
                 {/* Bottom row: Date and Secretary signature */}
-                <View style={styles.bottomRow}>
+                <View className="flex-row justify-between items-end">
                   {/* Date - bottom left, cursive style */}
-                  <Text style={[styles.dateText, { color: foreground }]}>
+                  <Text
+                    className="text-foreground text-base"
+                    style={{ fontFamily: "DancingScript-Regular" }}
+                  >
                     {formattedDate}
                   </Text>
 
                   {/* Secretary signature - bottom right */}
-                  <View style={styles.signatureContainer}>
+                  <View className="items-center">
                     {/* Name above the line in cursive */}
-                    <Text style={[styles.secretaryName, { color: foreground }]}>
+                    <Text
+                      className="text-foreground text-sm mb-0.5"
+                      style={{ fontFamily: "DancingScript-Regular" }}
+                    >
                       {secretaryName}
                     </Text>
                     {/* Line */}
-                    <View
-                      style={[
-                        styles.signatureLine,
-                        { backgroundColor: foreground },
-                      ]}
-                    />
+                    <View className="w-20 h-px bg-foreground" />
                     {/* "Secretary" below the line */}
                     <Text
-                      style={[styles.secretaryTitle, { color: foreground }]}
+                      className="text-foreground text-[10px] mt-0.5"
+                      style={{ fontFamily: "serif" }}
                     >
                       Secretary
                     </Text>
@@ -208,87 +224,5 @@ export function MembershipCard({
     </Animated.View>
   );
 }
-
-const styles = StyleSheet.create({
-  cardContainer: {
-    width: CARD_WIDTH,
-    height: CARD_HEIGHT,
-    alignSelf: "center",
-    shadowColor: "#000",
-    shadowOffset: { width: 0, height: 8 },
-    shadowOpacity: 0.25,
-    shadowRadius: 16,
-    elevation: 12,
-  },
-  cardWrapper: {
-    flex: 1,
-    transformOrigin: "center",
-  },
-  outerBorder: {
-    flex: 1,
-    borderRadius: 12,
-    borderWidth: 3,
-    overflow: "hidden",
-  },
-  innerBorder: {
-    flex: 1,
-    margin: 3,
-    borderRadius: 8,
-    borderWidth: 1.5,
-    overflow: "hidden",
-  },
-  cardContent: {
-    flex: 1,
-    position: "relative",
-  },
-  backgroundImage: {
-    ...StyleSheet.absoluteFillObject,
-    width: "100%",
-    height: "100%",
-  },
-  textOverlay: {
-    ...StyleSheet.absoluteFillObject,
-    justifyContent: "space-between",
-    padding: 16,
-    paddingTop: CARD_HEIGHT * 0.52, // Position below "This is to introduce"
-    paddingBottom: 12,
-  },
-  nameContainer: {
-    alignItems: "center",
-  },
-  memberName: {
-    fontSize: 16,
-    fontWeight: "700",
-    letterSpacing: 2,
-    fontFamily: "serif",
-    textAlign: "center",
-  },
-  bottomRow: {
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignItems: "flex-end",
-  },
-  dateText: {
-    fontSize: 16,
-    fontFamily: "DancingScript-Regular",
-  },
-  signatureContainer: {
-    alignItems: "center",
-  },
-  secretaryName: {
-    fontSize: 14,
-    fontFamily: "DancingScript-Regular",
-    marginBottom: 2,
-  },
-  signatureLine: {
-    width: 80,
-    height: 1,
-  },
-  secretaryTitle: {
-    fontSize: 10,
-    fontFamily: "serif",
-    marginTop: 2,
-  },
-});
 
 export default MembershipCard;

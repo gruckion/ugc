@@ -50,7 +50,7 @@ export default function ReciprocalClubs() {
   const insets = useSafeAreaInsets();
   const { isAuthenticated } = useConvexAuth();
 
-  // Theme colors for Ionicons
+  // Theme colors for Ionicons (which don't support className)
   const foreground = useThemeColor("foreground");
   const accent = useThemeColor("accent");
   const primaryForeground = "#FFFFFF";
@@ -68,29 +68,14 @@ export default function ReciprocalClubs() {
           paddingTop: insets.top + 8,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View className="flex-row items-center">
           <Pressable
+            className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-white/15"
             onPress={() => router.back()}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: "rgba(255, 255, 255, 0.15)",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 12,
-            }}
           >
             <Ionicons color={primaryForeground} name="arrow-back" size={22} />
           </Pressable>
-          <Text
-            className="flex-1 text-primary-foreground"
-            style={{
-              fontSize: 20,
-              fontWeight: "300",
-              fontFamily: "serif",
-            }}
-          >
+          <Text className="flex-1 font-light font-serif text-xl text-primary-foreground">
             Reciprocal Clubs
           </Text>
           <Ionicons color={accent} name="globe-outline" size={24} />
@@ -98,26 +83,23 @@ export default function ReciprocalClubs() {
       </View>
 
       <ScrollView
+        className="flex-1"
         contentContainerStyle={{ paddingBottom: 32 }}
-        style={{ flex: 1 }}
       >
         {/* Hero Image */}
         <Image
           cachePolicy="memory-disk"
+          className="h-[220px] w-full"
           contentFit="cover"
           source={{ uri: GLOBE_IMAGE_URL }}
-          style={{ width: "100%", height: 220 }}
         />
 
         {/* Content Section */}
-        <View style={{ padding: 16 }}>
+        <View className="p-4">
           {/* Stats Card */}
           <View
-            className="bg-surface"
+            className="mb-4 rounded-xl bg-surface p-5"
             style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.08,
@@ -125,33 +107,13 @@ export default function ReciprocalClubs() {
               elevation: 2,
             }}
           >
-            <Text
-              className="text-center text-foreground"
-              style={{
-                fontSize: 28,
-                fontWeight: "700",
-                marginBottom: 4,
-              }}
-            >
+            <Text className="mb-1 text-center text-[28px] font-bold text-foreground">
               450+
             </Text>
-            <Text
-              className="text-center text-accent"
-              style={{
-                fontSize: 16,
-                fontWeight: "500",
-                marginBottom: 12,
-              }}
-            >
+            <Text className="mb-3 text-center text-base font-medium text-accent">
               Reciprocal Clubs Worldwide
             </Text>
-            <Text
-              className="text-center text-muted"
-              style={{
-                fontSize: 15,
-                lineHeight: 22,
-              }}
-            >
+            <Text className="text-center text-[15px] leading-[22px] text-muted">
               UGC has a unique list of over 450 reciprocal
               clubs throughout the world where members will be welcomed.
             </Text>
@@ -159,11 +121,8 @@ export default function ReciprocalClubs() {
 
           {/* About Section */}
           <View
-            className="bg-surface"
+            className="mb-4 rounded-xl bg-surface p-5"
             style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 1 },
               shadowOpacity: 0.05,
@@ -171,23 +130,10 @@ export default function ReciprocalClubs() {
               elevation: 2,
             }}
           >
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 17,
-                fontWeight: "600",
-                marginBottom: 12,
-              }}
-            >
+            <Text className="mb-3 text-[17px] font-semibold text-foreground">
               World-Class Clubs
             </Text>
-            <Text
-              className="text-muted"
-              style={{
-                fontSize: 15,
-                lineHeight: 24,
-              }}
-            >
+            <Text className="text-[15px] leading-6 text-muted">
               Many of our reciprocal clubs are renowned as being amongst the
               very finest private members' clubs in the world. As a City
               UGC member, you have access to an exclusive global
@@ -197,11 +143,8 @@ export default function ReciprocalClubs() {
 
           {/* Available Facilities */}
           <View
-            className="bg-surface"
+            className="mb-4 rounded-xl bg-surface p-5"
             style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 1 },
               shadowOpacity: 0.05,
@@ -209,55 +152,21 @@ export default function ReciprocalClubs() {
               elevation: 2,
             }}
           >
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 17,
-                fontWeight: "600",
-                marginBottom: 16,
-              }}
-            >
+            <Text className="mb-4 text-[17px] font-semibold text-foreground">
               Available Facilities
             </Text>
-            <Text
-              className="text-muted"
-              style={{
-                fontSize: 14,
-                lineHeight: 22,
-                marginBottom: 16,
-              }}
-            >
+            <Text className="mb-4 text-sm leading-[22px] text-muted">
               Many reciprocal clubs offer accommodation and a number possess
               excellent facilities including:
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                gap: 12,
-              }}
-            >
+            <View className="flex-row flex-wrap gap-3">
               {FACILITIES.map((facility) => (
                 <View
-                  className="bg-primary/10"
+                  className="flex-row items-center gap-1.5 rounded-full bg-primary/10 px-3 py-2"
                   key={facility.label}
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    paddingVertical: 8,
-                    paddingHorizontal: 12,
-                    borderRadius: 20,
-                    gap: 6,
-                  }}
                 >
                   <Ionicons color={foreground} name={facility.icon} size={16} />
-                  <Text
-                    className="text-foreground"
-                    style={{
-                      fontSize: 13,
-                      fontWeight: "500",
-                    }}
-                  >
+                  <Text className="text-[13px] font-medium text-foreground">
                     {facility.label}
                   </Text>
                 </View>
@@ -268,43 +177,21 @@ export default function ReciprocalClubs() {
           {/* Authentication-based content */}
           {isAuthenticated ? (
             // Authenticated: Show full access coming soon
-            <View
-              className="bg-accent"
-              style={{
-                borderRadius: 12,
-                padding: 24,
-                marginBottom: 16,
-                alignItems: "center",
-              }}
-            >
+            <View className="mb-4 items-center rounded-xl bg-accent p-6">
               <Ionicons
                 color={foreground}
                 name="checkmark-circle"
                 size={48}
                 style={{ marginBottom: 12 }}
               />
-              <Text
-                className="text-center text-foreground"
-                style={{
-                  fontSize: 18,
-                  fontWeight: "600",
-                  marginBottom: 8,
-                }}
-              >
+              <Text className="mb-2 text-center text-lg font-semibold text-foreground">
                 Member Access
               </Text>
-              <Text
-                className="text-center text-foreground"
-                style={{
-                  fontSize: 15,
-                  lineHeight: 22,
-                  opacity: 0.85,
-                }}
-              >
+              <Text className="text-center text-[15px] leading-[22px] text-foreground opacity-[0.85]">
                 Full reciprocal clubs directory coming soon. In the meantime,
                 you can view the complete list on our website.
               </Text>
-              <View style={{ marginTop: 16 }}>
+              <View className="mt-4">
                 <ExternalLinkButton
                   label="View Members' Area"
                   url="https://ugc.com/copy-of-reciprocal-clubs"
@@ -314,69 +201,31 @@ export default function ReciprocalClubs() {
             </View>
           ) : (
             // Not authenticated: Show sign in prompt
-            <View
-              className="border-accent bg-surface"
-              style={{
-                borderRadius: 12,
-                padding: 24,
-                marginBottom: 16,
-                borderWidth: 2,
-                borderStyle: "dashed",
-                alignItems: "center",
-              }}
-            >
+            <View className="mb-4 items-center rounded-xl border-2 border-dashed border-accent bg-surface p-6">
               <Ionicons
                 color={foreground}
                 name="lock-closed-outline"
                 size={40}
                 style={{ marginBottom: 12 }}
               />
-              <Text
-                className="text-center text-foreground"
-                style={{
-                  fontSize: 17,
-                  fontWeight: "600",
-                  marginBottom: 8,
-                }}
-              >
+              <Text className="mb-2 text-center text-[17px] font-semibold text-foreground">
                 Members Only
               </Text>
-              <Text
-                className="text-center text-muted"
-                style={{
-                  fontSize: 14,
-                  lineHeight: 22,
-                  marginBottom: 16,
-                }}
-              >
+              <Text className="mb-4 text-center text-sm leading-[22px] text-muted">
                 Sign in to access the full directory of reciprocal clubs and
                 view detailed information about each club's facilities and
                 booking process.
               </Text>
               <Pressable
-                className="bg-primary"
+                className="flex-row items-center gap-2 rounded-lg bg-primary px-8 py-3.5"
                 onPress={handleSignIn}
-                style={{
-                  paddingVertical: 14,
-                  paddingHorizontal: 32,
-                  borderRadius: 8,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 8,
-                }}
               >
                 <Ionicons
                   color={primaryForeground}
                   name="log-in-outline"
                   size={20}
                 />
-                <Text
-                  className="text-primary-foreground"
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "600",
-                  }}
-                >
+                <Text className="text-[15px] font-semibold text-primary-foreground">
                   Sign In to Access Full Details
                 </Text>
               </Pressable>
@@ -385,11 +234,8 @@ export default function ReciprocalClubs() {
 
           {/* Featured Clubs Preview */}
           <View
-            className="bg-surface"
+            className="mb-4 rounded-xl bg-surface p-5"
             style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 1 },
               shadowOpacity: 0.05,
@@ -397,123 +243,49 @@ export default function ReciprocalClubs() {
               elevation: 2,
             }}
           >
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 17,
-                fontWeight: "600",
-                marginBottom: 16,
-              }}
-            >
+            <Text className="mb-4 text-[17px] font-semibold text-foreground">
               Featured Partner Clubs
             </Text>
             {FEATURED_CLUBS.map((club, index) => (
               <View
-                className="border-border"
+                className="flex-row items-center border-border py-3"
                 key={club.name}
                 style={{
-                  flexDirection: "row",
-                  alignItems: "center",
-                  paddingVertical: 12,
                   borderBottomWidth: index < FEATURED_CLUBS.length - 1 ? 1 : 0,
                 }}
               >
-                <View
-                  className="bg-accent/30"
-                  style={{
-                    width: 40,
-                    height: 40,
-                    borderRadius: 20,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginRight: 12,
-                  }}
-                >
+                <View className="mr-3 h-10 w-10 items-center justify-center rounded-full bg-accent/30">
                   <Ionicons color={foreground} name={club.icon} size={20} />
                 </View>
-                <View style={{ flex: 1 }}>
-                  <Text
-                    className="text-foreground"
-                    style={{
-                      fontSize: 15,
-                      fontWeight: "500",
-                    }}
-                  >
+                <View className="flex-1">
+                  <Text className="text-[15px] font-medium text-foreground">
                     {club.name}
                   </Text>
-                  <Text
-                    className="text-muted"
-                    style={{
-                      fontSize: 13,
-                      marginTop: 2,
-                    }}
-                  >
+                  <Text className="mt-0.5 text-[13px] text-muted">
                     {club.location}
                   </Text>
                 </View>
               </View>
             ))}
-            <Text
-              className="text-center text-muted"
-              style={{
-                fontSize: 12,
-                marginTop: 12,
-                fontStyle: "italic",
-              }}
-            >
+            <Text className="mt-3 text-center text-xs italic text-muted">
               ...and 446+ more clubs worldwide
             </Text>
           </View>
 
           {/* Contact for Assistance */}
-          <View
-            className="bg-primary"
-            style={{
-              borderRadius: 12,
-              padding: 20,
-              alignItems: "center",
-            }}
-          >
-            <Text
-              className="text-primary-foreground"
-              style={{
-                fontSize: 15,
-                fontWeight: "600",
-                marginBottom: 8,
-              }}
-            >
+          <View className="items-center rounded-xl bg-primary p-5">
+            <Text className="mb-2 text-[15px] font-semibold text-primary-foreground">
               Need Assistance?
             </Text>
-            <Text
-              className="text-center text-primary-foreground"
-              style={{
-                fontSize: 14,
-                opacity: 0.9,
-                marginBottom: 12,
-              }}
-            >
+            <Text className="mb-3 text-center text-sm text-primary-foreground opacity-90">
               Contact the club for help with reciprocal club bookings
             </Text>
             <Pressable
-              className="bg-accent"
+              className="flex-row items-center gap-2 rounded-lg bg-accent px-5 py-3"
               onPress={() => Linking.openURL("tel:02071676682")}
-              style={{
-                paddingVertical: 12,
-                paddingHorizontal: 20,
-                borderRadius: 8,
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 8,
-              }}
             >
               <Ionicons color={foreground} name="call" size={18} />
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 14,
-                  fontWeight: "600",
-                }}
-              >
+              <Text className="text-sm font-semibold text-foreground">
                 020 7167 6682
               </Text>
             </Pressable>

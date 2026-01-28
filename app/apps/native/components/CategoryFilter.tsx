@@ -1,5 +1,5 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeColor } from "heroui-native";
+import { cn } from "@/lib/utils";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import Animated, {
   useAnimatedStyle,
@@ -39,14 +39,7 @@ export function CategoryFilter({
   onSelectCategory,
 }: CategoryFilterProps) {
   return (
-    <View
-      className="bg-background"
-      style={{
-        paddingVertical: 12,
-        borderBottomWidth: 1,
-        borderBottomColor: "rgba(0, 0, 0, 0.06)",
-      }}
-    >
+    <View className="bg-background py-3 border-b border-border">
       <ScrollView
         contentContainerStyle={{
           paddingHorizontal: 16,
@@ -78,9 +71,6 @@ function CategoryChip({
   onPress: () => void;
 }) {
   const scale = useSharedValue(1);
-  // useThemeColor only for Ionicons (which don't support className)
-  const accent = useThemeColor("accent") || "#ffbe5b";
-  const foreground = useThemeColor("foreground") || "#222325";
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -98,19 +88,13 @@ function CategoryChip({
     >
       <Animated.View style={animatedStyle}>
         <View
-          className={
+          className={cn(
+            "flex-row items-center gap-1.5 px-3.5 py-2.5 rounded-[20px] border",
             isSelected
               ? "border-primary bg-primary"
-              : "border-border bg-surface"
-          }
+              : "border-border bg-surface",
+          )}
           style={{
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 6,
-            paddingHorizontal: 14,
-            paddingVertical: 10,
-            borderRadius: 20,
-            borderWidth: 1,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 1 },
             shadowOpacity: isSelected ? 0.1 : 0.05,
@@ -119,18 +103,17 @@ function CategoryChip({
           }}
         >
           <Ionicons
-            color={isSelected ? accent : foreground}
+            className={cn(isSelected ? "text-accent" : "text-foreground")}
             name={category.icon}
             size={16}
           />
           <Text
-            className={
-              isSelected ? "text-primary-foreground" : "text-foreground"
-            }
-            style={{
-              fontSize: 14,
-              fontWeight: isSelected ? "600" : "500",
-            }}
+            className={cn(
+              "text-sm",
+              isSelected
+                ? "text-primary-foreground font-semibold"
+                : "text-foreground font-medium",
+            )}
           >
             {category.label}
           </Text>

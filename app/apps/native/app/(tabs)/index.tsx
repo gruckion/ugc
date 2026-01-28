@@ -70,13 +70,8 @@ export default function Home() {
         {/* Sign In Button */}
         <View className="px-6 pb-6">
           <Pressable
-            className="items-center bg-primary"
+            className="items-center rounded-lg px-6 py-4 bg-primary"
             onPress={() => router.push("/(auth)/landing")}
-            style={{
-              paddingVertical: 16,
-              paddingHorizontal: 24,
-              borderRadius: 8,
-            }}
           >
             <Text className="font-medium text-base text-primary-foreground">
               Sign In

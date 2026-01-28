@@ -5,17 +5,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createFAQPageJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-	sectionBackground: "#fafafa",
-};
+import { cn } from "@/lib/utils";
 
 // FAQ Categories with questions
 const FAQ_CATEGORIES = [
@@ -204,7 +194,7 @@ export default function CreatorFAQPage() {
 	const creatorFaqJsonLd = createFAQPageJsonLd(allFaqs);
 
 	return (
-		<ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+		<ScrollView className="flex-1 bg-background">
 			<SEO
 				title="Creator FAQ"
 				description="Frequently asked questions for creators on UGC Marketplace. Learn about getting started, building your profile, payments, working with brands, and growing your career."
@@ -219,55 +209,32 @@ export default function CreatorFAQPage() {
 				jsonLd={creatorFaqJsonLd}
 			/>
 			{/* Hero Section */}
-			<View
-				style={{
-					paddingTop: 64,
-					paddingBottom: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.primary,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 800,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="px-6 py-16 bg-primary">
+				<View className="mx-auto w-full items-center" style={{ maxWidth: 800 }}>
 					<View
+						className="mb-6 items-center justify-center rounded-full"
 						style={{
 							width: 72,
 							height: 72,
-							borderRadius: 36,
 							backgroundColor: "rgba(255,255,255,0.2)",
-							alignItems: "center",
-							justifyContent: "center",
-							marginBottom: 24,
 						}}
 					>
 						<Ionicons
-							color={THEME_COLORS.primaryForeground}
 							name="videocam-outline"
 							size={36}
+							className="text-primary-foreground"
 						/>
 					</View>
 					<Text
-						style={{
-							fontSize: isMobile ? 32 : 44,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
+						className="mb-3 text-center font-bold text-white"
+						style={{ fontSize: isMobile ? 32 : 44 }}
 					>
 						Creator FAQ
 					</Text>
 					<Text
+						className="text-center text-lg"
 						style={{
-							fontSize: 18,
 							color: "rgba(255,255,255,0.9)",
-							textAlign: "center",
 							maxWidth: 600,
 							lineHeight: 28,
 						}}
@@ -279,144 +246,105 @@ export default function CreatorFAQPage() {
 			</View>
 
 			{/* Main Content */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-				}}
-			>
+			<View className="px-6 py-16">
 				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-						flexDirection: isMobile ? "column" : "row",
-						gap: 48,
-					}}
+					className={cn(
+						"mx-auto w-full gap-12",
+						isMobile ? "flex-col" : "flex-row"
+					)}
+					style={{ maxWidth: 1200 }}
 				>
 					{/* FAQ Accordion */}
-					<View style={{ flex: 1 }}>
+					<View className="flex-1">
 						{FAQ_CATEGORIES.map((category) => (
 							<View
 								key={category.title}
-								style={{
-									marginBottom: 16,
-									borderRadius: 16,
-									borderWidth: 1,
-									borderColor:
-										expandedCategory === category.title
-											? THEME_COLORS.primary
-											: THEME_COLORS.border,
-									overflow: "hidden",
-								}}
+								className={cn(
+									"mb-4 overflow-hidden rounded-2xl border",
+									expandedCategory === category.title
+										? "border-primary"
+										: "border-border"
+								)}
 							>
 								{/* Category Header */}
 								<Pressable
 									onPress={() => toggleCategory(category.title)}
-									style={({ hovered }) => ({
-										padding: 24,
-										backgroundColor:
-											expandedCategory === category.title
-												? `${THEME_COLORS.primary}08`
-												: hovered
-													? THEME_COLORS.sectionBackground
-													: THEME_COLORS.background,
-										flexDirection: "row",
-										alignItems: "center",
-										gap: 16,
-									})}
+									className={cn(
+										"flex-row items-center gap-4 p-6",
+										expandedCategory === category.title
+											? ""
+											: "bg-background hover:bg-surface-raised"
+									)}
+									style={
+										expandedCategory === category.title
+											? { backgroundColor: "rgba(29,191,115,0.03)" }
+											: undefined
+									}
 								>
 									<View
+										className="items-center justify-center rounded-xl"
 										style={{
 											width: 48,
 											height: 48,
-											borderRadius: 12,
 											backgroundColor:
 												expandedCategory === category.title
-													? THEME_COLORS.primary
-													: `${THEME_COLORS.primary}15`,
-											alignItems: "center",
-											justifyContent: "center",
+													? "#1DBF73"
+													: "rgba(29,191,115,0.08)",
 										}}
 									>
 										<Ionicons
 											color={
 												expandedCategory === category.title
-													? THEME_COLORS.primaryForeground
-													: THEME_COLORS.primary
+													? "#FFFFFF"
+													: "#1DBF73"
 											}
 											name={category.icon}
 											size={24}
 										/>
 									</View>
-									<View style={{ flex: 1 }}>
-										<Text
-											style={{
-												fontSize: 18,
-												fontWeight: "600",
-												color: THEME_COLORS.foreground,
-											}}
-										>
+									<View className="flex-1">
+										<Text className="text-lg font-semibold text-foreground">
 											{category.title}
 										</Text>
 										<Text
-											style={{
-												fontSize: 14,
-												color: THEME_COLORS.muted,
-												marginTop: 2,
-											}}
+											className="text-sm text-muted"
+											style={{ marginTop: 2 }}
 										>
 											{category.questions.length} questions
 										</Text>
 									</View>
 									<Ionicons
-										color={THEME_COLORS.muted}
 										name={
 											expandedCategory === category.title
 												? "chevron-up"
 												: "chevron-down"
 										}
 										size={24}
+										className="text-muted"
 									/>
 								</Pressable>
 
 								{/* Questions */}
 								{expandedCategory === category.title && (
-									<View
-										style={{
-											borderTopWidth: 1,
-											borderTopColor: THEME_COLORS.border,
-										}}
-									>
+									<View className="border-t border-border">
 										{category.questions.map((item, questionIndex) => (
 											<View
 												key={item.question}
-												style={{
-													borderBottomWidth:
-														questionIndex < category.questions.length - 1
-															? 1
-															: 0,
-													borderBottomColor: THEME_COLORS.border,
-												}}
+												className={cn(
+													questionIndex < category.questions.length - 1
+														? "border-b border-border"
+														: ""
+												)}
 											>
 												<Pressable
 													onPress={() => toggleQuestion(item.question)}
-													style={({ hovered }) => ({
-														padding: 20,
-														paddingLeft: 24,
-														backgroundColor: hovered
-															? THEME_COLORS.sectionBackground
-															: THEME_COLORS.background,
-														flexDirection: "row",
-														alignItems: "flex-start",
-														gap: 12,
-													})}
+													className="flex-row items-start gap-3 p-5 pl-6 bg-background hover:bg-surface-raised"
 												>
 													<Ionicons
 														color={
 															expandedQuestions.has(item.question)
-																? THEME_COLORS.primary
-																: THEME_COLORS.muted
+																? "#1DBF73"
+																: undefined
 														}
 														name={
 															expandedQuestions.has(item.question)
@@ -425,15 +353,15 @@ export default function CreatorFAQPage() {
 														}
 														size={22}
 														style={{ marginTop: 2 }}
+														className={cn(
+															expandedQuestions.has(item.question)
+																? ""
+																: "text-muted"
+														)}
 													/>
 													<Text
-														style={{
-															flex: 1,
-															fontSize: 16,
-															fontWeight: "500",
-															color: THEME_COLORS.foreground,
-															lineHeight: 24,
-														}}
+														className="flex-1 text-base font-medium text-foreground"
+														style={{ lineHeight: 24 }}
 													>
 														{item.question}
 													</Text>
@@ -441,16 +369,13 @@ export default function CreatorFAQPage() {
 
 												{expandedQuestions.has(item.question) && (
 													<View
-														style={{
-															paddingHorizontal: 24,
-															paddingBottom: 20,
-															paddingLeft: 58,
-														}}
+														className="px-6 pb-5"
+														style={{ paddingLeft: 58 }}
 													>
 														<Text
+															className="text-muted"
 															style={{
 																fontSize: 15,
-																color: THEME_COLORS.muted,
 																lineHeight: 26,
 															}}
 														>
@@ -468,29 +393,12 @@ export default function CreatorFAQPage() {
 
 					{/* Sidebar */}
 					<View
-						style={{
-							width: isMobile ? "100%" : 320,
-							gap: 24,
-						}}
+						className="gap-6"
+						style={{ width: isMobile ? "100%" : 320 }}
 					>
 						{/* Related Resources */}
-						<View
-							style={{
-								padding: 24,
-								borderRadius: 16,
-								backgroundColor: THEME_COLORS.sectionBackground,
-								borderWidth: 1,
-								borderColor: THEME_COLORS.border,
-							}}
-						>
-							<Text
-								style={{
-									fontSize: 18,
-									fontWeight: "600",
-									color: THEME_COLORS.foreground,
-									marginBottom: 20,
-								}}
-							>
+						<View className="rounded-2xl border border-border bg-surface-raised p-6">
+							<Text className="mb-5 text-lg font-semibold text-foreground">
 								Related Resources
 							</Text>
 							{RELATED_RESOURCES.map((resource, index) => (
@@ -500,64 +408,55 @@ export default function CreatorFAQPage() {
 									key={resource.title}
 								>
 									<Pressable
-										style={({ hovered }) => ({
-											flexDirection: "row",
-											alignItems: "center",
-											gap: 12,
-											paddingVertical: 12,
-											borderTopWidth: index > 0 ? 1 : 0,
-											borderTopColor: THEME_COLORS.border,
-										})}
+										className={cn(
+											"flex-row items-center gap-3 py-3",
+											index > 0 ? "border-t border-border" : ""
+										)}
 									>
 										{({ hovered: isHovered }) => (
 											<>
 												<View
+													className={cn(
+														"items-center justify-center",
+														isHovered ? "bg-primary" : "bg-background"
+													)}
 													style={{
 														width: 40,
 														height: 40,
 														borderRadius: 10,
-														backgroundColor: isHovered
-															? THEME_COLORS.primary
-															: THEME_COLORS.background,
-														alignItems: "center",
-														justifyContent: "center",
 													}}
 												>
 													<Ionicons
 														color={
 															isHovered
-																? THEME_COLORS.primaryForeground
-																: THEME_COLORS.primary
+																? "#FFFFFF"
+																: "#1DBF73"
 														}
 														name={resource.icon}
 														size={20}
 													/>
 												</View>
-												<View style={{ flex: 1 }}>
+												<View className="flex-1">
 													<Text
-														style={{
-															fontSize: 15,
-															fontWeight: "500",
-															color: isHovered
-																? THEME_COLORS.primary
-																: THEME_COLORS.foreground,
-														}}
+														className={cn(
+															"font-medium",
+															isHovered ? "text-primary" : "text-foreground"
+														)}
+														style={{ fontSize: 15 }}
 													>
 														{resource.title}
 													</Text>
 													<Text
-														style={{
-															fontSize: 13,
-															color: THEME_COLORS.muted,
-														}}
+														className="text-muted"
+														style={{ fontSize: 13 }}
 													>
 														{resource.description}
 													</Text>
 												</View>
 												<Ionicons
-													color={THEME_COLORS.muted}
 													name="chevron-forward"
 													size={18}
+													className="text-muted"
 												/>
 											</>
 										)}
@@ -568,38 +467,23 @@ export default function CreatorFAQPage() {
 
 						{/* Pro Tips Card */}
 						<View
+							className="rounded-2xl border p-6"
 							style={{
-								padding: 24,
-								borderRadius: 16,
-								backgroundColor: `${THEME_COLORS.primary}08`,
-								borderWidth: 1,
-								borderColor: `${THEME_COLORS.primary}20`,
+								backgroundColor: "rgba(29,191,115,0.03)",
+								borderColor: "rgba(29,191,115,0.12)",
 							}}
 						>
-							<View
-								style={{
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 12,
-									marginBottom: 16,
-								}}
-							>
+							<View className="mb-4 flex-row items-center gap-3">
 								<Ionicons
-									color={THEME_COLORS.primary}
 									name="bulb-outline"
 									size={24}
+									className="text-primary"
 								/>
-								<Text
-									style={{
-										fontSize: 18,
-										fontWeight: "600",
-										color: THEME_COLORS.foreground,
-									}}
-								>
+								<Text className="text-lg font-semibold text-foreground">
 									Pro Tips
 								</Text>
 							</View>
-							<View style={{ gap: 12 }}>
+							<View className="gap-3">
 								{[
 									"Complete your profile 100% to get 3x more visibility",
 									"Respond to briefs within 24 hours for higher acceptance rates",
@@ -607,25 +491,17 @@ export default function CreatorFAQPage() {
 								].map((tip, index) => (
 									<View
 										key={index}
-										style={{
-											flexDirection: "row",
-											alignItems: "flex-start",
-											gap: 8,
-										}}
+										className="flex-row items-start gap-2"
 									>
 										<Ionicons
-											color={THEME_COLORS.primary}
 											name="checkmark-circle"
 											size={18}
 											style={{ marginTop: 2 }}
+											className="text-primary"
 										/>
 										<Text
-											style={{
-												flex: 1,
-												fontSize: 14,
-												color: THEME_COLORS.muted,
-												lineHeight: 22,
-											}}
+											className="flex-1 text-sm text-muted"
+											style={{ lineHeight: 22 }}
 										>
 											{tip}
 										</Text>
@@ -635,48 +511,24 @@ export default function CreatorFAQPage() {
 						</View>
 
 						{/* CTA Card */}
-						<View
-							style={{
-								padding: 24,
-								borderRadius: 16,
-								backgroundColor: THEME_COLORS.foreground,
-							}}
-						>
-							<Text
-								style={{
-									fontSize: 18,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-									marginBottom: 8,
-								}}
-							>
+						<View className="rounded-2xl p-6 bg-foreground">
+							<Text className="mb-2 text-lg font-semibold text-white">
 								Ready to start creating?
 							</Text>
 							<Text
-								style={{
-									fontSize: 14,
-									color: "#a0a0a0",
-									marginBottom: 20,
-									lineHeight: 22,
-								}}
+								className="mb-5 text-sm text-muted"
+								style={{ lineHeight: 22 }}
 							>
 								Join thousands of creators earning on our platform.
 							</Text>
 							<Pressable
 								onPress={() => openAuthModal("signup")}
-								style={({ hovered }) => ({
-									padding: 14,
-									borderRadius: 8,
-									backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-									alignItems: "center",
-								})}
+								className="items-center rounded-lg bg-primary hover:bg-hover-primary"
+								style={{ padding: 14 }}
 							>
 								<Text
-									style={{
-										fontSize: 15,
-										fontWeight: "600",
-										color: THEME_COLORS.primaryForeground,
-									}}
+									className="font-semibold text-white"
+									style={{ fontSize: 15 }}
 								>
 									Become a Creator
 								</Text>
@@ -687,65 +539,27 @@ export default function CreatorFAQPage() {
 			</View>
 
 			{/* Bottom CTA */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.sectionBackground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 600,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="bg-surface-raised px-6 py-16">
+				<View className="mx-auto w-full items-center" style={{ maxWidth: 600 }}>
 					<Ionicons
-						color={THEME_COLORS.primary}
 						name="chatbubble-ellipses-outline"
 						size={48}
-						style={{ marginBottom: 20 }}
+						className="mb-5 text-primary"
 					/>
-					<Text
-						style={{
-							fontSize: 24,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
-					>
+					<Text className="mb-3 text-center text-2xl font-bold text-foreground">
 						Still have questions?
 					</Text>
 					<Text
-						style={{
-							fontSize: 16,
-							color: THEME_COLORS.muted,
-							textAlign: "center",
-							marginBottom: 24,
-							lineHeight: 24,
-						}}
+						className="mb-6 text-center text-base text-muted"
+						style={{ lineHeight: 24 }}
 					>
 						Our creator success team is here to help you succeed.
 					</Text>
 					<Link asChild href={"/contact" as any}>
 						<Pressable
-							style={({ hovered }) => ({
-								paddingHorizontal: 32,
-								paddingVertical: 14,
-								backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-								borderRadius: 8,
-							})}
+							className="rounded-lg px-8 py-3.5 bg-primary hover:bg-hover-primary"
 						>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-								}}
-							>
+							<Text className="text-base font-semibold text-white">
 								Contact Creator Support
 							</Text>
 						</Pressable>

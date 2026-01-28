@@ -6,19 +6,7 @@ import { XIcon } from "@/components/icons/XIcon";
 import { UGCLogo } from "@/components/UGCLogo";
 import { useScrollContext } from "@/contexts/scroll-context";
 import { useResponsive } from "@/hooks/useResponsive";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  footerBackground: "#1a1a1a",
-  footerText: "#b5b6ba",
-  footerHeading: "#FFFFFF",
-};
+import { cn } from "@/lib/utils";
 
 interface FooterLink {
   label: string;
@@ -113,54 +101,27 @@ export function WebFooter() {
   };
 
   return (
-    <View
-      style={{
-        backgroundColor: THEME_COLORS.footerBackground,
-        paddingTop: 48,
-        paddingBottom: 24,
-      }}
-    >
+    <View className="bg-footer-bg pt-12 pb-6">
       {/* Main Footer Content */}
-      <View
-        style={{
-          maxWidth: 1200,
-          marginHorizontal: "auto",
-          width: "100%",
-          paddingHorizontal: 24,
-        }}
-      >
+      <View className="max-w-[1200px] mx-auto w-full px-6">
         {/* Footer Columns */}
         {showAccordion ? (
           // Mobile: Accordion style
-          <View style={{ gap: 0 }}>
+          <View className="gap-0">
             {FOOTER_COLUMNS.map((column) => (
               <View
                 key={column.title}
-                style={{
-                  borderBottomWidth: 1,
-                  borderBottomColor: "rgba(255,255,255,0.1)",
-                }}
+                className="border-b border-white/10"
               >
                 <Pressable
                   onPress={() => toggleSection(column.title)}
-                  style={{
-                    flexDirection: "row",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    paddingVertical: 16,
-                  }}
+                  className="flex-row justify-between items-center py-4"
                 >
-                  <Text
-                    style={{
-                      fontSize: 16,
-                      fontWeight: "600",
-                      color: THEME_COLORS.footerHeading,
-                    }}
-                  >
+                  <Text className="text-base font-semibold text-footer-heading">
                     {column.title}
                   </Text>
                   <Ionicons
-                    color={THEME_COLORS.footerText}
+                    className="text-footer-text"
                     name={
                       expandedSection === column.title
                         ? "chevron-up"
@@ -170,18 +131,13 @@ export function WebFooter() {
                   />
                 </Pressable>
                 {expandedSection === column.title && (
-                  <View style={{ paddingBottom: 16, gap: 12 }}>
+                  <View className="pb-4 gap-3">
                     {column.links.map((link) => (
                       <Pressable
                         key={link.label}
                         onPress={() => navigateWithScroll(link.href)}
                       >
-                        <Text
-                          style={{
-                            fontSize: 14,
-                            color: THEME_COLORS.footerText,
-                          }}
-                        >
+                        <Text className="text-sm text-footer-text">
                           {link.label}
                         </Text>
                       </Pressable>
@@ -193,33 +149,20 @@ export function WebFooter() {
           </View>
         ) : (
           // Desktop/Tablet: Grid layout
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              marginBottom: 48,
-            }}
-          >
+          <View className="flex-row flex-wrap mb-12">
             {FOOTER_COLUMNS.map((column) => (
               <View
                 key={column.title}
+                className="pr-6"
                 style={{
                   width: `${100 / columns}%`,
-                  paddingRight: 24,
                   marginBottom: isTablet ? 32 : 0,
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: "600",
-                    color: THEME_COLORS.footerHeading,
-                    marginBottom: 20,
-                  }}
-                >
+                <Text className="text-base font-semibold mb-5 text-footer-heading">
                   {column.title}
                 </Text>
-                <View style={{ gap: 12 }}>
+                <View className="gap-3">
                   {column.links.map((link) => (
                     <Pressable
                       key={link.label}
@@ -227,12 +170,12 @@ export function WebFooter() {
                     >
                       {({ hovered }) => (
                         <Text
-                          style={{
-                            fontSize: 14,
-                            color: hovered
-                              ? THEME_COLORS.footerHeading
-                              : THEME_COLORS.footerText,
-                          }}
+                          className={cn(
+                            "text-sm",
+                            hovered
+                              ? "text-footer-heading"
+                              : "text-footer-text"
+                          )}
                         >
                           {link.label}
                         </Text>
@@ -247,47 +190,28 @@ export function WebFooter() {
 
         {/* Bottom Section */}
         <View
+          className="border-t border-white/10 pt-6"
           style={{
-            borderTopWidth: 1,
-            borderTopColor: "rgba(255,255,255,0.1)",
-            paddingTop: 24,
             marginTop: showAccordion ? 24 : 0,
           }}
         >
           <View
+            className="justify-between items-center"
             style={{
               flexDirection: isMobile ? "column" : "row",
-              justifyContent: "space-between",
-              alignItems: isMobile ? "center" : "center",
               gap: isMobile ? 24 : 0,
             }}
           >
             {/* Logo */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 12,
-              }}
-            >
+            <View className="flex-row items-center gap-3">
               <UGCLogo size={32} />
-              <Text
-                style={{
-                  fontSize: 14,
-                  color: THEME_COLORS.footerText,
-                }}
-              >
+              <Text className="text-sm text-footer-text">
                 UGC Marketplace
               </Text>
             </View>
 
             {/* Social Icons */}
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 16,
-              }}
-            >
+            <View className="flex-row gap-4">
               {SOCIAL_LINKS.map((social) => (
                 <Pressable
                   key={social.platform}
@@ -302,18 +226,18 @@ export function WebFooter() {
                       <XIcon
                         color={
                           hovered
-                            ? THEME_COLORS.footerHeading
-                            : THEME_COLORS.footerText
+                            ? "var(--footer-heading)"
+                            : "var(--footer-text)"
                         }
                         size={22}
                       />
                     ) : (
                       <Ionicons
-                        color={
+                        className={cn(
                           hovered
-                            ? THEME_COLORS.footerHeading
-                            : THEME_COLORS.footerText
-                        }
+                            ? "text-footer-heading"
+                            : "text-footer-text"
+                        )}
                         name={social.icon as keyof typeof Ionicons.glyphMap}
                         size={22}
                       />
@@ -326,37 +250,25 @@ export function WebFooter() {
 
           {/* Copyright & Legal */}
           <View
+            className="justify-between items-center mt-6"
             style={{
               flexDirection: isMobile ? "column" : "row",
-              justifyContent: "space-between",
-              alignItems: isMobile ? "center" : "center",
-              marginTop: 24,
               gap: isMobile ? 16 : 0,
             }}
           >
-            <Text
-              style={{
-                fontSize: 13,
-                color: THEME_COLORS.footerText,
-              }}
-            >
+            <Text className="text-[13px] text-footer-text">
               © 2026 UGC Marketplace. All rights reserved.
             </Text>
-            <View
-              style={{
-                flexDirection: "row",
-                gap: 24,
-              }}
-            >
+            <View className="flex-row gap-6">
               <Pressable onPress={() => navigateWithScroll("/privacypolicy")}>
                 {({ hovered }) => (
                   <Text
-                    style={{
-                      fontSize: 13,
-                      color: hovered
-                        ? THEME_COLORS.footerHeading
-                        : THEME_COLORS.footerText,
-                    }}
+                    className={cn(
+                      "text-[13px]",
+                      hovered
+                        ? "text-footer-heading"
+                        : "text-footer-text"
+                    )}
                   >
                     Privacy Policy
                   </Text>
@@ -365,12 +277,12 @@ export function WebFooter() {
               <Pressable onPress={() => navigateWithScroll("/termsofservice")}>
                 {({ hovered }) => (
                   <Text
-                    style={{
-                      fontSize: 13,
-                      color: hovered
-                        ? THEME_COLORS.footerHeading
-                        : THEME_COLORS.footerText,
-                    }}
+                    className={cn(
+                      "text-[13px]",
+                      hovered
+                        ? "text-footer-heading"
+                        : "text-footer-text"
+                    )}
                   >
                     Terms of Service
                   </Text>

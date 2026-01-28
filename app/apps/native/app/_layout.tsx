@@ -146,7 +146,7 @@ export default function Layout() {
   return (
     <ConvexBetterAuthProvider authClient={authClient} client={convex}>
       <SystemBars style="light" />
-      <GestureHandlerRootView style={{ flex: 1 }}>
+      <GestureHandlerRootView className="flex-1">
         <KeyboardProvider>
           <HeroUINativeProvider
             config={{

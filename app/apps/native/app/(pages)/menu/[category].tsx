@@ -20,7 +20,7 @@ export default function MenuCategory() {
   const insets = useSafeAreaInsets();
   const { category } = useLocalSearchParams<{ category: string }>();
 
-  // Theme colors for Ionicons
+  // Ionicons on primary bg always need white
   const primaryForeground = "#FFFFFF";
 
   const categoryTitle = CATEGORY_TITLES[category || ""] || "Menu";
@@ -33,24 +33,16 @@ export default function MenuCategory() {
         className="bg-primary px-4 pb-5"
         style={{ paddingTop: insets.top + 8 }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+        <View className="flex-row items-center gap-3">
           <Pressable
+            className="h-10 w-10 items-center justify-center rounded-full bg-white/15"
             onPress={() => router.back()}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: "rgba(255, 255, 255, 0.15)",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
           >
             <Ionicons color={primaryForeground} name="arrow-back" size={24} />
           </Pressable>
           <View>
             <Text
-              className="font-light text-2xl text-primary-foreground"
-              style={{ fontFamily: "serif" }}
+              className="font-light font-serif text-2xl text-primary-foreground"
             >
               {categoryTitle}
             </Text>
@@ -62,8 +54,8 @@ export default function MenuCategory() {
       </View>
 
       <ScrollView
+        className="flex-1"
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
-        style={{ flex: 1 }}
       >
         {items.map((item) => (
           <MenuItem item={item} key={item.name} />
@@ -80,37 +72,27 @@ function MenuItem({
 }) {
   return (
     <View
-      className="mb-4 overflow-hidden bg-surface"
-      style={{
-        borderRadius: 12,
-        shadowColor: "#000",
-        shadowOffset: { width: 0, height: 2 },
-        shadowOpacity: 0.08,
-        shadowRadius: 4,
-        elevation: 2,
-      }}
+      className="mb-4 overflow-hidden rounded-xl bg-surface shadow-sm"
     >
       {item.image && (
         <Image
           cachePolicy="memory-disk"
           contentFit="cover"
           placeholder={{ blurhash: FOOD_BLURHASH }}
+          className="h-[180px] w-full"
           source={item.image}
-          style={{ width: "100%", height: 180 }}
           transition={200}
         />
       )}
-      <View style={{ padding: 16 }}>
+      <View className="p-4">
         <Text
-          className="font-semibold text-foreground"
-          style={{ fontSize: 17, lineHeight: 22 }}
+          className="font-semibold text-[17px] leading-[22px] text-foreground"
         >
           {item.name}
         </Text>
         {item.description && (
           <Text
-            className="mt-1.5 text-muted text-sm"
-            style={{ lineHeight: 20 }}
+            className="mt-1.5 leading-5 text-muted text-sm"
           >
             {item.description}
           </Text>

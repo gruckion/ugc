@@ -4,17 +4,7 @@ import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { XIcon } from "@/components/icons/XIcon";
 import { createWebPageJsonLd, SEO } from "@/components/web/SEO";
 import { useResponsive } from "@/hooks/useResponsive";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  sectionBackground: "#fafafa",
-};
+import { cn } from "@/lib/utils";
 
 // Contact options
 const CONTACT_OPTIONS = [
@@ -94,8 +84,14 @@ export default function ContactPage() {
     "/contact"
   );
 
+  const isFormDisabled =
+    isSubmitting ||
+    !formData.name ||
+    !formData.email ||
+    !formData.message;
+
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+    <ScrollView className="flex-1 bg-background">
       <SEO
         description="Get in touch with UGC Marketplace. Contact our support team for help, brand partnerships, creator support, or press inquiries. We're here to help."
         jsonLd={contactPageJsonLd}
@@ -111,38 +107,28 @@ export default function ContactPage() {
 
       {/* Hero Section */}
       <View
+        className="px-6 bg-sectionBackground"
         style={{
           paddingTop: 48,
           paddingBottom: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
         }}
       >
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1200 }}
         >
           <Text
+            className="font-bold text-foreground text-center mb-4"
             style={{
               fontSize: isMobile ? 32 : 48,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 16,
             }}
           >
             Contact Us
           </Text>
           <Text
+            className="text-lg text-muted text-center mx-auto"
             style={{
-              fontSize: 18,
-              color: THEME_COLORS.muted,
-              textAlign: "center",
               maxWidth: 600,
-              marginHorizontal: "auto",
               lineHeight: 28,
             }}
           >
@@ -154,82 +140,44 @@ export default function ContactPage() {
 
       {/* Contact Options */}
       <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-        }}
+        className="px-6"
+        style={{ paddingVertical: 64 }}
       >
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1200 }}
         >
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: 24,
-              justifyContent: "center",
-            }}
-          >
+          <View className="flex-row flex-wrap gap-6 justify-center">
             {CONTACT_OPTIONS.map((option) => (
               <View
                 key={option.title}
+                className="p-6 rounded-xl bg-background border border-border"
                 style={{
                   width: isMobile ? "100%" : 260,
-                  padding: 24,
-                  borderRadius: 12,
-                  backgroundColor: THEME_COLORS.background,
-                  borderWidth: 1,
-                  borderColor: THEME_COLORS.border,
                 }}
               >
                 <View
-                  style={{
-                    width: 48,
-                    height: 48,
-                    borderRadius: 24,
-                    backgroundColor: `${THEME_COLORS.primary}15`,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 16,
-                  }}
+                  className="w-12 h-12 items-center justify-center mb-4 bg-primary/5"
+                  style={{ borderRadius: 24 }}
                 >
                   <Ionicons
-                    color={THEME_COLORS.primary}
                     name={option.icon}
                     size={24}
+                    className="text-primary"
                   />
                 </View>
                 <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "600",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 8,
-                  }}
+                  className="text-lg font-semibold text-foreground mb-2"
                 >
                   {option.title}
                 </Text>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: THEME_COLORS.muted,
-                    marginBottom: 12,
-                    lineHeight: 20,
-                  }}
+                  className="text-sm text-muted mb-3"
+                  style={{ lineHeight: 20 }}
                 >
                   {option.description}
                 </Text>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    color: THEME_COLORS.primary,
-                    fontWeight: "500",
-                  }}
-                >
+                <Text className="text-sm text-primary font-medium">
                   {option.email}
                 </Text>
               </View>
@@ -240,106 +188,50 @@ export default function ContactPage() {
 
       {/* Contact Form & Info */}
       <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
-        }}
+        className="px-6 bg-sectionBackground"
+        style={{ paddingVertical: 64 }}
       >
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1200 }}
         >
           <View
-            style={{
-              flexDirection: isMobile ? "column" : "row",
-              gap: 48,
-            }}
+            className={isMobile ? "flex-col" : "flex-row"}
+            style={{ gap: 48 }}
           >
             {/* Contact Form */}
-            <View style={{ flex: 1 }}>
-              <Text
-                style={{
-                  fontSize: 24,
-                  fontWeight: "700",
-                  color: THEME_COLORS.foreground,
-                  marginBottom: 24,
-                }}
-              >
+            <View className="flex-1">
+              <Text className="text-2xl font-bold text-foreground mb-6">
                 Send Us a Message
               </Text>
 
               {submitted ? (
-                <View
-                  style={{
-                    padding: 32,
-                    borderRadius: 12,
-                    backgroundColor: THEME_COLORS.background,
-                    borderWidth: 1,
-                    borderColor: THEME_COLORS.primary,
-                    alignItems: "center",
-                  }}
-                >
+                <View className="p-8 rounded-xl bg-background border border-primary items-center">
                   <View
-                    style={{
-                      width: 64,
-                      height: 64,
-                      borderRadius: 32,
-                      backgroundColor: `${THEME_COLORS.primary}15`,
-                      alignItems: "center",
-                      justifyContent: "center",
-                      marginBottom: 16,
-                    }}
+                    className="w-16 h-16 items-center justify-center mb-4 bg-primary/5"
+                    style={{ borderRadius: 32 }}
                   >
                     <Ionicons
-                      color={THEME_COLORS.primary}
                       name="checkmark-circle"
                       size={32}
+                      className="text-primary"
                     />
                   </View>
                   <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: "600",
-                      color: THEME_COLORS.foreground,
-                      marginBottom: 8,
-                    }}
+                    className="font-semibold text-foreground mb-2"
+                    style={{ fontSize: 20 }}
                   >
                     Message Sent!
                   </Text>
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: THEME_COLORS.muted,
-                      textAlign: "center",
-                    }}
-                  >
+                  <Text className="text-sm text-muted text-center">
                     We'll get back to you within 24-48 hours.
                   </Text>
                 </View>
               ) : (
-                <View
-                  style={{
-                    padding: 32,
-                    borderRadius: 12,
-                    backgroundColor: THEME_COLORS.background,
-                    borderWidth: 1,
-                    borderColor: THEME_COLORS.border,
-                  }}
-                >
+                <View className="p-8 rounded-xl bg-background border border-border">
                   {/* Name Input */}
-                  <View style={{ marginBottom: 20 }}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        fontWeight: "500",
-                        color: THEME_COLORS.foreground,
-                        marginBottom: 8,
-                      }}
-                    >
+                  <View className="mb-5">
+                    <Text className="text-sm font-medium text-foreground mb-2">
                       Name
                     </Text>
                     <TextInput
@@ -347,29 +239,19 @@ export default function ContactPage() {
                         setFormData({ ...formData, name: text })
                       }
                       placeholder="Your name"
-                      placeholderTextColor={THEME_COLORS.muted}
+                      placeholderTextColor="#62646a"
+                      className="rounded-lg border border-border text-foreground"
                       style={{
                         padding: 14,
-                        borderRadius: 8,
-                        borderWidth: 1,
-                        borderColor: THEME_COLORS.border,
                         fontSize: 15,
-                        color: THEME_COLORS.foreground,
                       }}
                       value={formData.name}
                     />
                   </View>
 
                   {/* Email Input */}
-                  <View style={{ marginBottom: 20 }}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        fontWeight: "500",
-                        color: THEME_COLORS.foreground,
-                        marginBottom: 8,
-                      }}
-                    >
+                  <View className="mb-5">
+                    <Text className="text-sm font-medium text-foreground mb-2">
                       Email
                     </Text>
                     <TextInput
@@ -379,74 +261,48 @@ export default function ContactPage() {
                         setFormData({ ...formData, email: text })
                       }
                       placeholder="your@email.com"
-                      placeholderTextColor={THEME_COLORS.muted}
+                      placeholderTextColor="#62646a"
+                      className="rounded-lg border border-border text-foreground"
                       style={{
                         padding: 14,
-                        borderRadius: 8,
-                        borderWidth: 1,
-                        borderColor: THEME_COLORS.border,
                         fontSize: 15,
-                        color: THEME_COLORS.foreground,
                       }}
                       value={formData.email}
                     />
                   </View>
 
                   {/* Inquiry Type Dropdown */}
-                  <View style={{ marginBottom: 20 }}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        fontWeight: "500",
-                        color: THEME_COLORS.foreground,
-                        marginBottom: 8,
-                      }}
-                    >
+                  <View className="mb-5">
+                    <Text className="text-sm font-medium text-foreground mb-2">
                       Inquiry Type
                     </Text>
                     <Pressable
                       onPress={() =>
                         setShowInquiryDropdown(!showInquiryDropdown)
                       }
-                      style={{
-                        padding: 14,
-                        borderRadius: 8,
-                        borderWidth: 1,
-                        borderColor: THEME_COLORS.border,
-                        flexDirection: "row",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                      }}
+                      className="rounded-lg border border-border flex-row justify-between items-center"
+                      style={{ padding: 14 }}
                     >
                       <Text
-                        style={{
-                          fontSize: 15,
-                          color: formData.inquiryType
-                            ? THEME_COLORS.foreground
-                            : THEME_COLORS.muted,
-                        }}
+                        className={cn(
+                          formData.inquiryType
+                            ? "text-foreground"
+                            : "text-muted"
+                        )}
+                        style={{ fontSize: 15 }}
                       >
                         {formData.inquiryType || "Select inquiry type"}
                       </Text>
                       <Ionicons
-                        color={THEME_COLORS.muted}
                         name={
                           showInquiryDropdown ? "chevron-up" : "chevron-down"
                         }
                         size={20}
+                        className="text-muted"
                       />
                     </Pressable>
                     {showInquiryDropdown && (
-                      <View
-                        style={{
-                          marginTop: 4,
-                          borderRadius: 8,
-                          borderWidth: 1,
-                          borderColor: THEME_COLORS.border,
-                          backgroundColor: THEME_COLORS.background,
-                          overflow: "hidden",
-                        }}
-                      >
+                      <View className="mt-1 rounded-lg border border-border bg-background overflow-hidden">
                         {INQUIRY_TYPES.map((type) => (
                           <Pressable
                             key={type}
@@ -454,19 +310,9 @@ export default function ContactPage() {
                               setFormData({ ...formData, inquiryType: type });
                               setShowInquiryDropdown(false);
                             }}
-                            style={({ hovered }) => ({
-                              padding: 12,
-                              backgroundColor: hovered
-                                ? THEME_COLORS.sectionBackground
-                                : THEME_COLORS.background,
-                            })}
+                            className="p-3 bg-background hover:bg-surface-raised"
                           >
-                            <Text
-                              style={{
-                                fontSize: 14,
-                                color: THEME_COLORS.foreground,
-                              }}
-                            >
+                            <Text className="text-sm text-foreground">
                               {type}
                             </Text>
                           </Pressable>
@@ -476,15 +322,8 @@ export default function ContactPage() {
                   </View>
 
                   {/* Message Input */}
-                  <View style={{ marginBottom: 24 }}>
-                    <Text
-                      style={{
-                        fontSize: 14,
-                        fontWeight: "500",
-                        color: THEME_COLORS.foreground,
-                        marginBottom: 8,
-                      }}
-                    >
+                  <View className="mb-6">
+                    <Text className="text-sm font-medium text-foreground mb-2">
                       Message
                     </Text>
                     <TextInput
@@ -494,14 +333,11 @@ export default function ContactPage() {
                         setFormData({ ...formData, message: text })
                       }
                       placeholder="How can we help?"
-                      placeholderTextColor={THEME_COLORS.muted}
+                      placeholderTextColor="#62646a"
+                      className="rounded-lg border border-border text-foreground"
                       style={{
                         padding: 14,
-                        borderRadius: 8,
-                        borderWidth: 1,
-                        borderColor: THEME_COLORS.border,
                         fontSize: 15,
-                        color: THEME_COLORS.foreground,
                         minHeight: 120,
                         textAlignVertical: "top",
                       }}
@@ -511,35 +347,17 @@ export default function ContactPage() {
 
                   {/* Submit Button */}
                   <Pressable
-                    disabled={
-                      isSubmitting ||
-                      !formData.name ||
-                      !formData.email ||
-                      !formData.message
-                    }
+                    disabled={isFormDisabled}
                     onPress={handleSubmit}
-                    style={({ hovered }) => ({
-                      padding: 16,
-                      borderRadius: 8,
-                      backgroundColor:
-                        isSubmitting ||
-                        !formData.name ||
-                        !formData.email ||
-                        !formData.message
-                          ? "#d0d0d0"
-                          : hovered
-                            ? "#19a864"
-                            : THEME_COLORS.primary,
-                    })}
+                    className={cn(
+                      "rounded-lg",
+                      isFormDisabled
+                        ? "bg-gray-300"
+                        : "bg-primary hover:bg-hover-primary"
+                    )}
+                    style={{ padding: 16 }}
                   >
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "600",
-                        color: THEME_COLORS.primaryForeground,
-                        textAlign: "center",
-                      }}
-                    >
+                    <Text className="text-base font-semibold text-primaryForeground text-center">
                       {isSubmitting ? "Sending..." : "Send Message"}
                     </Text>
                   </Pressable>
@@ -548,58 +366,29 @@ export default function ContactPage() {
             </View>
 
             {/* Additional Info */}
-            <View style={{ flex: 1, maxWidth: isMobile ? "100%" : 400 }}>
+            <View className="flex-1" style={{ maxWidth: isMobile ? "100%" : 400 }}>
               {/* Office Info */}
-              <View style={{ marginBottom: 32 }}>
+              <View className="mb-8">
                 <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "700",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 16,
-                  }}
+                  className="font-bold text-foreground mb-4"
+                  style={{ fontSize: 20 }}
                 >
                   Our Office
                 </Text>
-                <View
-                  style={{
-                    padding: 24,
-                    borderRadius: 12,
-                    backgroundColor: THEME_COLORS.background,
-                    borderWidth: 1,
-                    borderColor: THEME_COLORS.border,
-                  }}
-                >
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "flex-start",
-                      gap: 12,
-                      marginBottom: 16,
-                    }}
-                  >
+                <View className="p-6 rounded-xl bg-background border border-border">
+                  <View className="flex-row items-start gap-3 mb-4">
                     <Ionicons
-                      color={THEME_COLORS.primary}
                       name="location-outline"
                       size={20}
+                      className="text-primary"
                     />
                     <View>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: THEME_COLORS.foreground,
-                          fontWeight: "500",
-                          marginBottom: 4,
-                        }}
-                      >
+                      <Text className="text-sm text-foreground font-medium mb-1">
                         Headquarters
                       </Text>
                       <Text
-                        style={{
-                          fontSize: 14,
-                          color: THEME_COLORS.muted,
-                          lineHeight: 20,
-                        }}
+                        className="text-sm text-muted"
+                        style={{ lineHeight: 20 }}
                       >
                         123 Creator Street{"\n"}
                         San Francisco, CA 94103{"\n"}
@@ -607,35 +396,17 @@ export default function ContactPage() {
                       </Text>
                     </View>
                   </View>
-                  <View
-                    style={{
-                      flexDirection: "row",
-                      alignItems: "center",
-                      gap: 12,
-                    }}
-                  >
+                  <View className="flex-row items-center gap-3">
                     <Ionicons
-                      color={THEME_COLORS.primary}
                       name="time-outline"
                       size={20}
+                      className="text-primary"
                     />
                     <View>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: THEME_COLORS.foreground,
-                          fontWeight: "500",
-                          marginBottom: 4,
-                        }}
-                      >
+                      <Text className="text-sm text-foreground font-medium mb-1">
                         Business Hours
                       </Text>
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: THEME_COLORS.muted,
-                        }}
-                      >
+                      <Text className="text-sm text-muted">
                         Mon-Fri: 9am - 6pm PST
                       </Text>
                     </View>
@@ -646,57 +417,29 @@ export default function ContactPage() {
               {/* Quick Links */}
               <View>
                 <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "700",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 16,
-                  }}
+                  className="font-bold text-foreground mb-4"
+                  style={{ fontSize: 20 }}
                 >
                   Quick Links
                 </Text>
-                <View
-                  style={{
-                    padding: 24,
-                    borderRadius: 12,
-                    backgroundColor: THEME_COLORS.background,
-                    borderWidth: 1,
-                    borderColor: THEME_COLORS.border,
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: THEME_COLORS.muted,
-                      marginBottom: 16,
-                    }}
-                  >
+                <View className="p-6 rounded-xl bg-background border border-border">
+                  <Text className="text-sm text-muted mb-4">
                     Find answers to common questions:
                   </Text>
                   {QUICK_LINKS.map((link, index) => (
                     <View
                       key={link.title}
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 8,
-                        paddingVertical: 8,
-                        borderTopWidth: index > 0 ? 1 : 0,
-                        borderTopColor: THEME_COLORS.border,
-                      }}
+                      className={cn(
+                        "flex-row items-center gap-2 py-2",
+                        index > 0 ? "border-t border-border" : ""
+                      )}
                     >
                       <Ionicons
-                        color={THEME_COLORS.primary}
                         name="arrow-forward"
                         size={16}
+                        className="text-primary"
                       />
-                      <Text
-                        style={{
-                          fontSize: 14,
-                          color: THEME_COLORS.primary,
-                          fontWeight: "500",
-                        }}
-                      >
+                      <Text className="text-sm text-primary font-medium">
                         {link.title}
                       </Text>
                     </View>
@@ -705,18 +448,14 @@ export default function ContactPage() {
               </View>
 
               {/* Social Links */}
-              <View style={{ marginTop: 32 }}>
+              <View className="mt-8">
                 <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "700",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 16,
-                  }}
+                  className="font-bold text-foreground mb-4"
+                  style={{ fontSize: 20 }}
                 >
                   Follow Us
                 </Text>
-                <View style={{ flexDirection: "row", gap: 12 }}>
+                <View className="flex-row gap-3">
                   {[
                     { icon: "x", href: "https://x.com/idoads" },
                     {
@@ -743,17 +482,14 @@ export default function ContactPage() {
                           );
                         }
                       }}
+                      className="items-center justify-center border border-border"
                       style={({ hovered }) => ({
                         width: 44,
                         height: 44,
                         borderRadius: 22,
                         backgroundColor: hovered
-                          ? THEME_COLORS.foreground
-                          : THEME_COLORS.background,
-                        borderWidth: 1,
-                        borderColor: THEME_COLORS.border,
-                        alignItems: "center",
-                        justifyContent: "center",
+                          ? "#222325"
+                          : undefined,
                       })}
                     >
                       {({ hovered }) =>
@@ -761,8 +497,8 @@ export default function ContactPage() {
                           <XIcon
                             color={
                               hovered
-                                ? THEME_COLORS.primaryForeground
-                                : THEME_COLORS.muted
+                                ? "#FFFFFF"
+                                : "#62646a"
                             }
                             size={20}
                           />
@@ -770,8 +506,8 @@ export default function ContactPage() {
                           <Ionicons
                             color={
                               hovered
-                                ? THEME_COLORS.primaryForeground
-                                : THEME_COLORS.muted
+                                ? "#FFFFFF"
+                                : "#62646a"
                             }
                             name={social.icon as any}
                             size={20}

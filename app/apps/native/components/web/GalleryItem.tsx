@@ -2,14 +2,6 @@ import { Ionicons } from "@expo/vector-icons";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-};
-
 export interface GalleryItemProps {
 	imageUrl: string;
 	category: string;
@@ -47,20 +39,13 @@ export function GalleryItem({
 			// @ts-ignore - Web-specific events
 			onMouseEnter={() => setIsHovered(true)}
 			onMouseLeave={() => setIsHovered(false)}
-			style={{
-				position: "relative",
-				width: "100%",
-				borderRadius: 12,
-				overflow: "hidden",
-				marginBottom: 16,
-			}}
+			className="relative w-full rounded-xl overflow-hidden mb-4"
 		>
 			{/* Image Container with aspect ratio */}
 			<View
-				// @ts-ignore - Web-specific percentage padding
+				className="relative w-full"
+				// @ts-expect-error - Web-specific percentage padding for aspect ratio
 				style={{
-					position: "relative",
-					width: "100%",
 					...getAspectRatioStyle(),
 				}}
 			>
@@ -68,24 +53,13 @@ export function GalleryItem({
 					alt={`${category} by ${creatorName}`}
 					loading="lazy"
 					src={imageUrl}
-					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						width: "100%",
-						height: "100%",
-						objectFit: "cover",
-					}}
+					className="absolute top-0 left-0 w-full h-full object-cover"
 				/>
 
 				{/* Hover Overlay */}
 				<View
+					className="absolute top-0 left-0 right-0 bottom-0"
 					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
 						opacity: isHovered ? 1 : 0,
 						// @ts-ignore - Web-specific transition
 						transition: "opacity 0.2s ease-in-out",
@@ -93,12 +67,8 @@ export function GalleryItem({
 				>
 					{/* Gradient Overlay */}
 					<View
+						className="absolute top-0 left-0 right-0 bottom-0"
 						style={{
-							position: "absolute",
-							top: 0,
-							left: 0,
-							right: 0,
-							bottom: 0,
 							// @ts-expect-error - Web-specific gradient property
 							background: "linear-gradient(to top, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0) 50%)",
 						}}
@@ -107,16 +77,9 @@ export function GalleryItem({
 					{/* Save to List Button - Top Right */}
 					<Pressable
 						onPress={onSave}
+						className="absolute top-3 right-3 w-10 h-10 rounded-full items-center justify-center"
 						style={({ hovered }) => ({
-							position: "absolute",
-							top: 12,
-							right: 12,
-							width: 40,
-							height: 40,
-							borderRadius: 20,
 							backgroundColor: hovered ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.9)",
-							alignItems: "center",
-							justifyContent: "center",
 							shadowColor: "#000",
 							shadowOffset: { width: 0, height: 2 },
 							shadowOpacity: 0.2,
@@ -124,7 +87,7 @@ export function GalleryItem({
 						})}
 					>
 						<Ionicons
-							color={THEME_COLORS.foreground}
+							className="text-foreground"
 							name="heart-outline"
 							size={20}
 						/>
@@ -133,20 +96,13 @@ export function GalleryItem({
 					{/* Menu Button - Bottom Right */}
 					<Pressable
 						onPress={onMenuPress}
+						className="absolute bottom-3 right-3 w-9 h-9 rounded-full items-center justify-center"
 						style={({ hovered }) => ({
-							position: "absolute",
-							bottom: 12,
-							right: 12,
-							width: 36,
-							height: 36,
-							borderRadius: 18,
 							backgroundColor: hovered ? "rgba(255,255,255,1)" : "rgba(255,255,255,0.9)",
-							alignItems: "center",
-							justifyContent: "center",
 						})}
 					>
 						<Ionicons
-							color={THEME_COLORS.foreground}
+							className="text-foreground"
 							name="ellipsis-horizontal"
 							size={18}
 						/>
@@ -154,18 +110,11 @@ export function GalleryItem({
 
 					{/* Featured In Text - Bottom Left */}
 					<View
-						style={{
-							position: "absolute",
-							bottom: 12,
-							left: 12,
-							right: 60,
-						}}
+						className="absolute bottom-3 left-3 right-[60px]"
 					>
 						<Text
+							className="text-sm font-medium text-white"
 							style={{
-								fontSize: 14,
-								fontWeight: "500",
-								color: THEME_COLORS.primaryForeground,
 								textShadowColor: "rgba(0, 0, 0, 0.5)",
 								textShadowOffset: { width: 0, height: 1 },
 								textShadowRadius: 2,
@@ -174,10 +123,9 @@ export function GalleryItem({
 							Featured in: {category}
 						</Text>
 						<Text
+							className="text-[13px] mt-1"
 							style={{
-								fontSize: 13,
 								color: "rgba(255, 255, 255, 0.8)",
-								marginTop: 4,
 								textShadowColor: "rgba(0, 0, 0, 0.5)",
 								textShadowOffset: { width: 0, height: 1 },
 								textShadowRadius: 2,

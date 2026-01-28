@@ -57,7 +57,7 @@ export const SignInScreen: StoryObj = {
           value={password}
         />
 
-        <View style={{ marginTop: 8 }}>
+        <View className="mt-2">
           <StyledButton
             isLoading={isLoading}
             label="Sign In"
@@ -65,38 +65,18 @@ export const SignInScreen: StoryObj = {
           />
         </View>
 
-        <Pressable style={{ alignSelf: "center", paddingVertical: 8 }}>
-          <Text
-            className="text-accent"
-            style={{
-              fontSize: 14,
-              fontWeight: "500",
-            }}
-          >
+        <Pressable className="self-center py-2">
+          <Text className="text-sm font-medium text-accent">
             Forgot Password?
           </Text>
         </Pressable>
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 24,
-            gap: 4,
-          }}
-        >
-          <Text className="text-muted" style={{ fontSize: 14 }}>
+        <View className="mt-6 flex-row items-center justify-center gap-1">
+          <Text className="text-sm text-muted">
             Don't have an account?
           </Text>
           <Pressable>
-            <Text
-              className="text-accent"
-              style={{
-                fontSize: 14,
-                fontWeight: "600",
-              }}
-            >
+            <Text className="text-sm font-semibold text-accent">
               Sign Up
             </Text>
           </Pressable>
@@ -169,7 +149,7 @@ export const SignUpScreen: StoryObj = {
           value={confirmPassword}
         />
 
-        <View style={{ marginTop: 8 }}>
+        <View className="mt-2">
           <StyledButton
             isLoading={isLoading}
             label="Create Account"
@@ -178,49 +158,24 @@ export const SignUpScreen: StoryObj = {
         </View>
 
         <Text
-          className="text-center text-muted"
-          style={{
-            fontSize: 13,
-            lineHeight: 20,
-            paddingHorizontal: 20,
-          }}
+          className="px-5 text-center text-muted text-[13px] leading-5"
         >
           By signing up, you agree to our{" "}
-          <Text
-            className="text-foreground"
-            style={{ textDecorationLine: "underline" }}
-          >
+          <Text className="underline text-foreground">
             Terms of Service
           </Text>{" "}
           and{" "}
-          <Text
-            className="text-foreground"
-            style={{ textDecorationLine: "underline" }}
-          >
+          <Text className="underline text-foreground">
             Privacy Policy
           </Text>
         </Text>
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "center",
-            alignItems: "center",
-            marginTop: 8,
-            gap: 4,
-          }}
-        >
-          <Text className="text-muted" style={{ fontSize: 14 }}>
+        <View className="mt-2 flex-row items-center justify-center gap-1">
+          <Text className="text-sm text-muted">
             Already have an account?
           </Text>
           <Pressable>
-            <Text
-              className="text-accent"
-              style={{
-                fontSize: 14,
-                fontWeight: "600",
-              }}
-            >
+            <Text className="text-sm font-semibold text-accent">
               Sign In
             </Text>
           </Pressable>
@@ -270,7 +225,7 @@ export const ResetPasswordScreen: StoryObj = {
           value={confirmPassword}
         />
 
-        <View style={{ marginTop: 8 }}>
+        <View className="mt-2">
           <StyledButton
             isLoading={isLoading}
             label="Reset Password"
@@ -286,51 +241,21 @@ export const ResetPasswordScreen: StoryObj = {
 
 export const InvalidLinkScreen: StoryObj = {
   render: () => (
-    <View
-      className="bg-background"
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        paddingHorizontal: 24,
-      }}
-    >
-      <View style={{ alignItems: "center", marginBottom: 32 }}>
+    <View className="flex-1 justify-center px-6 bg-background">
+      <View className="mb-8 items-center">
         <Text
-          className="text-center text-foreground"
-          style={{
-            fontSize: 28,
-            fontWeight: "300",
-            fontFamily: "serif",
-            marginBottom: 12,
-          }}
+          className="mb-3 font-serif text-center font-light text-foreground text-[28px]"
         >
           Invalid Link
         </Text>
         <Text
-          className="text-center text-muted"
-          style={{
-            fontSize: 15,
-            lineHeight: 22,
-          }}
+          className="text-center text-muted text-[15px] leading-[22px]"
         >
           This reset link has expired or is invalid. Please request a new one.
         </Text>
       </View>
-      <Pressable
-        className="bg-primary"
-        style={{
-          borderRadius: 12,
-          paddingVertical: 16,
-          alignItems: "center",
-        }}
-      >
-        <Text
-          className="text-primary-foreground"
-          style={{
-            fontSize: 16,
-            fontWeight: "600",
-          }}
-        >
+      <Pressable className="items-center rounded-xl py-4 bg-primary">
+        <Text className="text-base font-semibold text-primary-foreground">
           Back to Sign In
         </Text>
       </Pressable>
@@ -374,31 +299,13 @@ export const EventsListScreen: StoryObj = {
     return (
       <View className="flex-1 bg-background">
         {/* Header */}
-        <View
-          className="bg-primary"
-          style={{
-            paddingTop: 60,
-            paddingBottom: 20,
-            paddingHorizontal: 20,
-          }}
-        >
+        <View className="px-5 pb-5 pt-[60px] bg-primary">
           <Text
-            className="text-primary-foreground"
-            style={{
-              fontSize: 28,
-              fontWeight: "300",
-              fontFamily: "serif",
-            }}
+            className="font-serif font-light text-primary-foreground text-[28px]"
           >
             Events
           </Text>
-          <Text
-            className="text-accent"
-            style={{
-              fontSize: 14,
-              marginTop: 4,
-            }}
-          >
+          <Text className="mt-1 text-sm text-accent">
             Upcoming events at UGC
           </Text>
         </View>
@@ -411,43 +318,20 @@ export const EventsListScreen: StoryObj = {
         />
 
         <ScrollView
+          className="flex-1"
           contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
-          style={{ flex: 1 }}
         >
           {filteredEvents.length === 0 ? (
-            <View
-              style={{
-                padding: 32,
-                alignItems: "center",
-              }}
-            >
+            <View className="items-center p-8">
               <Ionicons color="#85b09a" name="calendar-outline" size={48} />
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 16,
-                  marginTop: 16,
-                  textAlign: "center",
-                }}
-              >
+              <Text className="mt-4 text-center text-base text-foreground">
                 No events found in this category
               </Text>
               <Pressable
-                className="bg-accent"
+                className="mt-3 rounded-lg px-4 py-2 bg-accent"
                 onPress={() => setSelectedCategory(null)}
-                style={{
-                  marginTop: 12,
-                  paddingHorizontal: 16,
-                  paddingVertical: 8,
-                  borderRadius: 8,
-                }}
               >
-                <Text
-                  className="text-foreground"
-                  style={{
-                    fontWeight: "500",
-                  }}
-                >
+                <Text className="font-medium text-foreground">
                   View All Events
                 </Text>
               </Pressable>
@@ -484,11 +368,8 @@ function EventCardStory({
 }) {
   return (
     <Pressable
-      className={featured ? "bg-primary" : "bg-surface"}
+      className={`mb-4 overflow-hidden rounded-xl shadow ${featured ? "bg-primary" : "bg-surface"}`}
       style={{
-        borderRadius: 12,
-        marginBottom: 16,
-        overflow: "hidden",
         shadowColor: "#000",
         shadowOffset: { width: 0, height: 2 },
         shadowOpacity: 0.1,
@@ -498,58 +379,29 @@ function EventCardStory({
     >
       <Image
         contentFit="cover"
+        className="w-full h-[160px]"
         source={event.image}
-        style={{ width: "100%", height: 160 }}
         transition={200}
       />
 
-      <View style={{ padding: 16 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "flex-start",
-          }}
-        >
-          <View style={{ flex: 1 }}>
+      <View className="p-4">
+        <View className="flex-row items-start justify-between">
+          <View className="flex-1">
             <Text
-              className={
-                featured ? "text-primary-foreground" : "text-foreground"
-              }
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-                marginBottom: 4,
-              }}
+              className={`mb-1 text-lg font-semibold ${featured ? "text-primary-foreground" : "text-foreground"}`}
             >
               {event.title}
             </Text>
             <Text
-              className={featured ? "text-accent" : "text-muted"}
-              style={{
-                fontSize: 14,
-                lineHeight: 20,
-              }}
+              className={`text-sm leading-5 ${featured ? "text-accent" : "text-muted"}`}
             >
               {event.description}
             </Text>
           </View>
           {featured && (
-            <View
-              className="bg-accent"
-              style={{
-                paddingHorizontal: 10,
-                paddingVertical: 4,
-                borderRadius: 12,
-                marginLeft: 8,
-              }}
-            >
+            <View className="ml-2 rounded-xl px-2.5 py-1 bg-accent">
               <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 11,
-                  fontWeight: "600",
-                }}
+                className="font-semibold text-foreground text-[11px]"
               >
                 Featured
               </Text>
@@ -557,44 +409,25 @@ function EventCardStory({
           )}
         </View>
 
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            alignItems: "center",
-            marginTop: 16,
-          }}
-        >
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 6 }}>
+        <View className="mt-4 flex-row items-center justify-between">
+          <View className="flex-row items-center gap-1.5">
             <Ionicons
               color={featured ? "#85b09a" : "#666666"}
               name="calendar-outline"
               size={16}
             />
             <Text
-              className={featured ? "text-accent" : "text-muted"}
-              style={{
-                fontSize: 13,
-              }}
+              className={`text-[13px] ${featured ? "text-accent" : "text-muted"}`}
             >
               {event.dateRange}
             </Text>
           </View>
 
           <View
-            className={featured ? "bg-primary-foreground" : "bg-primary"}
-            style={{
-              paddingHorizontal: 16,
-              paddingVertical: 8,
-              borderRadius: 6,
-            }}
+            className={`rounded-md px-4 py-2 ${featured ? "bg-primary-foreground" : "bg-primary"}`}
           >
             <Text
-              className={featured ? "text-primary" : "text-primary-foreground"}
-              style={{
-                fontSize: 13,
-                fontWeight: "500",
-              }}
+              className={`font-medium text-[13px] ${featured ? "text-primary" : "text-primary-foreground"}`}
             >
               RSVP
             </Text>
@@ -611,31 +444,13 @@ export const EventsEmptyState: StoryObj = {
   render: () => (
     <View className="flex-1 bg-background">
       {/* Header */}
-      <View
-        className="bg-primary"
-        style={{
-          paddingTop: 60,
-          paddingBottom: 20,
-          paddingHorizontal: 20,
-        }}
-      >
+      <View className="px-5 pb-5 pt-[60px] bg-primary">
         <Text
-          className="text-primary-foreground"
-          style={{
-            fontSize: 28,
-            fontWeight: "300",
-            fontFamily: "serif",
-          }}
+          className="font-serif font-light text-primary-foreground text-[28px]"
         >
           Events
         </Text>
-        <Text
-          className="text-accent"
-          style={{
-            fontSize: 14,
-            marginTop: 4,
-          }}
-        >
+        <Text className="mt-1 text-sm text-accent">
           Upcoming events at UGC
         </Text>
       </View>
@@ -648,40 +463,13 @@ export const EventsEmptyState: StoryObj = {
       />
 
       {/* Empty State */}
-      <View
-        style={{
-          flex: 1,
-          padding: 32,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <View className="flex-1 items-center justify-center p-8">
         <Ionicons color="#85b09a" name="calendar-outline" size={48} />
-        <Text
-          className="text-foreground"
-          style={{
-            fontSize: 16,
-            marginTop: 16,
-            textAlign: "center",
-          }}
-        >
+        <Text className="mt-4 text-center text-base text-foreground">
           No events found in this category
         </Text>
-        <Pressable
-          className="bg-accent"
-          style={{
-            marginTop: 12,
-            paddingHorizontal: 16,
-            paddingVertical: 8,
-            borderRadius: 8,
-          }}
-        >
-          <Text
-            className="text-foreground"
-            style={{
-              fontWeight: "500",
-            }}
-          >
+        <Pressable className="mt-3 rounded-lg px-4 py-2 bg-accent">
+          <Text className="font-medium text-foreground">
             View All Events
           </Text>
         </Pressable>

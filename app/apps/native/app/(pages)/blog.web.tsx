@@ -3,17 +3,7 @@ import { useState } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createWebPageJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-	sectionBackground: "#fafafa",
-};
+import { cn } from "@/lib/utils";
 
 // Blog categories
 const CATEGORIES = [
@@ -101,7 +91,7 @@ const ARTICLES = [
 	},
 ];
 
-// Category colors
+// Category colors (data-driven, acceptable as inline style exception)
 const CATEGORY_COLORS: Record<string, string> = {
 	"Creator Tips": "#1DBF73",
 	"Brand Insights": "#4F46E5",
@@ -125,7 +115,7 @@ export default function BlogPage() {
 	);
 
 	return (
-		<ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+		<ScrollView className="flex-1 bg-background">
 			<SEO
 				title="Blog"
 				description="Stay updated with the latest UGC trends, creator tips, brand insights, and industry news. Learn how to create better content and grow your business."
@@ -141,41 +131,17 @@ export default function BlogPage() {
 			/>
 
 			{/* Hero Section */}
-			<View
-				style={{
-					paddingTop: 64,
-					paddingBottom: 48,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.sectionBackground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
+			<View className="bg-sectionBackground px-6 pb-12 pt-16">
+				<View className="mx-auto w-full max-w-[1200px]">
 					<Text
-						style={{
-							fontSize: isMobile ? 32 : 48,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
+						className="mb-3 text-center font-bold text-foreground"
+						style={{ fontSize: isMobile ? 32 : 48 }}
 					>
 						Blog
 					</Text>
 					<Text
-						style={{
-							fontSize: 18,
-							color: THEME_COLORS.muted,
-							textAlign: "center",
-							maxWidth: 600,
-							marginHorizontal: "auto",
-							lineHeight: 28,
-						}}
+						className="mx-auto max-w-[600px] text-center text-lg text-muted"
+						style={{ lineHeight: 28 }}
 					>
 						Insights, tips, and updates from the world of user-generated content
 						and creator marketing.
@@ -184,95 +150,64 @@ export default function BlogPage() {
 			</View>
 
 			{/* Featured Article */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingVertical: 48,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
+			<View className="px-6 py-12">
+				<View className="mx-auto w-full max-w-[1200px]">
 					<Pressable
-						style={({ hovered }) => ({
+						className={cn(
+							"overflow-hidden rounded-[20px] border bg-background",
+							"border-border hover:border-primary"
+						)}
+						style={{
 							flexDirection: isMobile ? "column" : "row",
-							backgroundColor: THEME_COLORS.background,
-							borderRadius: 20,
-							overflow: "hidden",
-							borderWidth: 1,
-							borderColor: hovered
-								? THEME_COLORS.primary
-								: THEME_COLORS.border,
-						})}
+						}}
 					>
 						{/* Image */}
 						<View
+							className="bg-sectionBackground"
 							style={{
 								width: isMobile ? "100%" : "55%",
 								height: isMobile ? 240 : 400,
-								backgroundColor: THEME_COLORS.sectionBackground,
 							}}
 						>
 							<Image
 								source={{ uri: FEATURED_ARTICLE.image }}
-								style={{ width: "100%", height: "100%" }}
+								className="h-full w-full"
 								resizeMode="cover"
 							/>
 						</View>
 
 						{/* Content */}
 						<View
-							style={{
-								flex: 1,
-								padding: isMobile ? 24 : 40,
-								justifyContent: "center",
-							}}
+							className="flex-1 justify-center"
+							style={{ padding: isMobile ? 24 : 40 }}
 						>
-							<View
-								style={{
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 12,
-									marginBottom: 16,
-								}}
-							>
+							<View className="mb-4 flex-row items-center gap-3">
 								<View
+									className="rounded-md px-3 py-1.5"
 									style={{
-										paddingHorizontal: 12,
-										paddingVertical: 6,
-										borderRadius: 6,
-										backgroundColor: `${CATEGORY_COLORS[FEATURED_ARTICLE.category] || THEME_COLORS.primary}15`,
+										backgroundColor: `${CATEGORY_COLORS[FEATURED_ARTICLE.category] || "#1DBF73"}15`,
 									}}
 								>
 									<Text
+										className="text-xs font-semibold uppercase tracking-wide"
 										style={{
-											fontSize: 12,
-											fontWeight: "600",
 											color:
 												CATEGORY_COLORS[FEATURED_ARTICLE.category] ||
-												THEME_COLORS.primary,
-											textTransform: "uppercase",
-											letterSpacing: 0.5,
+												"#1DBF73",
 										}}
 									>
 										{FEATURED_ARTICLE.category}
 									</Text>
 								</View>
-								<Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>
+								<Text className="text-[13px] text-muted">
 									Featured
 								</Text>
 							</View>
 
 							<Text
+								className="mb-4 font-bold text-foreground"
 								style={{
 									fontSize: isMobile ? 24 : 32,
-									fontWeight: "700",
-									color: THEME_COLORS.foreground,
-									marginBottom: 16,
 									lineHeight: isMobile ? 32 : 42,
 								}}
 							>
@@ -280,40 +215,18 @@ export default function BlogPage() {
 							</Text>
 
 							<Text
-								style={{
-									fontSize: 16,
-									color: THEME_COLORS.muted,
-									lineHeight: 26,
-									marginBottom: 24,
-								}}
+								className="mb-6 text-base text-muted"
+								style={{ lineHeight: 26 }}
 							>
 								{FEATURED_ARTICLE.excerpt}
 							</Text>
 
-							<View
-								style={{
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 16,
-								}}
-							>
+							<View className="flex-row items-center gap-4">
 								<View
-									style={{
-										width: 44,
-										height: 44,
-										borderRadius: 22,
-										backgroundColor: THEME_COLORS.sectionBackground,
-										alignItems: "center",
-										justifyContent: "center",
-									}}
+									className="items-center justify-center rounded-full bg-sectionBackground"
+									style={{ width: 44, height: 44 }}
 								>
-									<Text
-										style={{
-											fontSize: 16,
-											fontWeight: "600",
-											color: THEME_COLORS.muted,
-										}}
-									>
+									<Text className="text-base font-semibold text-muted">
 										{FEATURED_ARTICLE.author
 											.split(" ")
 											.map((n) => n[0])
@@ -321,16 +234,10 @@ export default function BlogPage() {
 									</Text>
 								</View>
 								<View>
-									<Text
-										style={{
-											fontSize: 14,
-											fontWeight: "500",
-											color: THEME_COLORS.foreground,
-										}}
-									>
+									<Text className="text-sm font-medium text-foreground">
 										{FEATURED_ARTICLE.author}
 									</Text>
-									<Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>
+									<Text className="text-[13px] text-muted">
 										{FEATURED_ARTICLE.date} · {FEATURED_ARTICLE.readTime}
 									</Text>
 								</View>
@@ -341,19 +248,8 @@ export default function BlogPage() {
 			</View>
 
 			{/* Category Filter */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingBottom: 32,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
+			<View className="px-6 pb-8">
+				<View className="mx-auto w-full max-w-[1200px]">
 					<ScrollView
 						horizontal
 						showsHorizontalScrollIndicator={false}
@@ -363,46 +259,30 @@ export default function BlogPage() {
 							<Pressable
 								key={category.name}
 								onPress={() => setSelectedCategory(category.name)}
-								style={({ hovered }) => ({
-									paddingHorizontal: 20,
-									paddingVertical: 10,
-									borderRadius: 100,
-									backgroundColor:
-										selectedCategory === category.name
-											? THEME_COLORS.foreground
-											: hovered
-												? THEME_COLORS.sectionBackground
-												: THEME_COLORS.background,
-									borderWidth: 1,
-									borderColor:
-										selectedCategory === category.name
-											? THEME_COLORS.foreground
-											: THEME_COLORS.border,
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 8,
-								})}
+								className={cn(
+									"flex-row items-center gap-2 rounded-full border px-5 py-2.5",
+									selectedCategory === category.name
+										? "bg-foreground border-foreground"
+										: "border-border bg-background hover:bg-surface-raised"
+								)}
 							>
 								<Text
-									style={{
-										fontSize: 14,
-										fontWeight: "500",
-										color:
-											selectedCategory === category.name
-												? THEME_COLORS.primaryForeground
-												: THEME_COLORS.foreground,
-									}}
+									className={cn(
+										"text-sm font-medium",
+										selectedCategory === category.name
+											? "text-primary-foreground"
+											: "text-foreground"
+									)}
 								>
 									{category.name}
 								</Text>
 								<Text
-									style={{
-										fontSize: 12,
-										color:
-											selectedCategory === category.name
-												? "rgba(255,255,255,0.7)"
-												: THEME_COLORS.muted,
-									}}
+									className={cn(
+										"text-xs",
+										selectedCategory === category.name
+											? "text-white/70"
+											: "text-muted"
+									)}
 								>
 									{category.count}
 								</Text>
@@ -413,136 +293,83 @@ export default function BlogPage() {
 			</View>
 
 			{/* Articles Grid */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingBottom: 64,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
-					<View
-						style={{
-							flexDirection: "row",
-							flexWrap: "wrap",
-							gap: 24,
-						}}
-					>
+			<View className="px-6 pb-16">
+				<View className="mx-auto w-full max-w-[1200px]">
+					<View className="flex-row flex-wrap gap-6">
 						{filteredArticles.map((article) => (
 							<Pressable
 								key={article.title}
-								style={({ hovered }) => ({
+								className={cn(
+									"overflow-hidden rounded-2xl border bg-background",
+									"border-border hover:border-primary"
+								)}
+								style={{
 									width: isMobile ? "100%" : isTablet ? "48%" : "31%",
-									backgroundColor: THEME_COLORS.background,
-									borderRadius: 16,
-									overflow: "hidden",
-									borderWidth: 1,
-									borderColor: hovered
-										? THEME_COLORS.primary
-										: THEME_COLORS.border,
-								})}
+								}}
 							>
 								{({ hovered }) => (
 									<>
 										{/* Image */}
 										<View
-											style={{
-												height: 180,
-												backgroundColor: THEME_COLORS.sectionBackground,
-											}}
+											className="bg-sectionBackground"
+											style={{ height: 180 }}
 										>
 											<Image
 												source={{ uri: article.image }}
-												style={{ width: "100%", height: "100%" }}
+												className="h-full w-full"
 												resizeMode="cover"
 											/>
 										</View>
 
 										{/* Content */}
-										<View style={{ padding: 20 }}>
-											<View
-												style={{
-													flexDirection: "row",
-													alignItems: "center",
-													gap: 8,
-													marginBottom: 12,
-												}}
-											>
+										<View className="p-5">
+											<View className="mb-3 flex-row items-center gap-2">
 												<View
+													className="rounded px-2.5 py-1"
 													style={{
-														paddingHorizontal: 10,
-														paddingVertical: 4,
-														borderRadius: 4,
-														backgroundColor: `${CATEGORY_COLORS[article.category] || THEME_COLORS.primary}15`,
+														backgroundColor: `${CATEGORY_COLORS[article.category] || "#1DBF73"}15`,
 													}}
 												>
 													<Text
+														className="font-semibold uppercase tracking-wide"
 														style={{
 															fontSize: 11,
-															fontWeight: "600",
 															color:
 																CATEGORY_COLORS[article.category] ||
-																THEME_COLORS.primary,
-															textTransform: "uppercase",
-															letterSpacing: 0.5,
+																"#1DBF73",
 														}}
 													>
 														{article.category}
 													</Text>
 												</View>
-												<Text
-													style={{ fontSize: 12, color: THEME_COLORS.muted }}
-												>
+												<Text className="text-xs text-muted">
 													{article.readTime}
 												</Text>
 											</View>
 
 											<Text
-												style={{
-													fontSize: 18,
-													fontWeight: "600",
-													color: hovered
-														? THEME_COLORS.primary
-														: THEME_COLORS.foreground,
-													marginBottom: 8,
-													lineHeight: 26,
-												}}
+												className={cn(
+													"mb-2 text-lg font-semibold",
+													hovered ? "text-primary" : "text-foreground"
+												)}
+												style={{ lineHeight: 26 }}
 											>
 												{article.title}
 											</Text>
 
 											<Text
-												style={{
-													fontSize: 14,
-													color: THEME_COLORS.muted,
-													lineHeight: 22,
-													marginBottom: 16,
-												}}
+												className="mb-4 text-sm text-muted"
+												style={{ lineHeight: 22 }}
 												numberOfLines={2}
 											>
 												{article.excerpt}
 											</Text>
 
-											<View
-												style={{
-													flexDirection: "row",
-													alignItems: "center",
-													justifyContent: "space-between",
-												}}
-											>
-												<Text
-													style={{ fontSize: 13, color: THEME_COLORS.muted }}
-												>
+											<View className="flex-row items-center justify-between">
+												<Text className="text-[13px] text-muted">
 													{article.author}
 												</Text>
-												<Text
-													style={{ fontSize: 12, color: THEME_COLORS.muted }}
-												>
+												<Text className="text-xs text-muted">
 													{article.date}
 												</Text>
 											</View>
@@ -554,35 +381,17 @@ export default function BlogPage() {
 					</View>
 
 					{/* Load More */}
-					<View style={{ alignItems: "center", marginTop: 48 }}>
+					<View className="mt-12 items-center">
 						<Pressable
-							style={({ hovered }) => ({
-								paddingHorizontal: 32,
-								paddingVertical: 14,
-								borderRadius: 8,
-								backgroundColor: hovered
-									? THEME_COLORS.sectionBackground
-									: THEME_COLORS.background,
-								borderWidth: 1,
-								borderColor: THEME_COLORS.border,
-								flexDirection: "row",
-								alignItems: "center",
-								gap: 8,
-							})}
+							className="flex-row items-center gap-2 rounded-lg border border-border bg-background px-8 py-3.5 hover:bg-surface-raised"
 						>
-							<Text
-								style={{
-									fontSize: 15,
-									fontWeight: "500",
-									color: THEME_COLORS.foreground,
-								}}
-							>
+							<Text className="font-medium text-foreground text-[15px]">
 								Load More Articles
 							</Text>
 							<Ionicons
-								color={THEME_COLORS.muted}
 								name="arrow-down"
 								size={18}
+								className="text-muted"
 							/>
 						</Pressable>
 					</View>
@@ -590,87 +399,45 @@ export default function BlogPage() {
 			</View>
 
 			{/* Newsletter CTA */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.foreground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 600,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="bg-foreground px-6 py-16">
+				<View className="mx-auto w-full max-w-[600px] items-center">
 					<Ionicons
-						color={THEME_COLORS.primary}
 						name="mail-outline"
 						size={48}
-						style={{ marginBottom: 20 }}
+						className="mb-5 text-primary"
 					/>
 					<Text
-						style={{
-							fontSize: 28,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
+						className="mb-3 text-center text-[28px] font-bold text-primaryForeground"
 					>
 						Stay in the loop
 					</Text>
 					<Text
-						style={{
-							fontSize: 16,
-							color: "#a0a0a0",
-							textAlign: "center",
-							marginBottom: 32,
-							lineHeight: 24,
-						}}
+						className="mb-8 text-center text-base text-muted"
+						style={{ lineHeight: 24 }}
 					>
 						Get the latest creator tips, industry insights, and platform updates
 						delivered to your inbox weekly.
 					</Text>
 					<View
-						style={{
-							flexDirection: isMobile ? "column" : "row",
-							gap: 12,
-							width: "100%",
-							maxWidth: 400,
-						}}
+						className="w-full max-w-[400px] gap-3"
+						style={{ flexDirection: isMobile ? "column" : "row" }}
 					>
 						<View
+							className="flex-1 rounded-lg px-4"
 							style={{
-								flex: 1,
 								backgroundColor: "rgba(255,255,255,0.1)",
-								borderRadius: 8,
-								paddingHorizontal: 16,
 								paddingVertical: 14,
 							}}
 						>
-							<Text style={{ fontSize: 15, color: "#666" }}>
+							<Text className="text-[15px] text-muted">
 								Enter your email
 							</Text>
 						</View>
 						<Pressable
-							style={({ hovered }) => ({
-								paddingHorizontal: 24,
-								paddingVertical: 14,
-								backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-								borderRadius: 8,
-							})}
+							className="rounded-lg px-6 bg-primary hover:bg-hover-primary"
+							style={{ paddingVertical: 14 }}
 						>
-							<Text
-								style={{
-									fontSize: 15,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-									textAlign: "center",
-								}}
-							>
+							<Text className="text-center text-[15px] font-semibold text-primaryForeground">
 								Subscribe
 							</Text>
 						</Pressable>

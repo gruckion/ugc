@@ -4,18 +4,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createWebPageJsonLd, createFAQPageJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  sectionBackground: "#fafafa",
-  accent: "#ffbe5b",
-};
+import { cn } from "@/lib/utils";
 
 // Pricing tiers for Brands
 const BRAND_TIERS = [
@@ -137,7 +126,7 @@ export default function PricingPage() {
   );
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+    <ScrollView className="flex-1 bg-background">
       <SEO
         title="Pricing"
         description="Simple, transparent pricing for UGC Marketplace. Free for creators with 10% commission. Brand plans starting free. No hidden fees - see what works best for you."
@@ -153,41 +142,17 @@ export default function PricingPage() {
       />
 
       {/* Hero Section */}
-      <View
-        style={{
-          paddingTop: 48,
-          paddingBottom: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
-        }}
-      >
-        <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
-        >
+      <View className="pt-12 pb-16 px-6 bg-surface-raised">
+        <View className="w-full mx-auto" style={{ maxWidth: 1200 }}>
           <Text
-            style={{
-              fontSize: isMobile ? 32 : 48,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 16,
-            }}
+            className="font-bold text-foreground text-center mb-4"
+            style={{ fontSize: isMobile ? 32 : 48 }}
           >
             Simple, Transparent Pricing
           </Text>
           <Text
-            style={{
-              fontSize: 18,
-              color: THEME_COLORS.muted,
-              textAlign: "center",
-              maxWidth: 600,
-              marginHorizontal: "auto",
-              lineHeight: 28,
-            }}
+            className="text-lg text-muted text-center mx-auto"
+            style={{ maxWidth: 600, lineHeight: 28 }}
           >
             No hidden fees. Choose the plan that works best for your brand, or
             start creating for free.
@@ -196,72 +161,38 @@ export default function PricingPage() {
       </View>
 
       {/* Brand Pricing Tiers */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-        }}
-      >
-        <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 24,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 48,
-            }}
-          >
+      <View className="py-16 px-6">
+        <View className="w-full mx-auto" style={{ maxWidth: 1200 }}>
+          <Text className="text-2xl font-bold text-foreground text-center mb-12">
             For Brands
           </Text>
 
           <View
-            style={{
-              flexDirection: isMobile ? "column" : "row",
-              gap: 24,
-              alignItems: "stretch",
-            }}
+            className="gap-6 items-stretch"
+            style={{ flexDirection: isMobile ? "column" : "row" }}
           >
             {BRAND_TIERS.map((tier) => (
               <View
                 key={tier.name}
-                style={{
-                  flex: 1,
-                  padding: 32,
-                  borderRadius: 16,
-                  backgroundColor: tier.highlighted
-                    ? THEME_COLORS.foreground
-                    : THEME_COLORS.background,
-                  borderWidth: tier.highlighted ? 0 : 1,
-                  borderColor: THEME_COLORS.border,
-                  position: "relative",
-                  overflow: "hidden",
-                }}
+                className={cn(
+                  "flex-1 p-8 rounded-2xl relative overflow-hidden",
+                  tier.highlighted
+                    ? "bg-surface-highlight"
+                    : "bg-background border border-border"
+                )}
               >
                 {tier.highlighted && (
                   <View
+                    className="absolute px-10 py-1 bg-[#ffbe5b]"
                     style={{
-                      position: "absolute",
                       top: 16,
                       right: -32,
-                      backgroundColor: THEME_COLORS.accent,
-                      paddingHorizontal: 40,
-                      paddingVertical: 4,
                       transform: [{ rotate: "45deg" }],
                     }}
                   >
                     <Text
-                      style={{
-                        fontSize: 11,
-                        fontWeight: "700",
-                        color: THEME_COLORS.foreground,
-                      }}
+                      className="font-bold text-foreground"
+                      style={{ fontSize: 11 }}
                     >
                       POPULAR
                     </Text>
@@ -269,82 +200,62 @@ export default function PricingPage() {
                 )}
 
                 <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "700",
-                    color: tier.highlighted
-                      ? THEME_COLORS.primaryForeground
-                      : THEME_COLORS.foreground,
-                    marginBottom: 8,
-                  }}
+                  className={cn(
+                    "text-xl font-bold mb-2",
+                    tier.highlighted ? "text-surface-highlight-foreground" : "text-foreground"
+                  )}
                 >
                   {tier.name}
                 </Text>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: tier.highlighted ? "#a0a0a0" : THEME_COLORS.muted,
-                    marginBottom: 24,
-                  }}
+                  className={cn(
+                    "text-sm mb-6",
+                    tier.highlighted ? "text-surface-highlight-muted" : "text-muted"
+                  )}
                 >
                   {tier.description}
                 </Text>
 
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "baseline",
-                    gap: 4,
-                  }}
-                >
+                <View className="flex-row items-baseline gap-1">
                   <Text
+                    className={cn(
+                      "font-bold",
+                      tier.highlighted ? "text-surface-highlight-foreground" : "text-foreground"
+                    )}
                     style={{
                       fontSize: 40,
-                      fontWeight: "700",
-                      color: tier.highlighted
-                        ? THEME_COLORS.primaryForeground
-                        : THEME_COLORS.foreground,
                     }}
                   >
                     {tier.price}
                   </Text>
                   {tier.priceNote && (
                     <Text
-                      style={{
-                        fontSize: 14,
-                        color: tier.highlighted
-                          ? "#a0a0a0"
-                          : THEME_COLORS.muted,
-                      }}
+                      className={cn(
+                        "text-sm",
+                        tier.highlighted ? "text-surface-highlight-muted" : "text-muted"
+                      )}
                     >
                       {tier.priceNote}
                     </Text>
                   )}
                 </View>
 
-                <View style={{ marginTop: 32, marginBottom: 32 }}>
+                <View className="mt-8 mb-8">
                   {tier.features.map((feature) => (
                     <View
                       key={feature}
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 12,
-                        marginBottom: 12,
-                      }}
+                      className="flex-row items-center gap-3 mb-3"
                     >
                       <Ionicons
-                        color={THEME_COLORS.primary}
+                        className="text-primary"
                         name="checkmark-circle"
                         size={20}
                       />
                       <Text
-                        style={{
-                          fontSize: 14,
-                          color: tier.highlighted
-                            ? THEME_COLORS.primaryForeground
-                            : THEME_COLORS.foreground,
-                        }}
+                        className={cn(
+                          "text-sm",
+                          tier.highlighted ? "text-surface-highlight-foreground" : "text-foreground"
+                        )}
                       >
                         {feature}
                       </Text>
@@ -353,24 +264,20 @@ export default function PricingPage() {
                   {tier.notIncluded.map((feature) => (
                     <View
                       key={feature}
-                      style={{
-                        flexDirection: "row",
-                        alignItems: "center",
-                        gap: 12,
-                        marginBottom: 12,
-                        opacity: 0.5,
-                      }}
+                      className="flex-row items-center gap-3 mb-3 opacity-50"
                     >
                       <Ionicons
-                        color={tier.highlighted ? "#666" : THEME_COLORS.muted}
+                        className={cn(
+                          tier.highlighted ? "text-muted" : "text-muted"
+                        )}
                         name="close-circle"
                         size={20}
                       />
                       <Text
-                        style={{
-                          fontSize: 14,
-                          color: tier.highlighted ? "#666" : THEME_COLORS.muted,
-                        }}
+                        className={cn(
+                          "text-sm",
+                          tier.highlighted ? "text-muted" : "text-muted"
+                        )}
                       >
                         {feature}
                       </Text>
@@ -380,36 +287,26 @@ export default function PricingPage() {
 
                 <Pressable
                   onPress={() => openAuthModal("signup")}
-                  style={({ hovered }) => ({
+                  className={cn(
+                    "rounded-lg",
+                    tier.highlighted
+                      ? "bg-primary hover:bg-hover-primary"
+                      : "border border-border hover:bg-foreground hover:border-foreground"
+                  )}
+                  style={{
                     paddingVertical: 14,
-                    borderRadius: 8,
-                    backgroundColor: tier.highlighted
-                      ? hovered
-                        ? "#19a864"
-                        : THEME_COLORS.primary
-                      : hovered
-                        ? THEME_COLORS.foreground
-                        : "transparent",
-                    borderWidth: tier.highlighted ? 0 : 1,
-                    borderColor: tier.highlighted
-                      ? undefined
-                      : hovered
-                        ? THEME_COLORS.foreground
-                        : THEME_COLORS.border,
-                  })}
+                  }}
                 >
                   {({ hovered }) => (
                     <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "600",
-                        color: tier.highlighted
-                          ? THEME_COLORS.primaryForeground
+                      className={cn(
+                        "text-base font-semibold text-center",
+                        tier.highlighted
+                          ? "text-primary-foreground"
                           : hovered
-                            ? THEME_COLORS.primaryForeground
-                            : THEME_COLORS.foreground,
-                        textAlign: "center",
-                      }}
+                            ? "text-primary-foreground"
+                            : "text-foreground"
+                      )}
                     >
                       {tier.cta}
                     </Text>
@@ -422,145 +319,79 @@ export default function PricingPage() {
       </View>
 
       {/* Creator Pricing */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
-        }}
-      >
-        <View
-          style={{
-            maxWidth: 800,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 24,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 48,
-            }}
-          >
+      <View className="py-16 px-6 bg-surface-raised">
+        <View className="w-full mx-auto" style={{ maxWidth: 800 }}>
+          <Text className="text-2xl font-bold text-foreground text-center mb-12">
             For Creators
           </Text>
 
-          <View
-            style={{
-              padding: 32,
-              borderRadius: 16,
-              backgroundColor: THEME_COLORS.background,
-              borderWidth: 1,
-              borderColor: THEME_COLORS.border,
-            }}
-          >
+          <View className="p-8 rounded-2xl bg-background border border-border">
             <View
+              className="mb-8 gap-4"
               style={{
                 flexDirection: isMobile ? "column" : "row",
                 justifyContent: "space-between",
                 alignItems: isMobile ? "flex-start" : "center",
-                marginBottom: 32,
-                gap: 16,
               }}
             >
               <View>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "700",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 4,
-                  }}
-                >
+                <Text className="text-xl font-bold text-foreground mb-1">
                   Free to Join
                 </Text>
-                <Text style={{ fontSize: 14, color: THEME_COLORS.muted }}>
+                <Text className="text-sm text-muted">
                   Only pay when you earn
                 </Text>
               </View>
               <View
                 style={{ alignItems: isMobile ? "flex-start" : "flex-end" }}
               >
-                <View
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "baseline",
-                    gap: 4,
-                  }}
-                >
+                <View className="flex-row items-baseline gap-1">
                   <Text
+                    className="font-bold text-primary"
                     style={{
                       fontSize: 40,
-                      fontWeight: "700",
-                      color: THEME_COLORS.primary,
                     }}
                   >
                     {CREATOR_INFO.commission}
                   </Text>
-                  <Text style={{ fontSize: 14, color: THEME_COLORS.muted }}>
+                  <Text className="text-sm text-muted">
                     platform fee
                   </Text>
                 </View>
-                <Text style={{ fontSize: 14, color: THEME_COLORS.muted }}>
+                <Text className="text-sm text-muted">
                   Keep 90% of your earnings
                 </Text>
               </View>
             </View>
 
-            <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                gap: 16,
-              }}
-            >
+            <View className="flex-row flex-wrap gap-4">
               {CREATOR_INFO.features.map((feature) => (
                 <View
                   key={feature}
-                  style={{
-                    flexDirection: "row",
-                    alignItems: "center",
-                    gap: 8,
-                    width: isMobile ? "100%" : "48%",
-                  }}
+                  className="flex-row items-center gap-2"
+                  style={{ width: isMobile ? "100%" : "48%" }}
                 >
                   <Ionicons
-                    color={THEME_COLORS.primary}
+                    className="text-primary"
                     name="checkmark-circle"
                     size={20}
                   />
-                  <Text
-                    style={{
-                      fontSize: 14,
-                      color: THEME_COLORS.foreground,
-                    }}
-                  >
+                  <Text className="text-sm text-foreground">
                     {feature}
                   </Text>
                 </View>
               ))}
             </View>
 
-            <View style={{ alignItems: "center", marginTop: 32 }}>
+            <View className="items-center mt-8">
               <Pressable
                 onPress={() => openAuthModal("signup")}
-                style={({ hovered }) => ({
-                  paddingHorizontal: 48,
+                className="px-12 rounded-lg bg-primary hover:bg-hover-primary"
+                style={{
                   paddingVertical: 14,
-                  backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-                  borderRadius: 8,
-                })}
+                }}
               >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: "600",
-                    color: THEME_COLORS.primaryForeground,
-                  }}
-                >
+                <Text className="text-base font-semibold text-white">
                   Start Creating
                 </Text>
               </Pressable>
@@ -570,59 +401,27 @@ export default function PricingPage() {
       </View>
 
       {/* FAQ Section */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-        }}
-      >
-        <View
-          style={{
-            maxWidth: 800,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
-        >
+      <View className="py-16 px-6">
+        <View className="w-full mx-auto" style={{ maxWidth: 800 }}>
           <Text
-            style={{
-              fontSize: 28,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 48,
-            }}
+            className="font-bold text-foreground text-center mb-12"
+            style={{ fontSize: 28 }}
           >
             Frequently Asked Questions
           </Text>
 
-          <View style={{ gap: 16 }}>
+          <View className="gap-4">
             {FAQ_ITEMS.map((item) => (
               <View
                 key={item.question}
-                style={{
-                  padding: 24,
-                  borderRadius: 12,
-                  backgroundColor: THEME_COLORS.sectionBackground,
-                  borderWidth: 1,
-                  borderColor: THEME_COLORS.border,
-                }}
+                className="p-6 rounded-xl border border-border bg-surface-raised"
               >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: "600",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 12,
-                  }}
-                >
+                <Text className="text-base font-semibold text-foreground mb-3">
                   {item.question}
                 </Text>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: THEME_COLORS.muted,
-                    lineHeight: 22,
-                  }}
+                  className="text-sm text-muted"
+                  style={{ lineHeight: 22 }}
                 >
                   {item.answer}
                 </Text>
@@ -633,58 +432,30 @@ export default function PricingPage() {
       </View>
 
       {/* CTA Section */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.foreground,
-        }}
-      >
+      <View className="py-16 px-6 bg-foreground">
         <View
-          style={{
-            maxWidth: 800,
-            marginHorizontal: "auto",
-            width: "100%",
-            alignItems: "center",
-          }}
+          className="w-full mx-auto items-center"
+          style={{ maxWidth: 800 }}
         >
           <Text
+            className="font-bold text-center mb-4 text-primary-foreground"
             style={{
               fontSize: isMobile ? 24 : 32,
-              fontWeight: "700",
-              color: THEME_COLORS.primaryForeground,
-              textAlign: "center",
-              marginBottom: 16,
             }}
           >
             Still Have Questions?
           </Text>
-          <Text
-            style={{
-              fontSize: 16,
-              color: "#a0a0a0",
-              textAlign: "center",
-              marginBottom: 32,
-            }}
-          >
+          <Text className="text-base text-center mb-8 text-muted">
             Our team is here to help you get started
           </Text>
           <Link asChild href={"/contact" as any}>
             <Pressable
-              style={({ hovered }) => ({
-                paddingHorizontal: 32,
+              className="px-8 rounded-lg bg-primary hover:bg-hover-primary"
+              style={{
                 paddingVertical: 14,
-                backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-                borderRadius: 8,
-              })}
+              }}
             >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "600",
-                  color: THEME_COLORS.primaryForeground,
-                }}
-              >
+              <Text className="text-base font-semibold text-white">
                 Contact Us
               </Text>
             </Pressable>

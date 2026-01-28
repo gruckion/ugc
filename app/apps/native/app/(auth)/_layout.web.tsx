@@ -21,7 +21,7 @@ export default function WebAuthLayout() {
   }, [isAuthenticated, router]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+    <View className="flex-1 bg-background">
       <Slot />
     </View>
   );

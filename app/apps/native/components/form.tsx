@@ -1,4 +1,4 @@
-import { useThemeColor } from "heroui-native";
+import { cn } from "@/lib/utils";
 import {
   ActivityIndicator,
   Pressable,
@@ -12,12 +12,7 @@ import {
 export function FormContainer({ children }: { children: React.ReactNode }) {
   return (
     <View
-      className="flex-1 bg-background"
-      style={{
-        paddingHorizontal: 24,
-        paddingTop: 100,
-        gap: 16,
-      }}
+      className="flex-1 bg-background px-6 pt-[100px] gap-4"
     >
       {children}
     </View>
@@ -35,23 +30,14 @@ export default function FormHeader({
   children?: React.ReactNode;
 }) {
   return (
-    <View style={{ gap: 8, marginBottom: 8 }}>
+    <View className="gap-2 mb-2">
       <Text
-        className="text-foreground"
-        style={{
-          fontSize: 32,
-          fontWeight: "300",
-          fontFamily: "serif",
-        }}
+        className="text-foreground text-[32px] font-light font-serif"
       >
         {title}
       </Text>
       <Text
-        className="text-muted"
-        style={{
-          fontSize: 15,
-          lineHeight: 22,
-        }}
+        className="text-muted text-[15px] leading-[22px]"
       >
         {description}
       </Text>
@@ -112,16 +98,10 @@ export function StyledTextInput({
   onSubmitEditing,
   blurOnSubmit,
 }: StyledTextInputProps) {
-  const muted = useThemeColor("muted");
-
   return (
-    <View style={{ gap: 8 }}>
+    <View className="gap-2">
       <Text
-        className="text-foreground"
-        style={{
-          fontSize: 14,
-          fontWeight: "500",
-        }}
+        className="text-foreground text-sm font-medium"
       >
         {label}
       </Text>
@@ -130,22 +110,16 @@ export function StyledTextInput({
         autoComplete={autoComplete}
         autoCorrect={autoCorrect}
         blurOnSubmit={blurOnSubmit}
-        className="border-border bg-surface text-foreground"
+        className="border-border bg-surface text-foreground rounded-xl px-4 py-4 text-base border"
         keyboardType={keyboardType}
         onChangeText={onChangeText}
         onSubmitEditing={onSubmitEditing}
         placeholder={placeholder}
-        placeholderTextColor={muted}
+        placeholderTextColor="var(--muted)"
         ref={ref}
         returnKeyType={returnKeyType}
         secureTextEntry={secureTextEntry}
-        style={{
-          borderRadius: 12,
-          paddingHorizontal: 16,
-          paddingVertical: 16,
-          fontSize: 16,
-          borderWidth: 1,
-        }}
+        style={{ color: "var(--foreground)" }}
         textContentType={textContentType}
         value={value}
       />
@@ -162,75 +136,43 @@ export interface StyledButtonProps {
   variant?: "primary" | "secondary" | "tertiary";
 }
 
-// Fiverr-style theme colors
-// These match the CSS variables defined in global.css
-const BUTTON_THEME_COLORS = {
-  primaryForeground: "#FFFFFF",
-};
-
 export function StyledButton({
   onPress,
   label,
   isLoading,
   variant = "primary",
 }: StyledButtonProps) {
-  const foreground = useThemeColor("foreground");
-  const primaryForeground = BUTTON_THEME_COLORS.primaryForeground;
+  const buttonClassName = cn(
+    "rounded-xl py-4 items-center",
+    variant === "secondary" && "bg-surface border-primary",
+    variant === "tertiary" && "bg-transparent",
+    variant === "primary" && "bg-primary",
+  );
 
-  const getClassName = () => {
-    switch (variant) {
-      case "secondary":
-        return "bg-surface border-primary";
-      case "tertiary":
-        return "bg-transparent";
-      default:
-        return "bg-primary";
-    }
-  };
-
-  const getTextClassName = () => {
-    switch (variant) {
-      case "secondary":
-      case "tertiary":
-        return "text-foreground";
-      default:
-        return "text-primary-foreground";
-    }
-  };
-
-  const getActivityIndicatorColor = () => {
-    switch (variant) {
-      case "secondary":
-      case "tertiary":
-        return foreground;
-      default:
-        return primaryForeground;
-    }
-  };
+  const textClassName = cn(
+    "text-base font-semibold",
+    variant === "primary" ? "text-primary-foreground" : "text-foreground",
+  );
 
   return (
     <Pressable
-      className={getClassName()}
+      className={buttonClassName}
       disabled={isLoading}
       onPress={onPress}
       style={{
-        borderRadius: 12,
-        paddingVertical: 16,
-        alignItems: "center",
         opacity: isLoading ? 0.7 : 1,
         borderWidth: variant === "secondary" ? 1 : 0,
       }}
     >
       {isLoading ? (
-        <ActivityIndicator color={getActivityIndicatorColor()} size="small" />
+        <ActivityIndicator
+          className={cn(
+            variant === "primary" ? "text-primary-foreground" : "text-foreground",
+          )}
+          size="small"
+        />
       ) : (
-        <Text
-          className={getTextClassName()}
-          style={{
-            fontSize: 16,
-            fontWeight: "600",
-          }}
-        >
+        <Text className={textClassName}>
           {label}
         </Text>
       )}

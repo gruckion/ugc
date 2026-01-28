@@ -2,16 +2,7 @@ import { Ionicons } from "@expo/vector-icons";
 import { useEffect, useRef, useState } from "react";
 import { Pressable, Text, TextInput, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-};
+import { cn } from "@/lib/utils";
 
 export interface CategoryOption {
   id: string;
@@ -104,62 +95,31 @@ export function SearchBar({
     setIsDropdownOpen(false);
   };
 
+  // Calculate dropdown height: each category item is ~44px tall
+  const dropdownHeight = categories.length * 44 + 4; // +4 for marginTop
+
   return (
-    <View
-      className="search-bar-container"
-      style={{
-        flexDirection: "row",
-        alignItems: "stretch",
-        backgroundColor: THEME_COLORS.background,
-        borderRadius: 12,
-        borderWidth: 2,
-        borderColor: "transparent",
-        maxWidth: 700,
-        width: "100%",
-      }}
-    >
-      <style
-        dangerouslySetInnerHTML={{
-          __html: `.search-bar-container:focus-within { border-color: ${THEME_COLORS.primary} !important; }`,
-        }}
-      />
+    <View className="w-full max-w-[700px]">
+      <View className="flex-row items-stretch rounded-xl border-2 border-transparent focus-within:border-primary bg-background w-full overflow-visible">
 
       {/* Category Dropdown - always visible, icon-only on small screens (<640px) */}
-      <View ref={buttonRef} style={{ position: "relative", zIndex: 1000 }}>
+      <View ref={buttonRef} className="relative z-[1000]">
         <Pressable
           onPress={() => setIsDropdownOpen(!isDropdownOpen)}
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            paddingHorizontal: 16,
-            paddingVertical: 14,
-            gap: 8,
-            borderRightWidth: 1,
-            borderRightColor: THEME_COLORS.border,
-            backgroundColor: "#fafafa",
-            borderTopLeftRadius: 10,
-            borderBottomLeftRadius: 10,
-          }}
+          className="flex-row items-center px-4 py-3.5 gap-2 border-r border-border bg-surface-raised rounded-tl-[10px] rounded-bl-[10px]"
         >
           {selectedCategoryOption?.icon && (
             <Ionicons
-              color={THEME_COLORS.muted}
+              className="text-muted"
               name={selectedCategoryOption.icon}
               size={18}
             />
           )}
-          <Text
-            className="hidden sm:inline"
-            style={{
-              fontSize: 14,
-              color: THEME_COLORS.foreground,
-              fontWeight: "500",
-            }}
-          >
+          <Text className="hidden sm:inline text-sm font-medium text-foreground">
             {selectedCategoryOption?.label || "All Categories"}
           </Text>
           <Ionicons
-            color={THEME_COLORS.muted}
+            className="text-muted"
             name={isDropdownOpen ? "chevron-up" : "chevron-down"}
             size={16}
           />
@@ -169,63 +129,43 @@ export function SearchBar({
         {isDropdownOpen && (
           <View
             ref={dropdownRef}
+            className="absolute top-full left-0 mt-1 min-w-[200px] border border-border rounded-lg z-[1000] elevation-4 bg-background"
             style={{
-              position: "absolute",
-              top: "100%",
-              left: 0,
-              marginTop: 4,
-              minWidth: 200,
-              backgroundColor: THEME_COLORS.background,
-              borderWidth: 1,
-              borderColor: THEME_COLORS.border,
-              borderRadius: 8,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 4 },
               shadowOpacity: 0.1,
               shadowRadius: 8,
-              elevation: 4,
-              zIndex: 1000,
             }}
           >
             {categories.map((category) => (
               <Pressable
                 key={category.id}
                 onPress={() => handleCategorySelect(category.id)}
-                style={({ hovered }) => ({
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 12,
-                  paddingHorizontal: 16,
-                  paddingVertical: 12,
-                  backgroundColor:
-                    currentCategory === category.id
-                      ? "#f0fdf4"
-                      : hovered
-                        ? "#fafafa"
-                        : "transparent",
-                })}
+                className={cn(
+                  "flex-row items-center gap-3 px-4 py-3",
+                  currentCategory === category.id
+                    ? "bg-chip-bg"
+                    : "hover:bg-hover-surface"
+                )}
               >
                 {category.icon && (
                   <Ionicons
-                    color={
+                    className={cn(
                       currentCategory === category.id
-                        ? THEME_COLORS.primary
-                        : THEME_COLORS.muted
-                    }
+                        ? "text-primary"
+                        : "text-muted"
+                    )}
                     name={category.icon}
                     size={18}
                   />
                 )}
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color:
-                      currentCategory === category.id
-                        ? THEME_COLORS.primary
-                        : THEME_COLORS.foreground,
-                    fontWeight:
-                      currentCategory === category.id ? "600" : "400",
-                  }}
+                  className={cn(
+                    "text-sm",
+                    currentCategory === category.id
+                      ? "text-primary font-semibold"
+                      : "text-foreground font-normal"
+                  )}
                 >
                   {category.label}
                 </Text>
@@ -236,29 +176,17 @@ export function SearchBar({
       </View>
 
       {/* Search Input */}
-      <View
-        style={{
-          flex: 1,
-          minWidth: 0,
-          flexDirection: "row",
-          alignItems: "center",
-          paddingHorizontal: 16,
-        }}
-      >
+      <View className="flex-1 min-w-0 flex-row items-center px-4">
         <TextInput
           onChangeText={setQuery}
           onSubmitEditing={handleSearch}
           placeholder={responsivePlaceholder}
-          placeholderTextColor={THEME_COLORS.muted}
+          placeholderTextColor="var(--muted)"
           returnKeyType="search"
+          className="flex-1 min-w-0 w-0 text-[15px] py-3.5"
           style={[
             {
-              flex: 1,
-              minWidth: 0,
-              width: 0,
-              fontSize: 15,
-              color: THEME_COLORS.foreground,
-              paddingVertical: 14,
+              color: "var(--foreground)",
             },
             // Remove native focus outline since container has custom focus indicator
             { outline: "none" } as any,
@@ -270,22 +198,17 @@ export function SearchBar({
       {/* Search Button */}
       <Pressable
         onPress={handleSearch}
-        style={({ pressed }) => ({
-          backgroundColor: THEME_COLORS.primary,
-          paddingHorizontal: 20,
-          alignItems: "center",
-          justifyContent: "center",
-          opacity: pressed ? 0.9 : 1,
-          borderTopRightRadius: 10,
-          borderBottomRightRadius: 10,
-        })}
+        className="px-5 items-center justify-center rounded-tr-[10px] rounded-br-[10px] bg-primary active:opacity-90"
       >
         <Ionicons
-          color={THEME_COLORS.primaryForeground}
+          className="text-primary-foreground"
           name="search"
           size={22}
         />
       </Pressable>
+      </View>
+      {/* Spacer to reserve space for dropdown, preventing it from being clipped by parent stacking context */}
+      {isDropdownOpen && <View style={{ height: dropdownHeight }} />}
     </View>
   );
 }

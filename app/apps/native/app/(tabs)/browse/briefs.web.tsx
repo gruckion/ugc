@@ -2,18 +2,8 @@ import { useState } from "react";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { BriefCard } from "@/components/web/BriefCard";
 import { getResponsiveValue, useResponsive } from "@/hooks/useResponsive";
+import { cn } from "@/lib/utils";
 import { SEO, createWebPageJsonLd, createBreadcrumbJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  sectionBackground: "#fafafa",
-};
 
 // Mock brief data
 const MOCK_BRIEFS = [
@@ -167,7 +157,7 @@ export default function BrowseBriefsPage() {
   });
 
   return (
-    <View style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+    <View className="flex-1 bg-background">
       <SEO
         title="Browse Briefs"
         description="Find paid UGC opportunities on our marketplace. Browse brand briefs with secure payment, filter by category and budget, and start creating authentic content."
@@ -184,89 +174,56 @@ export default function BrowseBriefsPage() {
 
       {/* Header */}
       <View
-        style={{
-          paddingTop: 32,
-          paddingBottom: 24,
-          paddingHorizontal: 24,
-          borderBottomWidth: 1,
-          borderBottomColor: THEME_COLORS.border,
-        }}
+        className="pt-8 pb-6 px-6 border-b border-border"
       >
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1200 }}
         >
           <Text
-            style={{
-              fontSize: 32,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              marginBottom: 8,
-            }}
+            className="text-3xl font-bold text-foreground mb-2"
           >
             Browse Briefs
           </Text>
-          <Text style={{ fontSize: 16, color: THEME_COLORS.muted }}>
-            {filteredBriefs.length} briefs available • All with secured payment
+          <Text className="text-base text-muted">
+            {filteredBriefs.length} briefs available - All with secured payment
           </Text>
         </View>
       </View>
 
       {/* Filters */}
       <View
-        style={{
-          paddingVertical: 16,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
-          borderBottomWidth: 1,
-          borderBottomColor: THEME_COLORS.border,
-        }}
+        className="py-4 px-6 bg-surface-raised border-b border-border"
       >
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1200 }}
         >
           {/* Category Filter */}
           <ScrollView
             contentContainerStyle={{ gap: 8 }}
             horizontal
             showsHorizontalScrollIndicator={false}
-            style={{ marginBottom: 16 }}
+            className="mb-4"
           >
             {CATEGORIES.map((category) => (
               <Pressable
                 key={category.id}
                 onPress={() => setSelectedCategory(category.id)}
-                style={{
-                  paddingHorizontal: 16,
-                  paddingVertical: 8,
-                  borderRadius: 20,
-                  backgroundColor:
-                    selectedCategory === category.id
-                      ? THEME_COLORS.primary
-                      : THEME_COLORS.background,
-                  borderWidth: 1,
-                  borderColor:
-                    selectedCategory === category.id
-                      ? THEME_COLORS.primary
-                      : THEME_COLORS.border,
-                }}
+                className={cn(
+                  "px-4 py-2 rounded-full border",
+                  selectedCategory === category.id
+                    ? "bg-primary border-primary"
+                    : "bg-background border-border",
+                )}
               >
                 <Text
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "500",
-                    color:
-                      selectedCategory === category.id
-                        ? THEME_COLORS.primaryForeground
-                        : THEME_COLORS.foreground,
-                  }}
+                  className={cn(
+                    "text-sm font-medium",
+                    selectedCategory === category.id
+                      ? "text-primary-foreground"
+                      : "text-foreground",
+                  )}
                 >
                   {category.label}
                 </Text>
@@ -275,8 +232,8 @@ export default function BrowseBriefsPage() {
           </ScrollView>
 
           {/* Budget Filter */}
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-            <Text style={{ fontSize: 14, color: THEME_COLORS.muted }}>
+          <View className="flex-row items-center gap-3">
+            <Text className="text-sm text-muted">
               Budget:
             </Text>
             <ScrollView
@@ -288,23 +245,20 @@ export default function BrowseBriefsPage() {
                 <Pressable
                   key={filter.id}
                   onPress={() => setSelectedBudget(filter.id)}
-                  style={{
-                    paddingHorizontal: 12,
-                    paddingVertical: 6,
-                    borderRadius: 16,
-                    backgroundColor:
-                      selectedBudget === filter.id ? "#f0fdf4" : "transparent",
-                  }}
+                  className={cn(
+                    "px-3 py-1.5 rounded-2xl",
+                    selectedBudget === filter.id
+                      ? "bg-chip-bg"
+                      : "bg-transparent",
+                  )}
                 >
                   <Text
-                    style={{
-                      fontSize: 13,
-                      fontWeight: selectedBudget === filter.id ? "600" : "400",
-                      color:
-                        selectedBudget === filter.id
-                          ? THEME_COLORS.primary
-                          : THEME_COLORS.muted,
-                    }}
+                    className={cn(
+                      "text-[13px]",
+                      selectedBudget === filter.id
+                        ? "font-semibold text-primary"
+                        : "font-normal text-muted",
+                    )}
                   >
                     {filter.label}
                   </Text>
@@ -321,20 +275,15 @@ export default function BrowseBriefsPage() {
           paddingVertical: 32,
           paddingHorizontal: 24,
         }}
-        style={{ flex: 1 }}
+        className="flex-1"
       >
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1200 }}
         >
           <View
+            className="flex-row flex-wrap gap-6"
             style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: 24,
               justifyContent: isMobile ? "center" : "flex-start",
             }}
           >

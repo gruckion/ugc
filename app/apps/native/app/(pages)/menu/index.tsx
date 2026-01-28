@@ -241,10 +241,7 @@ export default function MenuIndex() {
         className="bg-primary px-5 pb-5"
         style={{ paddingTop: insets.top + 16 }}
       >
-        <Text
-          className="font-light text-3xl text-primary-foreground"
-          style={{ fontFamily: "serif" }}
-        >
+        <Text className="font-light font-serif text-3xl text-primary-foreground">
           A La Carte Menu
         </Text>
         <Text className="mt-1 text-accent text-sm">
@@ -253,17 +250,16 @@ export default function MenuIndex() {
       </View>
 
       <ScrollView
+        className="flex-1"
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
-        style={{ flex: 1 }}
       >
         {/* Menu Categories */}
         {MENU_CATEGORIES.map((category) => (
           <Pressable
-            className="mb-4 overflow-hidden bg-surface"
+            className="mb-4 overflow-hidden rounded-xl bg-surface"
             key={category.id}
             onPress={() => router.push(`/menu/${category.id}`)}
             style={{
-              borderRadius: 12,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.1,
@@ -275,19 +271,13 @@ export default function MenuIndex() {
               cachePolicy="memory-disk"
               contentFit="cover"
               placeholder={{ blurhash: FOOD_BLURHASH }}
+              className="h-[140px] w-full"
               source={category.image}
-              style={{ width: "100%", height: 140 }}
               transition={200}
             />
-            <View style={{ padding: 16 }}>
-              <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <View style={{ flex: 1 }}>
+            <View className="p-4">
+              <View className="flex-row items-center justify-between">
+                <View className="flex-1">
                   <Text className="font-semibold text-foreground text-lg">
                     {category.name}
                   </Text>
@@ -295,9 +285,7 @@ export default function MenuIndex() {
                     {category.description}
                   </Text>
                 </View>
-                <View
-                  style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
-                >
+                <View className="flex-row items-center gap-1">
                   <Text className="text-accent text-sm">
                     {category.itemCount} items
                   </Text>
@@ -309,24 +297,17 @@ export default function MenuIndex() {
         ))}
 
         {/* Opening Hours */}
-        <View className="mt-2 bg-primary p-5" style={{ borderRadius: 12 }}>
+        <View className="mt-2 rounded-xl bg-primary p-5">
           <Text className="mb-3 font-semibold text-base text-primary-foreground">
             Dining Hours
           </Text>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+          <View className="flex-row items-center gap-2">
             <Ionicons color={accent} name="time-outline" size={18} />
             <Text className="text-primary-foreground text-sm">
               Monday to Friday, 9:00 AM - 5:00 PM
             </Text>
           </View>
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 8,
-              marginTop: 8,
-            }}
-          >
+          <View className="mt-2 flex-row items-center gap-2">
             <Ionicons color={accent} name="restaurant-outline" size={18} />
             <Text className="text-primary-foreground text-sm">
               Lunch: 12:00 PM - Last orders 2:30 PM

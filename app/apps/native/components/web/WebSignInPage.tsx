@@ -2,17 +2,8 @@ import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { Pressable, ScrollView, Text, View } from "react-native";
 import { UGCLogo } from "@/components/UGCLogo";
+import { cn } from "@/lib/utils";
 import { useResponsive } from "@/hooks/useResponsive";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-};
 
 interface ValueProp {
   icon: keyof typeof Ionicons.glyphMap;
@@ -59,73 +50,49 @@ export function WebSignInPage({
   const showSplitLayout = !(isMobile || isTablet);
 
   return (
-    <View style={{ flex: 1, flexDirection: "row" }}>
+    <View className="flex-1 flex-row">
       {/* Left Panel - Value Props (Desktop Only) */}
       {showSplitLayout && (
         <View
-          style={{
-            flex: 1,
-            backgroundColor: THEME_COLORS.primary,
-            padding: 48,
-            justifyContent: "center",
-          }}
+          className="flex-1 p-12 justify-center bg-primary"
         >
-          <View style={{ maxWidth: 480 }}>
+          <View className="max-w-[480px]">
             {/* Logo */}
-            <View style={{ marginBottom: 48 }}>
+            <View className="mb-12">
               <UGCLogo
-                backgroundColor={THEME_COLORS.primaryForeground}
+                bgClassName="bg-white"
                 size={48}
-                textColor={THEME_COLORS.primary}
+                textClassName="text-primary"
               />
             </View>
 
             {/* Title */}
             <Text
-              style={{
-                fontSize: 40,
-                fontWeight: "700",
-                color: THEME_COLORS.primaryForeground,
-                marginBottom: 32,
-                lineHeight: 48,
-              }}
+              className="text-[40px] font-bold mb-8 leading-[48px] text-primary-foreground"
             >
               {leftPanelTitle}
             </Text>
 
             {/* Value Props */}
-            <View style={{ gap: 24 }}>
+            <View className="gap-6">
               {valueProps.map((prop) => (
                 <View
                   key={prop.title}
-                  style={{
-                    flexDirection: "row",
-                    gap: 16,
-                    alignItems: "flex-start",
-                  }}
+                  className="flex-row gap-4 items-start"
                 >
                   <Ionicons
-                    color={THEME_COLORS.primaryForeground}
+                    className="text-primary-foreground"
                     name={prop.icon}
                     size={24}
                   />
-                  <View style={{ flex: 1 }}>
+                  <View className="flex-1">
                     <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: "600",
-                        color: THEME_COLORS.primaryForeground,
-                        marginBottom: 4,
-                      }}
+                      className="text-base font-semibold mb-1 text-primary-foreground"
                     >
                       {prop.title}
                     </Text>
                     <Text
-                      style={{
-                        fontSize: 14,
-                        color: "rgba(255,255,255,0.85)",
-                        lineHeight: 20,
-                      }}
+                      className="text-sm leading-5 text-primary-foreground/85"
                     >
                       {prop.description}
                     </Text>
@@ -139,10 +106,7 @@ export function WebSignInPage({
 
       {/* Right Panel - Form */}
       <View
-        style={{
-          flex: 1,
-          backgroundColor: THEME_COLORS.background,
-        }}
+        className="flex-1 bg-background"
       >
         <ScrollView
           contentContainerStyle={{
@@ -152,27 +116,23 @@ export function WebSignInPage({
           }}
         >
           {/* Back to Home Link (Mobile/Tablet) */}
-          <View style={{ marginBottom: 32 }}>
+          <View className="mb-8">
             <Link asChild href="/">
-              <Pressable
-                style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
-              >
+              <Pressable className="flex-row items-center gap-2">
                 {({ hovered }) => (
                   <>
                     <Ionicons
-                      color={
-                        hovered ? THEME_COLORS.primary : THEME_COLORS.muted
-                      }
+                      className={cn(
+                        hovered ? "text-primary" : "text-muted",
+                      )}
                       name="arrow-back"
                       size={20}
                     />
                     <Text
-                      style={{
-                        fontSize: 14,
-                        color: hovered
-                          ? THEME_COLORS.primary
-                          : THEME_COLORS.muted,
-                      }}
+                      className={cn(
+                        "text-sm",
+                        hovered ? "text-primary" : "text-muted",
+                      )}
                     >
                       Back to home
                     </Text>
@@ -184,13 +144,13 @@ export function WebSignInPage({
 
           {/* Mobile Logo */}
           {!showSplitLayout && (
-            <View style={{ alignItems: "center", marginBottom: 32 }}>
+            <View className="items-center mb-8">
               <UGCLogo size={56} />
             </View>
           )}
 
           {/* Form Content */}
-          <View style={{ maxWidth: 400, width: "100%", alignSelf: "center" }}>
+          <View className="max-w-[400px] w-full self-center">
             {children}
           </View>
         </ScrollView>

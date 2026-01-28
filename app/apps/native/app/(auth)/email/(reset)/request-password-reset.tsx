@@ -88,7 +88,7 @@ export default function RequestPasswordResetRoute() {
         value={email}
       />
 
-      <View style={{ marginTop: 8 }}>
+      <View className="mt-2">
         <StyledButton
           isLoading={isLoading}
           label="Send Verification Code"

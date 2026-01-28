@@ -3,8 +3,7 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Card } from "heroui-native";
 import { Pressable, Text, View } from "react-native";
-
-// Theme colors are now defined in global.css and accessed via Tailwind classes
+import { cn } from "@/lib/utils";
 
 export interface BriefCardProps {
   /** Brief ID for navigation */
@@ -48,20 +47,21 @@ export function BriefCard({
 }: BriefCardProps) {
   const CardContent = ({ hovered = false }: { hovered?: boolean }) => (
     <Card
-      className={`w-[300px] rounded-xl overflow-hidden bg-background border border-border ${
-        hovered ? "shadow-lg -translate-y-1" : "shadow-sm"
-      } transition-all`}
+      className={cn(
+        "w-[300px] rounded-xl overflow-hidden bg-background border border-border transition-all",
+        hovered ? "shadow-lg -translate-y-1" : "shadow-sm",
+      )}
     >
       {/* Thumbnail */}
       {thumbnailUrl ? (
         <Image
+          className="w-full h-40"
           contentFit="cover"
           source={{ uri: thumbnailUrl }}
-          style={{ width: "100%", height: 160 }}
         />
       ) : (
-        <View className="w-full h-40 bg-gray-100 items-center justify-center">
-          <Ionicons color="#62646a" name="image-outline" size={40} />
+        <View className="w-full h-40 bg-surface-raised items-center justify-center">
+          <Ionicons className="text-muted" name="image-outline" size={40} />
         </View>
       )}
 
@@ -69,12 +69,12 @@ export function BriefCard({
       <View className="p-4">
         {/* Category & Payment Badge */}
         <View className="flex-row justify-between items-center mb-3">
-          <View className="bg-green-50 px-2.5 py-1 rounded-xl">
+          <View className="bg-chip-bg px-2.5 py-1 rounded-xl">
             <Text className="text-xs text-primary font-semibold">{category}</Text>
           </View>
           {paymentSecured && (
             <View className="flex-row items-center gap-1">
-              <Ionicons color="#1DBF73" name="checkmark-circle" size={14} />
+              <Ionicons className="text-primary" name="checkmark-circle" size={14} />
               <Text className="text-xs text-primary font-medium">
                 Payment Secured
               </Text>
@@ -108,7 +108,7 @@ export function BriefCard({
           </Text>
           {daysRemaining !== undefined && (
             <View className="flex-row items-center gap-1">
-              <Ionicons color="#62646a" name="time-outline" size={14} />
+              <Ionicons className="text-muted" name="time-outline" size={14} />
               <Text className="text-sm text-muted">{daysRemaining} days left</Text>
             </View>
           )}

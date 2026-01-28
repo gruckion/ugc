@@ -3,12 +3,18 @@
 @import "heroui-native/styles";
 
 @source "./node_modules/heroui-native/lib";
+@source "./components/web";
 
 /* ============================================
    User Generated Content (UGC) Brand Theme
 
    Override HeroUI Native's default theme with
    UGC brand colors using the correct structure.
+
+   All component colors are defined here as CSS
+   custom properties so they respond to light/dark
+   mode automatically. No hardcoded hex values in
+   component files.
    ============================================ */
 
 @layer theme {
@@ -29,13 +35,71 @@
     --surface-foreground: oklch(25% 0.005 240);
     /* Secondary text - body gray #62646a */
     --muted: oklch(50% 0.01 250);
-    /* Borders - warm neutral */
+    /* Borders - warm neutral #e4e5e7 */
     --border: oklch(90% 0.005 90);
     --divider: oklch(90% 0.005 90);
     /* Semantic colors */
     --success: oklch(70% 0.18 155);
     --warning: oklch(85% 0.13 80);
     --info: oklch(60% 0.15 240);
+    --error: oklch(55% 0.22 25);
+
+    /* Footer - always dark regardless of mode */
+    --footer-bg: oklch(18% 0.005 240);
+    --footer-text: oklch(73% 0.005 240);
+    --footer-heading: oklch(100% 0 0);
+
+    /* Subtle backgrounds for sections and chips */
+    --surface-raised: oklch(98% 0.002 90);
+    --surface-inset: oklch(96% 0.003 90);
+
+    /* Input / form field backgrounds */
+    --input-bg: oklch(100% 0 0);
+    --input-border: oklch(90% 0.005 90);
+
+    /* Hover state surfaces */
+    --hover-surface: oklch(98% 0.002 90);
+    --hover-primary: oklch(65% 0.18 155);
+
+    /* Badge / chip backgrounds */
+    --chip-bg: oklch(96% 0.01 150);
+    --chip-muted-bg: oklch(96% 0.003 90);
+    --chip-muted-text: oklch(40% 0.01 240);
+
+    /* Success alert */
+    --success-bg: oklch(96% 0.04 150);
+    --success-border: oklch(88% 0.08 150);
+    --success-text: oklch(35% 0.08 150);
+
+    /* Error alert */
+    --error-bg: oklch(96% 0.03 25);
+    --error-border: oklch(88% 0.06 25);
+    --error-text: oklch(45% 0.18 25);
+
+    /* CTA section */
+    --cta-bg: oklch(25% 0.06 330);
+
+    /* Overlay / backdrop */
+    --overlay: oklch(0% 0 0 / 50%);
+
+    /* Star / rating color */
+    --star: oklch(82% 0.16 85);
+
+    /* Highlighted / featured card surface */
+    --surface-highlight: oklch(25% 0.005 240);
+    --surface-highlight-foreground: oklch(100% 0 0);
+    --surface-highlight-muted: oklch(100% 0 0 / 70%);
+
+    /* Skeleton loading */
+    --skeleton: oklch(96% 0.003 90);
+
+    /* Promo banner backgrounds */
+    --banner-help: oklch(55% 0.06 330);
+    --banner-help-text: oklch(100% 0 0);
+    --banner-help-muted: oklch(92% 0.01 330);
+    --banner-pro: oklch(96% 0.03 85);
+    --banner-pro-text: oklch(25% 0.005 240);
+    --banner-pro-muted: oklch(50% 0.01 250);
   }
 
   @variant dark {
@@ -62,13 +126,152 @@
     --success: oklch(70% 0.18 155);
     --warning: oklch(85% 0.13 80);
     --info: oklch(60% 0.15 240);
+    --error: oklch(60% 0.2 25);
+
+    /* Footer - always dark regardless of mode */
+    --footer-bg: oklch(14% 0.005 240);
+    --footer-text: oklch(65% 0.005 240);
+    --footer-heading: oklch(95% 0 0);
+
+    /* Subtle backgrounds for sections and chips */
+    --surface-raised: oklch(23% 0.01 240);
+    --surface-inset: oklch(18% 0.01 240);
+
+    /* Input / form field backgrounds */
+    --input-bg: oklch(22% 0.01 240);
+    --input-border: oklch(32% 0.01 240);
+
+    /* Hover state surfaces */
+    --hover-surface: oklch(28% 0.01 240);
+    --hover-primary: oklch(65% 0.18 155);
+
+    /* Badge / chip backgrounds */
+    --chip-bg: oklch(28% 0.04 155);
+    --chip-muted-bg: oklch(28% 0.01 240);
+    --chip-muted-text: oklch(75% 0.005 240);
+
+    /* Success alert */
+    --success-bg: oklch(25% 0.04 150);
+    --success-border: oklch(35% 0.06 150);
+    --success-text: oklch(75% 0.08 150);
+
+    /* Error alert */
+    --error-bg: oklch(25% 0.04 25);
+    --error-border: oklch(35% 0.06 25);
+    --error-text: oklch(70% 0.15 25);
+
+    /* CTA section */
+    --cta-bg: oklch(22% 0.06 330);
+
+    /* Overlay / backdrop */
+    --overlay: oklch(0% 0 0 / 60%);
+
+    /* Star / rating color */
+    --star: oklch(82% 0.16 85);
+
+    /* Highlighted / featured card surface */
+    --surface-highlight: oklch(40% 0.01 240);
+    --surface-highlight-foreground: oklch(98% 0 0);
+    --surface-highlight-muted: oklch(98% 0 0 / 70%);
+
+    /* Skeleton loading */
+    --skeleton: oklch(28% 0.01 240);
+
+    /* Promo banner backgrounds */
+    --banner-help: oklch(32% 0.06 330);
+    --banner-help-text: oklch(95% 0 0);
+    --banner-help-muted: oklch(75% 0.02 330);
+    --banner-pro: oklch(25% 0.03 85);
+    --banner-pro-text: oklch(95% 0 0);
+    --banner-pro-muted: oklch(65% 0.01 85);
   }
 }
 
-/* Register custom colors with Tailwind */
+/* Register all theme colors with Tailwind */
 @theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-surface: var(--surface);
+  --color-surface-foreground: var(--surface-foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-divider: var(--divider);
+  --color-success: var(--success);
+  --color-warning: var(--warning);
+  --color-info: var(--info);
+  --color-error: var(--error);
+
+  /* Footer */
+  --color-footer-bg: var(--footer-bg);
+  --color-footer-text: var(--footer-text);
+  --color-footer-heading: var(--footer-heading);
+
+  /* Surfaces */
+  --color-surface-raised: var(--surface-raised);
+  --color-surface-inset: var(--surface-inset);
+  --color-surface-highlight: var(--surface-highlight);
+  --color-surface-highlight-foreground: var(--surface-highlight-foreground);
+  --color-surface-highlight-muted: var(--surface-highlight-muted);
+
+  /* Input */
+  --color-input-bg: var(--input-bg);
+  --color-input-border: var(--input-border);
+
+  /* Hover */
+  --color-hover-surface: var(--hover-surface);
+  --color-hover-primary: var(--hover-primary);
+
+  /* Chips / badges */
+  --color-chip-bg: var(--chip-bg);
+  --color-chip-muted-bg: var(--chip-muted-bg);
+  --color-chip-muted-text: var(--chip-muted-text);
+
+  /* Alert: success */
+  --color-success-bg: var(--success-bg);
+  --color-success-border: var(--success-border);
+  --color-success-text: var(--success-text);
+
+  /* Alert: error */
+  --color-error-bg: var(--error-bg);
+  --color-error-border: var(--error-border);
+  --color-error-text: var(--error-text);
+
+  /* CTA */
+  --color-cta-bg: var(--cta-bg);
+
+  /* Overlay */
+  --color-overlay: var(--overlay);
+
+  /* Star */
+  --color-star: var(--star);
+
+  /* Skeleton */
+  --color-skeleton: var(--skeleton);
+
+  /* Promo banner */
+  --color-banner-help: var(--banner-help);
+  --color-banner-help-text: var(--banner-help-text);
+  --color-banner-help-muted: var(--banner-help-muted);
+  --color-banner-pro: var(--banner-pro);
+  --color-banner-pro-text: var(--banner-pro-text);
+  --color-banner-pro-muted: var(--banner-pro-muted);
+}
+
+/* Override heroui-native radius calc() expressions with concrete values.
+   React Native cannot evaluate calc(var(--radius) * N) at runtime. */
+@theme inline {
+  --radius-xs: 0.125rem;
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-3xl: 1.5rem;
+  --radius-4xl: 2rem;
 }
 
 /* Custom breakpoints for mobile-first responsive design */

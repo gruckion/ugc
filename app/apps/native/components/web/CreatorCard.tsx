@@ -3,6 +3,7 @@ import { Image } from "expo-image";
 import { Link } from "expo-router";
 import { Card } from "heroui-native";
 import { Pressable, Text, View } from "react-native";
+import { cn } from "@/lib/utils";
 
 /**
  * Generates a deterministic color pair based on a string (e.g., name).
@@ -28,11 +29,9 @@ function getAvatarColors(name: string): { bg: string; text: string } {
   };
 }
 
-// Theme colors are now defined in global.css and accessed via Tailwind classes
-
 // Level badge style mappings
 const LEVEL_STYLES = {
-  new: { bgClass: "bg-gray-100", textClass: "text-gray-600" },
+  new: { bgClass: "bg-chip-muted-bg", textClass: "text-chip-muted-text" },
   rising: { bgClass: "bg-amber-100", textClass: "text-amber-800" },
   established: { bgClass: "bg-blue-100", textClass: "text-blue-800" },
   pro: { bgClass: "bg-green-100", textClass: "text-green-800" },
@@ -93,9 +92,10 @@ export function CreatorCard({
 
   const CardContent = ({ hovered = false }: { hovered?: boolean }) => (
     <Card
-      className={`w-[300px] p-5 rounded-xl overflow-hidden bg-background border border-border ${
-        hovered ? "shadow-lg -translate-y-1" : "shadow-sm"
-      } transition-all`}
+      className={cn(
+        "w-[300px] p-5 rounded-xl overflow-hidden bg-background border border-border transition-all",
+        hovered ? "shadow-lg -translate-y-1" : "shadow-sm",
+      )}
     >
       {/* Header with Avatar */}
       <View className="flex-row items-center gap-3 mb-4">
@@ -103,9 +103,9 @@ export function CreatorCard({
         <View className="relative">
           {avatarUrl ? (
             <Image
+              className="w-14 h-14 rounded-full"
               contentFit="cover"
               source={{ uri: avatarUrl }}
-              style={{ width: 56, height: 56, borderRadius: 28 }}
             />
           ) : (
             <View
@@ -134,14 +134,14 @@ export function CreatorCard({
             {name}
           </Text>
           <View className="flex-row items-center gap-2">
-            <View className={`px-2 py-0.5 rounded-lg ${levelStyles.bgClass}`}>
-              <Text className={`text-xs font-semibold ${levelStyles.textClass}`}>
+            <View className={cn("px-2 py-0.5 rounded-lg", levelStyles.bgClass)}>
+              <Text className={cn("text-xs font-semibold", levelStyles.textClass)}>
                 {levelLabel}
               </Text>
             </View>
             {trustScore !== undefined && (
               <View className="flex-row items-center gap-1">
-                <Ionicons color="#fbbf24" name="star" size={12} />
+                <Ionicons className="text-star" name="star" size={12} />
                 <Text className="text-xs text-muted font-medium">{trustScore}</Text>
               </View>
             )}
@@ -157,7 +157,7 @@ export function CreatorCard({
       {/* Niches */}
       <View className="flex-row flex-wrap gap-1.5 mb-4">
         {niches.slice(0, 3).map((niche) => (
-          <View key={niche} className="bg-gray-100 px-2.5 py-1 rounded-xl">
+          <View key={niche} className="bg-chip-muted-bg px-2.5 py-1 rounded-xl">
             <Text className="text-xs text-foreground">{niche}</Text>
           </View>
         ))}

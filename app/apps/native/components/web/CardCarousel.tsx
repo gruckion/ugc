@@ -9,16 +9,7 @@ import {
   View,
 } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-};
+import { cn } from "@/lib/utils";
 
 export interface CardCarouselProps<T> {
   /** Section title */
@@ -67,66 +58,31 @@ export function CardCarousel<T>({
   return (
     <View>
       {/* Header */}
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          alignItems: "center",
-          marginBottom: 24,
-        }}
-      >
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: "700",
-            color: THEME_COLORS.foreground,
-          }}
-        >
+      <View className="flex-row justify-between items-center mb-6">
+        <Text className="text-[28px] font-bold text-foreground">
           {title}
         </Text>
 
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 16 }}>
+        <View className="flex-row items-center gap-4">
           {/* Desktop Navigation Arrows */}
           {isDesktop && items.length > 3 && (
-            <View style={{ flexDirection: "row", gap: 8 }}>
+            <View className="flex-row gap-2">
               <Pressable
+                className="w-9 h-9 rounded-full border border-border items-center justify-center hover:border-primary hover:bg-chip-bg"
                 onPress={scrollLeft}
-                style={({ hovered }) => ({
-                  width: 36,
-                  height: 36,
-                  borderRadius: 18,
-                  borderWidth: 1,
-                  borderColor: hovered
-                    ? THEME_COLORS.primary
-                    : THEME_COLORS.border,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: hovered ? "#f0fdf4" : "transparent",
-                })}
               >
                 <Ionicons
-                  color={THEME_COLORS.foreground}
+                  className="text-foreground"
                   name="chevron-back"
                   size={18}
                 />
               </Pressable>
               <Pressable
+                className="w-9 h-9 rounded-full border border-border items-center justify-center hover:border-primary hover:bg-chip-bg"
                 onPress={scrollRight}
-                style={({ hovered }) => ({
-                  width: 36,
-                  height: 36,
-                  borderRadius: 18,
-                  borderWidth: 1,
-                  borderColor: hovered
-                    ? THEME_COLORS.primary
-                    : THEME_COLORS.border,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  backgroundColor: hovered ? "#f0fdf4" : "transparent",
-                })}
               >
                 <Ionicons
-                  color={THEME_COLORS.foreground}
+                  className="text-foreground"
                   name="chevron-forward"
                   size={18}
                 />
@@ -137,31 +93,15 @@ export function CardCarousel<T>({
           {/* See All Link */}
           {seeAllHref && (
             <Link asChild href={seeAllHref as any}>
-              <Pressable
-                style={{ flexDirection: "row", alignItems: "center", gap: 4 }}
-              >
-                {({ hovered }) => (
-                  <>
-                    <Text
-                      style={{
-                        fontSize: 15,
-                        fontWeight: "500",
-                        color: hovered
-                          ? THEME_COLORS.primary
-                          : THEME_COLORS.foreground,
-                      }}
-                    >
-                      {seeAllText}
-                    </Text>
-                    <Ionicons
-                      color={
-                        hovered ? THEME_COLORS.primary : THEME_COLORS.foreground
-                      }
-                      name="arrow-forward"
-                      size={18}
-                    />
-                  </>
-                )}
+              <Pressable className="flex-row items-center gap-1 group">
+                <Text className="text-[15px] font-medium text-foreground group-hover:text-primary">
+                  {seeAllText}
+                </Text>
+                <Ionicons
+                  className="text-foreground group-hover:text-primary"
+                  name="arrow-forward"
+                  size={18}
+                />
               </Pressable>
             </Link>
           )}
@@ -171,16 +111,11 @@ export function CardCarousel<T>({
       {/* Cards */}
       {isLoading ? (
         // Loading Skeleton
-        <View style={{ flexDirection: "row", gap }}>
+        <View className="flex-row" style={{ gap }}>
           {[1, 2, 3].map((i) => (
             <View
               key={i}
-              style={{
-                width: 300,
-                height: 280,
-                backgroundColor: "#f5f5f5",
-                borderRadius: 12,
-              }}
+              className="w-[300px] h-[280px] bg-skeleton rounded-xl"
             />
           ))}
         </View>

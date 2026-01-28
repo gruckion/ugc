@@ -5,18 +5,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createFAQPageJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-	sectionBackground: "#fafafa",
-	accent: "#4F46E5",
-};
+import { cn } from "@/lib/utils";
 
 // FAQ Categories with questions
 const FAQ_CATEGORIES = [
@@ -181,6 +170,10 @@ const BRAND_STATS = [
 	{ value: "98%", label: "Satisfaction Rate" },
 ];
 
+// Accent color used throughout this page
+const ACCENT_COLOR = "#4F46E5";
+const ACCENT_HOVER = "#4338CA";
+
 export default function BrandFAQPage() {
 	const { isMobile } = useResponsive();
 	const { open: openAuthModal } = useAuthModal();
@@ -212,7 +205,7 @@ export default function BrandFAQPage() {
 	const brandFaqJsonLd = createFAQPageJsonLd(allFaqs);
 
 	return (
-		<ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+		<ScrollView className="flex-1 bg-background">
 			<SEO
 				title="Brand FAQ"
 				description="Frequently asked questions for brands using UGC Marketplace. Learn about finding creators, managing projects, payments, content rights, and more."
@@ -228,55 +221,30 @@ export default function BrandFAQPage() {
 			/>
 			{/* Hero Section */}
 			<View
-				style={{
-					paddingTop: 64,
-					paddingBottom: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.accent,
-				}}
+				className="py-16 px-6"
+				style={{ backgroundColor: ACCENT_COLOR }}
 			>
-				<View
-					style={{
-						maxWidth: 800,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+				<View className="max-w-[800px] mx-auto w-full items-center">
 					<View
-						style={{
-							width: 72,
-							height: 72,
-							borderRadius: 36,
-							backgroundColor: "rgba(255,255,255,0.2)",
-							alignItems: "center",
-							justifyContent: "center",
-							marginBottom: 24,
-						}}
+						className="w-[72px] h-[72px] rounded-full items-center justify-center mb-6"
+						style={{ backgroundColor: "rgba(255,255,255,0.2)" }}
 					>
 						<Ionicons
-							color={THEME_COLORS.primaryForeground}
 							name="business-outline"
 							size={36}
+							className="text-primary-foreground"
 						/>
 					</View>
 					<Text
-						style={{
-							fontSize: isMobile ? 32 : 44,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
+						className="font-bold text-center mb-3 text-primary-foreground"
+						style={{ fontSize: isMobile ? 32 : 44 }}
 					>
 						Brand FAQ
 					</Text>
 					<Text
+						className="text-lg text-center max-w-[600px]"
 						style={{
-							fontSize: 18,
 							color: "rgba(255,255,255,0.9)",
-							textAlign: "center",
-							maxWidth: 600,
 							lineHeight: 28,
 						}}
 					>
@@ -287,42 +255,22 @@ export default function BrandFAQPage() {
 			</View>
 
 			{/* Stats Bar */}
-			<View
-				style={{
-					paddingVertical: 24,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.foreground,
-				}}
-			>
+			<View className="py-6 px-6 bg-foreground">
 				<View
+					className="max-w-[600px] mx-auto w-full justify-around items-center"
 					style={{
-						maxWidth: 600,
-						marginHorizontal: "auto",
-						width: "100%",
 						flexDirection: isMobile ? "column" : "row",
-						justifyContent: "space-around",
-						alignItems: "center",
 						gap: isMobile ? 20 : 0,
 					}}
 				>
 					{BRAND_STATS.map((stat) => (
-						<View key={stat.label} style={{ alignItems: "center" }}>
-							<Text
-								style={{
-									fontSize: 32,
-									fontWeight: "700",
-									color: THEME_COLORS.primary,
-								}}
-							>
+						<View key={stat.label} className="items-center">
+							<Text className="text-[32px] font-bold text-primary">
 								{stat.value}
 							</Text>
 							<Text
-								style={{
-									fontSize: 13,
-									color: "#a0a0a0",
-									textTransform: "uppercase",
-									letterSpacing: 1,
-								}}
+								className="text-[13px] uppercase tracking-wide text-muted"
+								style={{ letterSpacing: 1 }}
 							>
 								{stat.label}
 							</Text>
@@ -332,144 +280,103 @@ export default function BrandFAQPage() {
 			</View>
 
 			{/* Main Content */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-				}}
-			>
+			<View className="py-16 px-6">
 				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-						flexDirection: isMobile ? "column" : "row",
-						gap: 48,
-					}}
+					className="max-w-[1200px] mx-auto w-full gap-12"
+					style={{ flexDirection: isMobile ? "column" : "row" }}
 				>
 					{/* FAQ Accordion */}
-					<View style={{ flex: 1 }}>
+					<View className="flex-1">
 						{FAQ_CATEGORIES.map((category) => (
 							<View
 								key={category.title}
+								className={cn(
+									"mb-4 rounded-2xl overflow-hidden border",
+									expandedCategory === category.title
+										? ""
+										: "border-border"
+								)}
 								style={{
-									marginBottom: 16,
-									borderRadius: 16,
-									borderWidth: 1,
 									borderColor:
 										expandedCategory === category.title
-											? THEME_COLORS.accent
-											: THEME_COLORS.border,
-									overflow: "hidden",
+											? ACCENT_COLOR
+											: undefined,
 								}}
 							>
 								{/* Category Header */}
 								<Pressable
 									onPress={() => toggleCategory(category.title)}
-									style={({ hovered }) => ({
-										padding: 24,
-										backgroundColor:
-											expandedCategory === category.title
-												? `${THEME_COLORS.accent}08`
-												: hovered
-													? THEME_COLORS.sectionBackground
-													: THEME_COLORS.background,
-										flexDirection: "row",
-										alignItems: "center",
-										gap: 16,
-									})}
+									className={cn(
+										"flex-row items-center gap-4 p-6",
+										expandedCategory === category.title
+											? ""
+											: "bg-background hover:bg-surface-raised"
+									)}
+									style={
+										expandedCategory === category.title
+											? { backgroundColor: `${ACCENT_COLOR}08` }
+											: undefined
+									}
 								>
 									<View
+										className="w-12 h-12 rounded-xl items-center justify-center"
 										style={{
-											width: 48,
-											height: 48,
-											borderRadius: 12,
 											backgroundColor:
 												expandedCategory === category.title
-													? THEME_COLORS.accent
-													: `${THEME_COLORS.accent}15`,
-											alignItems: "center",
-											justifyContent: "center",
+													? ACCENT_COLOR
+													: `${ACCENT_COLOR}15`,
 										}}
 									>
 										<Ionicons
 											color={
 												expandedCategory === category.title
-													? THEME_COLORS.primaryForeground
-													: THEME_COLORS.accent
+													? "#FFFFFF"
+													: ACCENT_COLOR
 											}
 											name={category.icon}
 											size={24}
 										/>
 									</View>
-									<View style={{ flex: 1 }}>
-										<Text
-											style={{
-												fontSize: 18,
-												fontWeight: "600",
-												color: THEME_COLORS.foreground,
-											}}
-										>
+									<View className="flex-1">
+										<Text className="text-lg font-semibold text-foreground">
 											{category.title}
 										</Text>
-										<Text
-											style={{
-												fontSize: 14,
-												color: THEME_COLORS.muted,
-												marginTop: 2,
-											}}
-										>
+										<Text className="text-sm text-muted mt-0.5">
 											{category.questions.length} questions
 										</Text>
 									</View>
 									<Ionicons
-										color={THEME_COLORS.muted}
 										name={
 											expandedCategory === category.title
 												? "chevron-up"
 												: "chevron-down"
 										}
 										size={24}
+										className="text-muted"
 									/>
 								</Pressable>
 
 								{/* Questions */}
 								{expandedCategory === category.title && (
-									<View
-										style={{
-											borderTopWidth: 1,
-											borderTopColor: THEME_COLORS.border,
-										}}
-									>
+									<View className="border-t border-border">
 										{category.questions.map((item, questionIndex) => (
 											<View
 												key={item.question}
-												style={{
-													borderBottomWidth:
-														questionIndex < category.questions.length - 1
-															? 1
-															: 0,
-													borderBottomColor: THEME_COLORS.border,
-												}}
+												className={cn(
+													questionIndex < category.questions.length - 1
+														? "border-b border-border"
+														: ""
+												)}
 											>
 												<Pressable
 													onPress={() => toggleQuestion(item.question)}
-													style={({ hovered }) => ({
-														padding: 20,
-														paddingLeft: 24,
-														backgroundColor: hovered
-															? THEME_COLORS.sectionBackground
-															: THEME_COLORS.background,
-														flexDirection: "row",
-														alignItems: "flex-start",
-														gap: 12,
-													})}
+													className="flex-row items-start gap-3 p-5 pl-6 bg-background hover:bg-surface-raised"
 												>
 													<Ionicons
 														color={
 															expandedQuestions.has(item.question)
-																? THEME_COLORS.accent
-																: THEME_COLORS.muted
+																? ACCENT_COLOR
+																: undefined
 														}
 														name={
 															expandedQuestions.has(item.question)
@@ -478,15 +385,15 @@ export default function BrandFAQPage() {
 														}
 														size={22}
 														style={{ marginTop: 2 }}
+														className={cn(
+															expandedQuestions.has(item.question)
+																? ""
+																: "text-muted"
+														)}
 													/>
 													<Text
-														style={{
-															flex: 1,
-															fontSize: 16,
-															fontWeight: "500",
-															color: THEME_COLORS.foreground,
-															lineHeight: 24,
-														}}
+														className="flex-1 text-base font-medium text-foreground"
+														style={{ lineHeight: 24 }}
 													>
 														{item.question}
 													</Text>
@@ -494,18 +401,12 @@ export default function BrandFAQPage() {
 
 												{expandedQuestions.has(item.question) && (
 													<View
-														style={{
-															paddingHorizontal: 24,
-															paddingBottom: 20,
-															paddingLeft: 58,
-														}}
+														className="px-6 pb-5"
+														style={{ paddingLeft: 58 }}
 													>
 														<Text
-															style={{
-																fontSize: 15,
-																color: THEME_COLORS.muted,
-																lineHeight: 26,
-															}}
+															className="text-[15px] text-muted"
+															style={{ lineHeight: 26 }}
 														>
 															{item.answer}
 														</Text>
@@ -521,29 +422,12 @@ export default function BrandFAQPage() {
 
 					{/* Sidebar */}
 					<View
-						style={{
-							width: isMobile ? "100%" : 320,
-							gap: 24,
-						}}
+						className="gap-6"
+						style={{ width: isMobile ? "100%" : 320 }}
 					>
 						{/* Related Resources */}
-						<View
-							style={{
-								padding: 24,
-								borderRadius: 16,
-								backgroundColor: THEME_COLORS.sectionBackground,
-								borderWidth: 1,
-								borderColor: THEME_COLORS.border,
-							}}
-						>
-							<Text
-								style={{
-									fontSize: 18,
-									fontWeight: "600",
-									color: THEME_COLORS.foreground,
-									marginBottom: 20,
-								}}
-							>
+						<View className="p-6 rounded-2xl bg-surface-raised border border-border">
+							<Text className="text-lg font-semibold text-foreground mb-5">
 								Related Resources
 							</Text>
 							{RELATED_RESOURCES.map((resource, index) => (
@@ -553,64 +437,56 @@ export default function BrandFAQPage() {
 									key={resource.title}
 								>
 									<Pressable
-										style={{
-											flexDirection: "row",
-											alignItems: "center",
-											gap: 12,
-											paddingVertical: 12,
-											borderTopWidth: index > 0 ? 1 : 0,
-											borderTopColor: THEME_COLORS.border,
-										}}
+										className={cn(
+											"flex-row items-center gap-3 py-3",
+											index > 0 ? "border-t border-border" : ""
+										)}
 									>
 										{({ hovered: isHovered }) => (
 											<>
 												<View
-													style={{
-														width: 40,
-														height: 40,
-														borderRadius: 10,
-														backgroundColor: isHovered
-															? THEME_COLORS.accent
-															: THEME_COLORS.background,
-														alignItems: "center",
-														justifyContent: "center",
-													}}
+													className={cn(
+														"w-10 h-10 rounded-[10px] items-center justify-center",
+														isHovered ? "" : "bg-background"
+													)}
+													style={
+														isHovered
+															? { backgroundColor: ACCENT_COLOR }
+															: undefined
+													}
 												>
 													<Ionicons
 														color={
 															isHovered
-																? THEME_COLORS.primaryForeground
-																: THEME_COLORS.accent
+																? "#FFFFFF"
+																: ACCENT_COLOR
 														}
 														name={resource.icon}
 														size={20}
 													/>
 												</View>
-												<View style={{ flex: 1 }}>
+												<View className="flex-1">
 													<Text
-														style={{
-															fontSize: 15,
-															fontWeight: "500",
-															color: isHovered
-																? THEME_COLORS.accent
-																: THEME_COLORS.foreground,
-														}}
+														className={cn(
+															"text-[15px] font-medium",
+															isHovered ? "" : "text-foreground"
+														)}
+														style={
+															isHovered
+																? { color: ACCENT_COLOR }
+																: undefined
+														}
 													>
 														{resource.title}
 													</Text>
-													<Text
-														style={{
-															fontSize: 13,
-															color: THEME_COLORS.muted,
-														}}
-													>
+													<Text className="text-[13px] text-muted">
 														{resource.description}
 													</Text>
 												</View>
 												<Ionicons
-													color={THEME_COLORS.muted}
 													name="chevron-forward"
 													size={18}
+													className="text-muted"
 												/>
 											</>
 										)}
@@ -621,38 +497,24 @@ export default function BrandFAQPage() {
 
 						{/* Benefits Card */}
 						<View
+							className="p-6 rounded-2xl"
 							style={{
-								padding: 24,
-								borderRadius: 16,
-								backgroundColor: `${THEME_COLORS.accent}08`,
+								backgroundColor: `${ACCENT_COLOR}08`,
 								borderWidth: 1,
-								borderColor: `${THEME_COLORS.accent}20`,
+								borderColor: `${ACCENT_COLOR}20`,
 							}}
 						>
-							<View
-								style={{
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 12,
-									marginBottom: 16,
-								}}
-							>
+							<View className="flex-row items-center gap-3 mb-4">
 								<Ionicons
-									color={THEME_COLORS.accent}
+									color={ACCENT_COLOR}
 									name="star-outline"
 									size={24}
 								/>
-								<Text
-									style={{
-										fontSize: 18,
-										fontWeight: "600",
-										color: THEME_COLORS.foreground,
-									}}
-								>
+								<Text className="text-lg font-semibold text-foreground">
 									Why Brands Choose Us
 								</Text>
 							</View>
-							<View style={{ gap: 12 }}>
+							<View className="gap-3">
 								{[
 									"Verified creators with proven track records",
 									"Secure escrow payments protect your investment",
@@ -660,25 +522,17 @@ export default function BrandFAQPage() {
 								].map((benefit, index) => (
 									<View
 										key={index}
-										style={{
-											flexDirection: "row",
-											alignItems: "flex-start",
-											gap: 8,
-										}}
+										className="flex-row items-start gap-2"
 									>
 										<Ionicons
-											color={THEME_COLORS.accent}
+											color={ACCENT_COLOR}
 											name="checkmark-circle"
 											size={18}
 											style={{ marginTop: 2 }}
 										/>
 										<Text
-											style={{
-												flex: 1,
-												fontSize: 14,
-												color: THEME_COLORS.muted,
-												lineHeight: 22,
-											}}
+											className="flex-1 text-sm text-muted"
+											style={{ lineHeight: 22 }}
 										>
 											{benefit}
 										</Text>
@@ -689,27 +543,16 @@ export default function BrandFAQPage() {
 
 						{/* CTA Card */}
 						<View
-							style={{
-								padding: 24,
-								borderRadius: 16,
-								backgroundColor: THEME_COLORS.accent,
-							}}
+							className="p-6 rounded-2xl"
+							style={{ backgroundColor: ACCENT_COLOR }}
 						>
-							<Text
-								style={{
-									fontSize: 18,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-									marginBottom: 8,
-								}}
-							>
+							<Text className="text-lg font-semibold mb-2 text-primary-foreground">
 								Ready to get started?
 							</Text>
 							<Text
+								className="text-sm mb-5"
 								style={{
-									fontSize: 14,
 									color: "rgba(255,255,255,0.8)",
-									marginBottom: 20,
 									lineHeight: 22,
 								}}
 							>
@@ -717,21 +560,18 @@ export default function BrandFAQPage() {
 							</Text>
 							<Pressable
 								onPress={() => openAuthModal("signup")}
+								className="items-center"
 								style={({ hovered }) => ({
 									padding: 14,
 									borderRadius: 8,
 									backgroundColor: hovered
 										? "rgba(255,255,255,0.95)"
-										: THEME_COLORS.primaryForeground,
-									alignItems: "center",
+										: "#FFFFFF",
 								})}
 							>
 								<Text
-									style={{
-										fontSize: 15,
-										fontWeight: "600",
-										color: THEME_COLORS.accent,
-									}}
+									className="text-[15px] font-semibold"
+									style={{ color: ACCENT_COLOR }}
 								>
 									Post a Brief
 								</Text>
@@ -742,46 +582,20 @@ export default function BrandFAQPage() {
 			</View>
 
 			{/* Bottom CTA */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.sectionBackground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 600,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="py-16 px-6 bg-surface-raised">
+				<View className="max-w-[600px] mx-auto w-full items-center">
 					<Ionicons
-						color={THEME_COLORS.accent}
+						color={ACCENT_COLOR}
 						name="headset-outline"
 						size={48}
-						style={{ marginBottom: 20 }}
+						className="mb-5"
 					/>
-					<Text
-						style={{
-							fontSize: 24,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
-					>
+					<Text className="text-2xl font-bold text-foreground text-center mb-3">
 						Need personalized help?
 					</Text>
 					<Text
-						style={{
-							fontSize: 16,
-							color: THEME_COLORS.muted,
-							textAlign: "center",
-							marginBottom: 24,
-							lineHeight: 24,
-						}}
+						className="text-base text-muted text-center mb-6"
+						style={{ lineHeight: 24 }}
 					>
 						Our brand partnerships team is ready to help you find the perfect
 						creators.
@@ -791,17 +605,11 @@ export default function BrandFAQPage() {
 							style={({ hovered }) => ({
 								paddingHorizontal: 32,
 								paddingVertical: 14,
-								backgroundColor: hovered ? "#4338CA" : THEME_COLORS.accent,
+								backgroundColor: hovered ? ACCENT_HOVER : ACCENT_COLOR,
 								borderRadius: 8,
 							})}
 						>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-								}}
-							>
+							<Text className="text-base font-semibold text-primary-foreground">
 								Contact Brand Support
 							</Text>
 						</Pressable>

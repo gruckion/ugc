@@ -127,7 +127,7 @@ export default function SignInRoute() {
         value={password}
       />
 
-      <View style={{ marginTop: 8 }}>
+      <View className="mt-2">
         <StyledButton
           isLoading={isLoading}
           label="Sign In"
@@ -136,42 +136,18 @@ export default function SignInRoute() {
       </View>
 
       <Link asChild href="/(auth)/email/(reset)/request-password-reset">
-        <Pressable style={{ alignSelf: "center", paddingVertical: 8 }}>
-          <Text
-            className="text-accent"
-            style={{
-              fontSize: 14,
-              fontWeight: "500",
-            }}
-          >
+        <Pressable className="self-center py-2">
+          <Text className="text-accent text-sm font-medium">
             Forgot Password?
           </Text>
         </Pressable>
       </Link>
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 24,
-          gap: 4,
-        }}
-      >
-        <Text className="text-muted" style={{ fontSize: 14 }}>
-          Don't have an account?
-        </Text>
+      <View className="flex-row justify-center items-center mt-6 gap-1">
+        <Text className="text-muted text-sm">Don't have an account?</Text>
         <Link asChild href="/(auth)/email/signup" replace>
           <Pressable>
-            <Text
-              className="text-accent"
-              style={{
-                fontSize: 14,
-                fontWeight: "600",
-              }}
-            >
-              Sign Up
-            </Text>
+            <Text className="text-accent text-sm font-semibold">Sign Up</Text>
           </Pressable>
         </Link>
       </View>

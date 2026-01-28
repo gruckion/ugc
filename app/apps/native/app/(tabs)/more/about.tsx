@@ -7,630 +7,322 @@ import { ExternalLinkButton } from "@/components/ExternalLinkButton";
 import { UGCLogo } from "@/components/UGCLogo";
 
 export default function About() {
-  const router = useRouter();
-  const insets = useSafeAreaInsets();
+	const router = useRouter();
+	const insets = useSafeAreaInsets();
 
-  // Theme colors for Ionicons
-  const foreground = useThemeColor("foreground");
-  const primaryForeground = "#FFFFFF";
+	// Theme colors for Ionicons (which don't support className)
+	const foreground = useThemeColor("foreground");
+	const primaryForeground = "#FFFFFF";
 
-  return (
-    <View className="flex-1 bg-background">
-      {/* Header */}
-      <View
-        className="bg-primary px-4 pb-4"
-        style={{
-          paddingTop: insets.top,
-        }}
-      >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
-          <Pressable
-            onPress={() => router.back()}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
-          >
-            <Ionicons color={primaryForeground} name="arrow-back" size={22} />
-          </Pressable>
-          <Text
-            className="flex-1 text-primary-foreground"
-            style={{
-              fontSize: 20,
-              fontWeight: "300",
-              fontFamily: "serif",
-            }}
-          >
-            About the Club
-          </Text>
-        </View>
-      </View>
+	return (
+		<View className="flex-1 bg-background">
+			{/* Header */}
+			<View
+				className="bg-primary px-4 pb-4"
+				style={{
+					paddingTop: insets.top,
+				}}
+			>
+				<View className="flex-row items-center gap-3">
+					<Pressable
+						onPress={() => router.back()}
+						className="h-10 w-10 items-center justify-center rounded-full bg-white/10"
+					>
+						<Ionicons color={primaryForeground} name="arrow-back" size={22} />
+					</Pressable>
+					<Text className="flex-1 font-light font-serif text-xl text-primary-foreground">
+						About the Club
+					</Text>
+				</View>
+			</View>
 
-      <ScrollView
-        contentContainerStyle={{ paddingBottom: 40 }}
-        showsVerticalScrollIndicator={false}
-        style={{ flex: 1 }}
-      >
-        {/* Hero Section with Logo */}
-        <View
-          className="bg-primary"
-          style={{
-            height: 180,
-            alignItems: "center",
-            justifyContent: "center",
-          }}
-        >
-          <UGCLogo backgroundColor="#FFFFFF" size={80} textColor="#1DBF73" />
-        </View>
+			<ScrollView
+				contentContainerStyle={{ paddingBottom: 40 }}
+				showsVerticalScrollIndicator={false}
+				className="flex-1"
+			>
+				{/* Hero Section with Logo */}
+				<View className="h-[180px] items-center justify-center bg-primary">
+					<UGCLogo bgClassName="bg-background" size={80} textClassName="text-primary" />
+				</View>
 
-        {/* Title */}
-        <View
-          style={{
-            alignItems: "center",
-            paddingHorizontal: 20,
-            marginTop: 24,
-            marginBottom: 24,
-          }}
-        >
-          <Text
-            className="text-center text-foreground"
-            style={{
-              fontSize: 26,
-              fontWeight: "600",
-            }}
-          >
-            UGC Marketplace
-          </Text>
-          <Text
-            className="text-center text-muted"
-            style={{
-              fontSize: 16,
-              marginTop: 4,
-            }}
-          >
-            Connect with creators
-          </Text>
-        </View>
+				{/* Title */}
+				<View className="items-center px-5 my-6">
+					<Text className="text-center text-[26px] font-semibold text-foreground">
+						UGC Marketplace
+					</Text>
+					<Text className="mt-1 text-center text-base text-muted">
+						Connect with creators
+					</Text>
+				</View>
 
-        {/* History Section */}
-        <View
-          className="mx-4 mb-4 bg-surface"
-          style={{
-            borderRadius: 12,
-            padding: 20,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
-            shadowRadius: 4,
-            elevation: 2,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 12,
-            }}
-          >
-            <View
-              className="bg-primary/10"
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 12,
-              }}
-            >
-              <Ionicons color={foreground} name="book-outline" size={18} />
-            </View>
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-              }}
-            >
-              Our History
-            </Text>
-          </View>
-          <Text
-            className="text-muted"
-            style={{
-              fontSize: 15,
-              lineHeight: 24,
-            }}
-          >
-            Originally established in 1895 by Oxbridge graduates who wanted a
-            lunch club in the City, the link with the universities remains,
-            although membership is now much wider, embracing both sexes and many
-            professions.
-          </Text>
-          <Text
-            className="text-muted"
-            style={{
-              fontSize: 15,
-              lineHeight: 24,
-              marginTop: 12,
-            }}
-          >
-            Our current premises at 42 Crutched Friars, which we moved to in
-            January 2018, have a rich history of their own - they were once the
-            residence of the Spanish Ambassador during the late 18th century.
-          </Text>
-        </View>
+				{/* History Section */}
+				<View
+					className="mx-4 mb-4 rounded-xl p-5 bg-surface"
+					style={{
+						shadowColor: "#000",
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.08,
+						shadowRadius: 4,
+						elevation: 2,
+					}}
+				>
+					<View className="mb-3 flex-row items-center">
+						<View className="mr-3 h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+							<Ionicons color={foreground} name="book-outline" size={18} />
+						</View>
+						<Text className="text-lg font-semibold text-foreground">
+							Our History
+						</Text>
+					</View>
+					<Text className="text-[15px] leading-6 text-muted">
+						Originally established in 1895 by Oxbridge graduates who wanted a
+						lunch club in the City, the link with the universities remains,
+						although membership is now much wider, embracing both sexes and many
+						professions.
+					</Text>
+					<Text className="mt-3 text-[15px] leading-6 text-muted">
+						Our current premises at 42 Crutched Friars, which we moved to in
+						January 2018, have a rich history of their own - they were once the
+						residence of the Spanish Ambassador during the late 18th century.
+					</Text>
+				</View>
 
-        {/* About Section */}
-        <View
-          className="mx-4 mb-4 bg-surface"
-          style={{
-            borderRadius: 12,
-            padding: 20,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
-            shadowRadius: 4,
-            elevation: 2,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 12,
-            }}
-          >
-            <View
-              className="bg-primary/10"
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 12,
-              }}
-            >
-              <Ionicons
-                color={foreground}
-                name="restaurant-outline"
-                size={18}
-              />
-            </View>
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-              }}
-            >
-              The Club Today
-            </Text>
-          </View>
-          <Text
-            className="text-muted"
-            style={{
-              fontSize: 15,
-              lineHeight: 24,
-            }}
-          >
-            User Generated Content (UGC) provides a platform in the heart of London's
-            financial district. It is the ideal place for lunch or simply a
-            drink at the bar. UGC offers a first-class meal in discreet
-            circumstances for a modest price.
-          </Text>
-          <Text
-            className="text-muted"
-            style={{
-              fontSize: 15,
-              lineHeight: 24,
-              marginTop: 12,
-            }}
-          >
-            Members joining the Club find the atmosphere equally conducive to
-            lunching with friends or on their own at the club tables. The food
-            is first-class, the wine list comprehensive, and the service
-            excellent.
-          </Text>
-        </View>
+				{/* About Section */}
+				<View
+					className="mx-4 mb-4 rounded-xl p-5 bg-surface"
+					style={{
+						shadowColor: "#000",
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.08,
+						shadowRadius: 4,
+						elevation: 2,
+					}}
+				>
+					<View className="mb-3 flex-row items-center">
+						<View className="mr-3 h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+							<Ionicons
+								color={foreground}
+								name="restaurant-outline"
+								size={18}
+							/>
+						</View>
+						<Text className="text-lg font-semibold text-foreground">
+							The Club Today
+						</Text>
+					</View>
+					<Text className="text-[15px] leading-6 text-muted">
+						User Generated Content (UGC) provides a platform in the heart of London's
+						financial district. It is the ideal place for lunch or simply a
+						drink at the bar. UGC offers a first-class meal in discreet
+						circumstances for a modest price.
+					</Text>
+					<Text className="mt-3 text-[15px] leading-6 text-muted">
+						Members joining the Club find the atmosphere equally conducive to
+						lunching with friends or on their own at the club tables. The food
+						is first-class, the wine list comprehensive, and the service
+						excellent.
+					</Text>
+				</View>
 
-        {/* Key Features */}
-        <View
-          className="mx-4 mb-4 bg-surface"
-          style={{
-            borderRadius: 12,
-            padding: 20,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
-            shadowRadius: 4,
-            elevation: 2,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 16,
-            }}
-          >
-            <View
-              className="bg-primary/10"
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 12,
-              }}
-            >
-              <Ionicons color={foreground} name="star-outline" size={18} />
-            </View>
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-              }}
-            >
-              What We Offer
-            </Text>
-          </View>
+				{/* Key Features */}
+				<View
+					className="mx-4 mb-4 rounded-xl p-5 bg-surface"
+					style={{
+						shadowColor: "#000",
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.08,
+						shadowRadius: 4,
+						elevation: 2,
+					}}
+				>
+					<View className="mb-4 flex-row items-center">
+						<View className="mr-3 h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+							<Ionicons color={foreground} name="star-outline" size={18} />
+						</View>
+						<Text className="text-lg font-semibold text-foreground">
+							What We Offer
+						</Text>
+					</View>
 
-          {/* Feature Items */}
-          {[
-            {
-              icon: "globe-outline" as const,
-              title: "Reciprocal Clubs",
-              description: "Access to over 450 of the finest clubs worldwide",
-            },
-            {
-              icon: "restaurant-outline" as const,
-              title: "Fine Dining",
-              description: "First-class cuisine with an excellent wine list",
-            },
-            {
-              icon: "briefcase-outline" as const,
-              title: "Business Space",
-              description:
-                "Comfortable space for business use from early morning",
-            },
-            {
-              icon: "people-outline" as const,
-              title: "Networking",
-              description:
-                "Meet professionals from many fields and backgrounds",
-            },
-          ].map((feature, index) => (
-            <View
-              key={feature.title}
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: index < 3 ? 16 : 0,
-              }}
-            >
-              <View
-                className="bg-accent"
-                style={{
-                  width: 32,
-                  height: 32,
-                  borderRadius: 16,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  marginRight: 12,
-                }}
-              >
-                <Ionicons color={foreground} name={feature.icon} size={16} />
-              </View>
-              <View style={{ flex: 1 }}>
-                <Text
-                  className="text-foreground"
-                  style={{
-                    fontSize: 15,
-                    fontWeight: "600",
-                  }}
-                >
-                  {feature.title}
-                </Text>
-                <Text
-                  className="text-muted"
-                  style={{
-                    fontSize: 14,
-                    marginTop: 2,
-                  }}
-                >
-                  {feature.description}
-                </Text>
-              </View>
-            </View>
-          ))}
-        </View>
+					{/* Feature Items */}
+					{[
+						{
+							icon: "globe-outline" as const,
+							title: "Reciprocal Clubs",
+							description: "Access to over 450 of the finest clubs worldwide",
+						},
+						{
+							icon: "restaurant-outline" as const,
+							title: "Fine Dining",
+							description: "First-class cuisine with an excellent wine list",
+						},
+						{
+							icon: "briefcase-outline" as const,
+							title: "Business Space",
+							description:
+								"Comfortable space for business use from early morning",
+						},
+						{
+							icon: "people-outline" as const,
+							title: "Networking",
+							description:
+								"Meet professionals from many fields and backgrounds",
+						},
+					].map((feature, index) => (
+						<View
+							key={feature.title}
+							className="flex-row items-start"
+							style={{
+								marginBottom: index < 3 ? 16 : 0,
+							}}
+						>
+							<View className="mr-3 h-8 w-8 items-center justify-center rounded-full bg-accent">
+								<Ionicons color={foreground} name={feature.icon} size={16} />
+							</View>
+							<View className="flex-1">
+								<Text className="text-[15px] font-semibold text-foreground">
+									{feature.title}
+								</Text>
+								<Text className="mt-0.5 text-sm text-muted">
+									{feature.description}
+								</Text>
+							</View>
+						</View>
+					))}
+				</View>
 
-        {/* Location Section */}
-        <View
-          className="mx-4 mb-4 bg-primary"
-          style={{
-            borderRadius: 12,
-            padding: 20,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 12,
-            }}
-          >
-            <View
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 12,
-              }}
-            >
-              <Ionicons
-                color={primaryForeground}
-                name="location-outline"
-                size={18}
-              />
-            </View>
-            <Text
-              className="text-primary-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-              }}
-            >
-              Visit Us
-            </Text>
-          </View>
+				{/* Location Section */}
+				<View className="mx-4 mb-4 rounded-xl p-5 bg-primary">
+					<View className="mb-3 flex-row items-center">
+						<View
+							className="mr-3 h-9 w-9 items-center justify-center rounded-full bg-white/10"
+						>
+							<Ionicons
+								color={primaryForeground}
+								name="location-outline"
+								size={18}
+							/>
+						</View>
+						<Text className="text-lg font-semibold text-primary-foreground">
+							Visit Us
+						</Text>
+					</View>
 
-          <Text
-            className="text-primary-foreground"
-            style={{
-              fontSize: 16,
-              fontWeight: "500",
-            }}
-          >
-            42 Crutched Friars
-          </Text>
-          <Text
-            className="text-accent"
-            style={{
-              fontSize: 15,
-              marginTop: 4,
-            }}
-          >
-            London EC3N 2AP2
-          </Text>
+					<Text className="text-base font-medium text-primary-foreground">
+						42 Crutched Friars
+					</Text>
+					<Text className="mt-1 text-[15px] text-accent">
+						London EC3N 2AP2
+					</Text>
 
-          <View
-            style={{
-              height: 1,
-              backgroundColor: "rgba(255, 255, 255, 0.1)",
-              marginVertical: 16,
-            }}
-          />
+					<View
+						className="my-4 bg-white/10"
+						style={{ height: 1 }}
+					/>
 
-          <View style={{ flexDirection: "row", gap: 12 }}>
-            <Pressable
-              className="flex-1 bg-accent"
-              onPress={() => Linking.openURL("tel:02071676682")}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                paddingVertical: 12,
-                borderRadius: 8,
-                gap: 8,
-              }}
-            >
-              <Ionicons color={foreground} name="call" size={18} />
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 15,
-                  fontWeight: "500",
-                }}
-              >
-                Call Us
-              </Text>
-            </Pressable>
+					<View className="flex-row gap-3">
+						<Pressable
+							className="flex-1 flex-row items-center justify-center gap-2 rounded-lg py-3 bg-accent"
+							onPress={() => Linking.openURL("tel:02071676682")}
+						>
+							<Ionicons color={foreground} name="call" size={18} />
+							<Text className="text-[15px] font-medium text-foreground">
+								Call Us
+							</Text>
+						</Pressable>
 
-            <Pressable
-              onPress={() =>
-                Linking.openURL("mailto:contact@ugc.com")
-              }
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "center",
-                backgroundColor: "rgba(255, 255, 255, 0.1)",
-                paddingVertical: 12,
-                borderRadius: 8,
-                gap: 8,
-              }}
-            >
-              <Ionicons color={primaryForeground} name="mail" size={18} />
-              <Text
-                className="text-primary-foreground"
-                style={{
-                  fontSize: 15,
-                  fontWeight: "500",
-                }}
-              >
-                Email
-              </Text>
-            </Pressable>
-          </View>
-        </View>
+						<Pressable
+							className="flex-1 flex-row items-center justify-center gap-2 rounded-lg py-3 bg-white/10"
+							onPress={() =>
+								Linking.openURL("mailto:contact@ugc.com")
+							}
+						>
+							<Ionicons color={primaryForeground} name="mail" size={18} />
+							<Text className="text-[15px] font-medium text-primary-foreground">
+								Email
+							</Text>
+						</Pressable>
+					</View>
+				</View>
 
-        {/* Dress Code */}
-        <View
-          className="mx-4 mb-4 bg-surface"
-          style={{
-            borderRadius: 12,
-            padding: 20,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
-            shadowRadius: 4,
-            elevation: 2,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 12,
-            }}
-          >
-            <View
-              className="bg-primary/10"
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 12,
-              }}
-            >
-              <Ionicons color={foreground} name="shirt-outline" size={18} />
-            </View>
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-              }}
-            >
-              Dress Code
-            </Text>
-          </View>
-          <Text
-            className="text-muted"
-            style={{
-              fontSize: 15,
-              lineHeight: 24,
-            }}
-          >
-            In keeping with other private members clubs, the dress code is
-            jacket and tie for men and smart dress for ladies. Jeans and
-            trainers are not permitted.
-          </Text>
-        </View>
+				{/* Dress Code */}
+				<View
+					className="mx-4 mb-4 rounded-xl p-5 bg-surface"
+					style={{
+						shadowColor: "#000",
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.08,
+						shadowRadius: 4,
+						elevation: 2,
+					}}
+				>
+					<View className="mb-3 flex-row items-center">
+						<View className="mr-3 h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+							<Ionicons color={foreground} name="shirt-outline" size={18} />
+						</View>
+						<Text className="text-lg font-semibold text-foreground">
+							Dress Code
+						</Text>
+					</View>
+					<Text className="text-[15px] leading-6 text-muted">
+						In keeping with other private members clubs, the dress code is
+						jacket and tie for men and smart dress for ladies. Jeans and
+						trainers are not permitted.
+					</Text>
+				</View>
 
-        {/* Opening Hours */}
-        <View
-          className="mx-4 mb-4 bg-surface"
-          style={{
-            borderRadius: 12,
-            padding: 20,
-            shadowColor: "#000",
-            shadowOffset: { width: 0, height: 2 },
-            shadowOpacity: 0.08,
-            shadowRadius: 4,
-            elevation: 2,
-          }}
-        >
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              marginBottom: 12,
-            }}
-          >
-            <View
-              className="bg-primary/10"
-              style={{
-                width: 36,
-                height: 36,
-                borderRadius: 18,
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 12,
-              }}
-            >
-              <Ionicons color={foreground} name="time-outline" size={18} />
-            </View>
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-              }}
-            >
-              Opening Hours
-            </Text>
-          </View>
-          <View style={{ gap: 8 }}>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <Text className="text-muted" style={{ fontSize: 15 }}>
-                Monday - Friday
-              </Text>
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 15,
-                  fontWeight: "500",
-                }}
-              >
-                9:00 AM - 5:00 PM
-              </Text>
-            </View>
-            <View
-              style={{ flexDirection: "row", justifyContent: "space-between" }}
-            >
-              <Text className="text-muted" style={{ fontSize: 15 }}>
-                Lunch Service
-              </Text>
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 15,
-                  fontWeight: "500",
-                }}
-              >
-                12:00 PM - 2:30 PM
-              </Text>
-            </View>
-          </View>
-          <Text
-            className="text-muted"
-            style={{
-              fontSize: 13,
-              marginTop: 12,
-              fontStyle: "italic",
-            }}
-          >
-            Closed between Christmas and New Year
-          </Text>
-        </View>
+				{/* Opening Hours */}
+				<View
+					className="mx-4 mb-4 rounded-xl p-5 bg-surface"
+					style={{
+						shadowColor: "#000",
+						shadowOffset: { width: 0, height: 2 },
+						shadowOpacity: 0.08,
+						shadowRadius: 4,
+						elevation: 2,
+					}}
+				>
+					<View className="mb-3 flex-row items-center">
+						<View className="mr-3 h-9 w-9 items-center justify-center rounded-full bg-primary/10">
+							<Ionicons color={foreground} name="time-outline" size={18} />
+						</View>
+						<Text className="text-lg font-semibold text-foreground">
+							Opening Hours
+						</Text>
+					</View>
+					<View className="gap-2">
+						<View className="flex-row justify-between">
+							<Text className="text-[15px] text-muted">
+								Monday - Friday
+							</Text>
+							<Text className="text-[15px] font-medium text-foreground">
+								9:00 AM - 5:00 PM
+							</Text>
+						</View>
+						<View className="flex-row justify-between">
+							<Text className="text-[15px] text-muted">
+								Lunch Service
+							</Text>
+							<Text className="text-[15px] font-medium text-foreground">
+								12:00 PM - 2:30 PM
+							</Text>
+						</View>
+					</View>
+					<Text className="mt-3 text-[13px] italic text-muted">
+						Closed between Christmas and New Year
+					</Text>
+				</View>
 
-        {/* Website Link */}
-        <View style={{ marginHorizontal: 16 }}>
-          <ExternalLinkButton
-            label="Visit Our Website"
-            url="https://ugc.com/"
-            variant="primary"
-          />
-        </View>
-      </ScrollView>
-    </View>
-  );
+				{/* Website Link */}
+				<View className="mx-4">
+					<ExternalLinkButton
+						label="Visit Our Website"
+						url="https://ugc.com/"
+						variant="primary"
+					/>
+				</View>
+			</ScrollView>
+		</View>
+	);
 }

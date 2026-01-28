@@ -13,11 +13,6 @@ import { AuthModalLeftPanel } from "./AuthModalLeftPanel";
 import { AuthModalSignInView } from "./AuthModalSignInView";
 import { AuthModalSignUpView } from "./AuthModalSignUpView";
 
-const THEME_COLORS = {
-  background: "#FFFFFF",
-  foreground: "#222325",
-};
-
 export function AuthModal() {
   const { isOpen, view, close } = useAuthModal();
   const { isAuthenticated } = useConvexAuth();
@@ -71,24 +66,18 @@ export function AuthModal() {
     >
       {/* Backdrop */}
       <Pressable
+        className="flex-1 justify-center items-center bg-black/50"
         onPress={close}
         style={{
-          flex: 1,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          justifyContent: "center",
-          alignItems: "center",
           padding: isMobile ? 0 : 24,
         }}
       >
         {/* Modal Container */}
         <Pressable
+          className="flex-row bg-background overflow-hidden max-w-[900px]"
           onPress={(e) => e.stopPropagation()}
           style={{
-            flexDirection: "row",
-            backgroundColor: THEME_COLORS.background,
             borderRadius: isMobile ? 0 : 16,
-            overflow: "hidden",
-            maxWidth: 900,
             width: isMobile ? "100%" : "95%",
             maxHeight: isMobile ? "100%" : "90%",
             height: isMobile ? "100%" : "auto",
@@ -104,26 +93,15 @@ export function AuthModal() {
           {showSplitLayout && <AuthModalLeftPanel />}
 
           {/* Right Panel - Content */}
-          <View style={{ flex: 1 }}>
+          <View className="flex-1">
             {/* Close Button */}
-            <View
-              style={{
-                position: "absolute",
-                top: 16,
-                right: 16,
-                zIndex: 10,
-              }}
-            >
+            <View className="absolute top-4 right-4 z-10">
               <Pressable
+                className="p-2 rounded-[20px] hover:bg-hover-surface"
                 onPress={close}
-                style={({ hovered }) => ({
-                  padding: 8,
-                  borderRadius: 20,
-                  backgroundColor: hovered ? "#f0f0f0" : "transparent",
-                })}
               >
                 <Ionicons
-                  color={THEME_COLORS.foreground}
+                  className="text-foreground"
                   name="close"
                   size={24}
                 />
@@ -132,15 +110,14 @@ export function AuthModal() {
 
             {/* Scrollable Content */}
             <ScrollView
+              contentContainerClassName="flex-grow justify-center"
               contentContainerStyle={{
-                flexGrow: 1,
-                justifyContent: "center",
                 padding: isMobile ? 24 : 48,
                 paddingTop: isMobile ? 64 : 48,
               }}
               showsVerticalScrollIndicator={false}
             >
-              <View style={{ maxWidth: 400, width: "100%", alignSelf: "center" }}>
+              <View className="max-w-[400px] w-full self-center">
                 {renderContent(view)}
               </View>
             </ScrollView>

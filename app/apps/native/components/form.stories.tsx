@@ -68,7 +68,7 @@ export const Loading: ButtonStory = {
 
 export const AllButtonVariants: ButtonStory = {
   render: () => (
-    <View style={{ gap: 12 }}>
+    <View className="gap-3">
       <StyledButton label="Primary Button" onPress={fn()} variant="primary" />
       <StyledButton
         label="Secondary Button"
@@ -227,7 +227,7 @@ export const SignInFormExample: StoryObj = {
     };
 
     return (
-      <View style={{ gap: 16 }}>
+      <View className="gap-4">
         <FormHeader
           description="Welcome back! Please sign in to continue."
           title="Sign In"
@@ -275,7 +275,7 @@ export const SignUpFormExample: StoryObj = {
     const [password, setPassword] = useState("");
 
     return (
-      <View style={{ gap: 16 }}>
+      <View className="gap-4">
         <FormHeader
           description="Create an account to get started."
           title="Create Account"

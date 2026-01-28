@@ -3,17 +3,7 @@ import { useState } from "react";
 import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createWebPageJsonLd, createEventJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-	sectionBackground: "#fafafa",
-};
+import { cn } from "@/lib/utils";
 
 // Event types
 const EVENT_FILTERS = [
@@ -143,7 +133,7 @@ const PAST_EVENTS = [
 	},
 ];
 
-// Event type colors
+// Event type colors (data-driven, acceptable as inline style exception)
 const TYPE_COLORS: Record<string, string> = {
 	webinar: "#4F46E5",
 	workshop: "#F59E0B",
@@ -191,7 +181,7 @@ export default function CommunityEventsPage() {
 	const eventsJsonLd = [pageJsonLd, featuredEventJsonLd, ...upcomingEventsJsonLd];
 
 	return (
-		<ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+		<ScrollView className="flex-1 bg-background">
 			<SEO
 				title="Community Events"
 				description="Join UGC Marketplace community events. Attend webinars, workshops, conferences, and meetups for creators and brands. Learn, network, and grow your career."
@@ -208,55 +198,30 @@ export default function CommunityEventsPage() {
 
 			{/* Hero Section */}
 			<View
-				style={{
-					paddingTop: 64,
-					paddingBottom: 64,
-					paddingHorizontal: 24,
-					backgroundColor: "#4F46E5",
-				}}
+				className="px-6 py-16"
+				style={{ backgroundColor: "#4F46E5" }}
 			>
-				<View
-					style={{
-						maxWidth: 800,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+				<View className="max-w-[800px] mx-auto w-full items-center">
 					<View
-						style={{
-							width: 72,
-							height: 72,
-							borderRadius: 36,
-							backgroundColor: "rgba(255,255,255,0.2)",
-							alignItems: "center",
-							justifyContent: "center",
-							marginBottom: 24,
-						}}
+						className="w-[72px] h-[72px] rounded-full items-center justify-center mb-6"
+						style={{ backgroundColor: "rgba(255,255,255,0.2)" }}
 					>
 						<Ionicons
-							color={THEME_COLORS.primaryForeground}
 							name="calendar-outline"
 							size={36}
+							className="text-primary-foreground"
 						/>
 					</View>
 					<Text
-						style={{
-							fontSize: isMobile ? 32 : 48,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 16,
-						}}
+						className="font-bold text-center mb-4 text-primary-foreground"
+						style={{ fontSize: isMobile ? 32 : 48 }}
 					>
 						Connect, Learn, Grow
 					</Text>
 					<Text
+						className="text-lg text-center max-w-[600px]"
 						style={{
-							fontSize: 18,
 							color: "rgba(255,255,255,0.9)",
-							textAlign: "center",
-							maxWidth: 600,
 							lineHeight: 28,
 						}}
 					>
@@ -267,34 +232,14 @@ export default function CommunityEventsPage() {
 			</View>
 
 			{/* Featured Event */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingVertical: 64,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
-					<View
-						style={{
-							flexDirection: "row",
-							alignItems: "center",
-							gap: 8,
-							marginBottom: 20,
-						}}
-					>
+			<View className="px-6 py-16">
+				<View className="max-w-[1200px] mx-auto w-full">
+					<View className="flex-row items-center gap-2 mb-5">
 						<Ionicons color="#EC4899" name="star" size={20} />
 						<Text
+							className="text-[13px] font-semibold uppercase"
 							style={{
-								fontSize: 13,
-								fontWeight: "600",
 								color: "#EC4899",
-								textTransform: "uppercase",
 								letterSpacing: 1,
 							}}
 						>
@@ -303,96 +248,69 @@ export default function CommunityEventsPage() {
 					</View>
 
 					<View
+						className="bg-background rounded-[20px] overflow-hidden border border-border"
 						style={{
 							flexDirection: isMobile ? "column" : "row",
-							backgroundColor: THEME_COLORS.background,
-							borderRadius: 20,
-							overflow: "hidden",
-							borderWidth: 1,
-							borderColor: THEME_COLORS.border,
 						}}
 					>
 						{/* Image */}
 						<View
+							className="bg-sectionBackground"
 							style={{
 								width: isMobile ? "100%" : "50%",
 								height: isMobile ? 240 : 380,
-								backgroundColor: THEME_COLORS.sectionBackground,
 							}}
 						>
 							<Image
 								source={{ uri: FEATURED_EVENT.image }}
-								style={{ width: "100%", height: "100%" }}
+								className="w-full h-full"
 								resizeMode="cover"
 							/>
 						</View>
 
 						{/* Content */}
 						<View
+							className="flex-1"
 							style={{
-								flex: 1,
 								padding: isMobile ? 24 : 40,
 							}}
 						>
-							<View
-								style={{
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 8,
-									marginBottom: 16,
-								}}
-							>
+							<View className="flex-row items-center gap-2 mb-4">
 								<View
+									className="px-[10px] py-1 rounded"
 									style={{
-										paddingHorizontal: 10,
-										paddingVertical: 4,
-										borderRadius: 4,
 										backgroundColor: `${TYPE_COLORS[FEATURED_EVENT.type]}15`,
 									}}
 								>
 									<Text
+										className="text-[11px] font-semibold uppercase"
 										style={{
-											fontSize: 11,
-											fontWeight: "600",
 											color: TYPE_COLORS[FEATURED_EVENT.type],
-											textTransform: "uppercase",
 										}}
 									>
 										{FEATURED_EVENT.type}
 									</Text>
 								</View>
 								{FEATURED_EVENT.isVirtual && (
-									<View
-										style={{
-											flexDirection: "row",
-											alignItems: "center",
-											gap: 4,
-										}}
-									>
+									<View className="flex-row items-center gap-1">
 										<Ionicons
-											color={THEME_COLORS.muted}
 											name="videocam"
 											size={14}
+											className="text-muted"
 										/>
-										<Text style={{ fontSize: 12, color: THEME_COLORS.muted }}>
+										<Text className="text-xs text-muted">
 											Virtual
 										</Text>
 									</View>
 								)}
 								{FEATURED_EVENT.isInPerson && (
-									<View
-										style={{
-											flexDirection: "row",
-											alignItems: "center",
-											gap: 4,
-										}}
-									>
+									<View className="flex-row items-center gap-1">
 										<Ionicons
-											color={THEME_COLORS.muted}
 											name="location"
 											size={14}
+											className="text-muted"
 										/>
-										<Text style={{ fontSize: 12, color: THEME_COLORS.muted }}>
+										<Text className="text-xs text-muted">
 											In Person
 										</Text>
 									</View>
@@ -400,11 +318,9 @@ export default function CommunityEventsPage() {
 							</View>
 
 							<Text
+								className="font-bold text-foreground mb-3"
 								style={{
 									fontSize: isMobile ? 24 : 32,
-									fontWeight: "700",
-									color: THEME_COLORS.foreground,
-									marginBottom: 12,
 									lineHeight: isMobile ? 32 : 42,
 								}}
 							>
@@ -412,144 +328,70 @@ export default function CommunityEventsPage() {
 							</Text>
 
 							<Text
-								style={{
-									fontSize: 16,
-									color: THEME_COLORS.muted,
-									lineHeight: 26,
-									marginBottom: 24,
-								}}
+								className="text-base text-muted mb-6"
+								style={{ lineHeight: 26 }}
 							>
 								{FEATURED_EVENT.description}
 							</Text>
 
 							{/* Event Details */}
-							<View style={{ gap: 12, marginBottom: 24 }}>
-								<View
-									style={{
-										flexDirection: "row",
-										alignItems: "center",
-										gap: 12,
-									}}
-								>
+							<View className="gap-3 mb-6">
+								<View className="flex-row items-center gap-3">
 									<Ionicons
-										color={THEME_COLORS.primary}
 										name="calendar-outline"
 										size={20}
+										className="text-primary"
 									/>
-									<Text
-										style={{
-											fontSize: 15,
-											color: THEME_COLORS.foreground,
-											fontWeight: "500",
-										}}
-									>
+									<Text className="text-[15px] text-foreground font-medium">
 										{FEATURED_EVENT.date}
 									</Text>
 								</View>
-								<View
-									style={{
-										flexDirection: "row",
-										alignItems: "center",
-										gap: 12,
-									}}
-								>
+								<View className="flex-row items-center gap-3">
 									<Ionicons
-										color={THEME_COLORS.primary}
 										name="time-outline"
 										size={20}
+										className="text-primary"
 									/>
-									<Text
-										style={{
-											fontSize: 15,
-											color: THEME_COLORS.foreground,
-											fontWeight: "500",
-										}}
-									>
+									<Text className="text-[15px] text-foreground font-medium">
 										{FEATURED_EVENT.time}
 									</Text>
 								</View>
-								<View
-									style={{
-										flexDirection: "row",
-										alignItems: "center",
-										gap: 12,
-									}}
-								>
+								<View className="flex-row items-center gap-3">
 									<Ionicons
-										color={THEME_COLORS.primary}
 										name="location-outline"
 										size={20}
+										className="text-primary"
 									/>
-									<Text
-										style={{
-											fontSize: 15,
-											color: THEME_COLORS.foreground,
-											fontWeight: "500",
-										}}
-									>
+									<Text className="text-[15px] text-foreground font-medium">
 										{FEATURED_EVENT.location}
 									</Text>
 								</View>
 							</View>
 
 							{/* Stats */}
-							<View
-								style={{
-									flexDirection: "row",
-									gap: 32,
-									marginBottom: 24,
-								}}
-							>
+							<View className="flex-row gap-8 mb-6">
 								<View>
-									<Text
-										style={{
-											fontSize: 24,
-											fontWeight: "700",
-											color: THEME_COLORS.primary,
-										}}
-									>
+									<Text className="text-2xl font-bold text-primary">
 										{FEATURED_EVENT.attendees.toLocaleString()}+
 									</Text>
-									<Text
-										style={{ fontSize: 13, color: THEME_COLORS.muted }}
-									>
+									<Text className="text-[13px] text-muted">
 										Expected Attendees
 									</Text>
 								</View>
 								<View>
-									<Text
-										style={{
-											fontSize: 24,
-											fontWeight: "700",
-											color: THEME_COLORS.primary,
-										}}
-									>
+									<Text className="text-2xl font-bold text-primary">
 										{FEATURED_EVENT.speakers}+
 									</Text>
-									<Text
-										style={{ fontSize: 13, color: THEME_COLORS.muted }}
-									>
+									<Text className="text-[13px] text-muted">
 										Speakers
 									</Text>
 								</View>
 							</View>
 
 							<Pressable
-								style={({ hovered }) => ({
-									paddingHorizontal: 32,
-									paddingVertical: 14,
-									backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-									borderRadius: 8,
-									alignSelf: "flex-start",
-								})}
+								className="px-8 py-[14px] rounded-lg self-start bg-primary hover:bg-hover-primary"
 							>
-								<Text
-									style={{
-										fontSize: 16,
-										fontWeight: "600",
-										color: THEME_COLORS.primaryForeground,
-									}}
-								>
+								<Text className="text-base font-semibold text-primaryForeground">
 									Register Now
 								</Text>
 							</Pressable>
@@ -559,27 +401,9 @@ export default function CommunityEventsPage() {
 			</View>
 
 			{/* Event Filters */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingBottom: 32,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
-					<Text
-						style={{
-							fontSize: 28,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							marginBottom: 20,
-						}}
-					>
+			<View className="px-6 pb-8">
+				<View className="max-w-[1200px] mx-auto w-full">
+					<Text className="text-[28px] font-bold text-foreground mb-5">
 						Upcoming Events
 					</Text>
 
@@ -592,32 +416,20 @@ export default function CommunityEventsPage() {
 							<Pressable
 								key={filter.value}
 								onPress={() => setSelectedFilter(filter.value)}
-								style={({ hovered }) => ({
-									paddingHorizontal: 20,
-									paddingVertical: 10,
-									borderRadius: 100,
-									backgroundColor:
-										selectedFilter === filter.value
-											? THEME_COLORS.foreground
-											: hovered
-												? THEME_COLORS.sectionBackground
-												: THEME_COLORS.background,
-									borderWidth: 1,
-									borderColor:
-										selectedFilter === filter.value
-											? THEME_COLORS.foreground
-											: THEME_COLORS.border,
-								})}
+								className={cn(
+									"px-5 py-[10px] rounded-full border",
+									selectedFilter === filter.value
+										? "bg-foreground border-foreground"
+										: "border-border bg-background hover:bg-surface-raised"
+								)}
 							>
 								<Text
-									style={{
-										fontSize: 14,
-										fontWeight: "500",
-										color:
-											selectedFilter === filter.value
-												? THEME_COLORS.primaryForeground
-												: THEME_COLORS.foreground,
-									}}
+									className={cn(
+										"text-sm font-medium",
+										selectedFilter === filter.value
+											? "text-primary-foreground"
+											: "text-foreground"
+									)}
 								>
 									{filter.name}
 								</Text>
@@ -628,88 +440,52 @@ export default function CommunityEventsPage() {
 			</View>
 
 			{/* Events Grid */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingBottom: 64,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
-					<View
-						style={{
-							flexDirection: "row",
-							flexWrap: "wrap",
-							gap: 24,
-						}}
-					>
+			<View className="px-6 pb-16">
+				<View className="max-w-[1200px] mx-auto w-full">
+					<View className="flex-row flex-wrap gap-6">
 						{filteredEvents.map((event) => (
 							<Pressable
 								key={event.title}
+								className="rounded-2xl overflow-hidden border border-border bg-background"
 								style={({ hovered }) => ({
 									width: isMobile ? "100%" : isTablet ? "48%" : "31%",
-									backgroundColor: THEME_COLORS.background,
-									borderRadius: 16,
-									overflow: "hidden",
-									borderWidth: 1,
 									borderColor: hovered
 										? TYPE_COLORS[event.type]
-										: THEME_COLORS.border,
+										: undefined,
 								})}
 							>
 								{({ hovered }) => (
 									<>
 										{/* Image */}
-										<View
-											style={{
-												height: 160,
-												backgroundColor: THEME_COLORS.sectionBackground,
-											}}
-										>
+										<View className="h-[160px] bg-sectionBackground">
 											<Image
 												source={{ uri: event.image }}
-												style={{ width: "100%", height: "100%" }}
+												className="w-full h-full"
 												resizeMode="cover"
 											/>
 											<View
+												className="absolute top-3 left-3 px-[10px] py-1 rounded"
 												style={{
-													position: "absolute",
-													top: 12,
-													left: 12,
-													paddingHorizontal: 10,
-													paddingVertical: 4,
-													borderRadius: 4,
 													backgroundColor: TYPE_COLORS[event.type],
 												}}
 											>
-												<Text
-													style={{
-														fontSize: 11,
-														fontWeight: "600",
-														color: THEME_COLORS.primaryForeground,
-														textTransform: "uppercase",
-													}}
-												>
+												<Text className="text-[11px] font-semibold text-primaryForeground uppercase">
 													{event.type}
 												</Text>
 											</View>
 										</View>
 
 										{/* Content */}
-										<View style={{ padding: 20 }}>
+										<View className="p-5">
 											<Text
+												className={cn(
+													"text-lg font-semibold mb-2",
+													hovered ? "" : "text-foreground"
+												)}
 												style={{
-													fontSize: 18,
-													fontWeight: "600",
 													color: hovered
 														? TYPE_COLORS[event.type]
-														: THEME_COLORS.foreground,
-													marginBottom: 8,
+														: undefined,
 													lineHeight: 26,
 												}}
 											>
@@ -717,80 +493,43 @@ export default function CommunityEventsPage() {
 											</Text>
 
 											<Text
-												style={{
-													fontSize: 14,
-													color: THEME_COLORS.muted,
-													lineHeight: 22,
-													marginBottom: 16,
-												}}
+												className="text-sm text-muted mb-4"
+												style={{ lineHeight: 22 }}
 												numberOfLines={2}
 											>
 												{event.description}
 											</Text>
 
 											{/* Event Details */}
-											<View style={{ gap: 8, marginBottom: 16 }}>
-												<View
-													style={{
-														flexDirection: "row",
-														alignItems: "center",
-														gap: 8,
-													}}
-												>
+											<View className="gap-2 mb-4">
+												<View className="flex-row items-center gap-2">
 													<Ionicons
-														color={THEME_COLORS.muted}
 														name="calendar-outline"
 														size={16}
+														className="text-muted"
 													/>
-													<Text
-														style={{
-															fontSize: 13,
-															color: THEME_COLORS.foreground,
-														}}
-													>
+													<Text className="text-[13px] text-foreground">
 														{event.date}
 													</Text>
 												</View>
-												<View
-													style={{
-														flexDirection: "row",
-														alignItems: "center",
-														gap: 8,
-													}}
-												>
+												<View className="flex-row items-center gap-2">
 													<Ionicons
-														color={THEME_COLORS.muted}
 														name="time-outline"
 														size={16}
+														className="text-muted"
 													/>
-													<Text
-														style={{
-															fontSize: 13,
-															color: THEME_COLORS.foreground,
-														}}
-													>
+													<Text className="text-[13px] text-foreground">
 														{event.time}
 													</Text>
 												</View>
 												{event.location && (
-													<View
-														style={{
-															flexDirection: "row",
-															alignItems: "center",
-															gap: 8,
-														}}
-													>
+													<View className="flex-row items-center gap-2">
 														<Ionicons
-															color={THEME_COLORS.muted}
 															name="location-outline"
 															size={16}
+															className="text-muted"
 														/>
-														<Text
-															style={{
-																fontSize: 13,
-																color: THEME_COLORS.foreground,
-															}}
-														>
+														<Text className="text-[13px] text-foreground">
 															{event.location}
 														</Text>
 													</View>
@@ -798,56 +537,30 @@ export default function CommunityEventsPage() {
 											</View>
 
 											{/* Footer */}
-											<View
-												style={{
-													flexDirection: "row",
-													justifyContent: "space-between",
-													alignItems: "center",
-													paddingTop: 16,
-													borderTopWidth: 1,
-													borderTopColor: THEME_COLORS.border,
-												}}
-											>
-												<View
-													style={{
-														flexDirection: "row",
-														alignItems: "center",
-														gap: 4,
-													}}
-												>
+											<View className="flex-row justify-between items-center pt-4 border-t border-border">
+												<View className="flex-row items-center gap-1">
 													<Ionicons
-														color={THEME_COLORS.muted}
 														name="people-outline"
 														size={16}
+														className="text-muted"
 													/>
-													<Text
-														style={{
-															fontSize: 13,
-															color: THEME_COLORS.muted,
-														}}
-													>
+													<Text className="text-[13px] text-muted">
 														{event.attendees} spots
 													</Text>
 												</View>
-												<View
-													style={{
-														flexDirection: "row",
-														alignItems: "center",
-														gap: 4,
-													}}
-												>
+												<View className="flex-row items-center gap-1">
 													{event.isVirtual && (
 														<Ionicons
-															color={THEME_COLORS.primary}
 															name="videocam"
 															size={16}
+															className="text-primary"
 														/>
 													)}
 													{event.isInPerson && (
 														<Ionicons
-															color={THEME_COLORS.primary}
 															name="location"
 															size={16}
+															className="text-primary"
 														/>
 													)}
 												</View>
@@ -860,34 +573,16 @@ export default function CommunityEventsPage() {
 					</View>
 
 					{filteredEvents.length === 0 && (
-						<View
-							style={{
-								padding: 48,
-								alignItems: "center",
-							}}
-						>
+						<View className="p-12 items-center">
 							<Ionicons
-								color={THEME_COLORS.muted}
 								name="calendar-outline"
 								size={48}
-								style={{ marginBottom: 16 }}
+								className="mb-4 text-muted"
 							/>
-							<Text
-								style={{
-									fontSize: 18,
-									fontWeight: "600",
-									color: THEME_COLORS.foreground,
-									marginBottom: 8,
-								}}
-							>
+							<Text className="text-lg font-semibold text-foreground mb-2">
 								No events found
 							</Text>
-							<Text
-								style={{
-									fontSize: 14,
-									color: THEME_COLORS.muted,
-								}}
-							>
+							<Text className="text-sm text-muted">
 								Try a different filter
 							</Text>
 						</View>
@@ -896,133 +591,66 @@ export default function CommunityEventsPage() {
 			</View>
 
 			{/* Past Events */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.sectionBackground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
-					<Text
-						style={{
-							fontSize: 24,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							marginBottom: 24,
-						}}
-					>
+			<View className="py-16 px-6 bg-surface-raised">
+				<View className="max-w-[1200px] mx-auto w-full">
+					<Text className="text-2xl font-bold text-foreground mb-6">
 						Past Events
 					</Text>
 
-					<View
-						style={{
-							backgroundColor: THEME_COLORS.background,
-							borderRadius: 16,
-							borderWidth: 1,
-							borderColor: THEME_COLORS.border,
-							overflow: "hidden",
-						}}
-					>
+					<View className="bg-background rounded-2xl border border-border overflow-hidden">
 						{PAST_EVENTS.map((event, index) => (
 							<View
 								key={event.title}
+								className={cn(
+									"p-5 justify-between gap-3",
+									index < PAST_EVENTS.length - 1
+										? "border-b border-border"
+										: ""
+								)}
 								style={{
-									padding: 20,
-									borderBottomWidth: index < PAST_EVENTS.length - 1 ? 1 : 0,
-									borderBottomColor: THEME_COLORS.border,
 									flexDirection: isMobile ? "column" : "row",
 									alignItems: isMobile ? "flex-start" : "center",
-									justifyContent: "space-between",
-									gap: 12,
 								}}
 							>
-								<View style={{ flex: 1 }}>
-									<View
-										style={{
-											flexDirection: "row",
-											alignItems: "center",
-											gap: 8,
-											marginBottom: 4,
-										}}
-									>
+								<View className="flex-1">
+									<View className="flex-row items-center gap-2 mb-1">
 										<View
+											className="px-2 py-[2px] rounded"
 											style={{
-												paddingHorizontal: 8,
-												paddingVertical: 2,
-												borderRadius: 4,
 												backgroundColor: `${TYPE_COLORS[event.type]}15`,
 											}}
 										>
 											<Text
+												className="text-[10px] font-semibold uppercase"
 												style={{
-													fontSize: 10,
-													fontWeight: "600",
 													color: TYPE_COLORS[event.type],
-													textTransform: "uppercase",
 												}}
 											>
 												{event.type}
 											</Text>
 										</View>
-										<Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>
+										<Text className="text-[13px] text-muted">
 											{event.date}
 										</Text>
 									</View>
-									<Text
-										style={{
-											fontSize: 16,
-											fontWeight: "500",
-											color: THEME_COLORS.foreground,
-										}}
-									>
+									<Text className="text-base font-medium text-foreground">
 										{event.title}
 									</Text>
 								</View>
-								<View
-									style={{
-										flexDirection: "row",
-										alignItems: "center",
-										gap: 16,
-									}}
-								>
-									<Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>
+								<View className="flex-row items-center gap-4">
+									<Text className="text-[13px] text-muted">
 										{event.attendees} attended
 									</Text>
 									{event.recording && (
 										<Pressable
-											style={({ hovered }) => ({
-												flexDirection: "row",
-												alignItems: "center",
-												gap: 6,
-												paddingHorizontal: 12,
-												paddingVertical: 6,
-												borderRadius: 6,
-												backgroundColor: hovered
-													? THEME_COLORS.sectionBackground
-													: "transparent",
-												borderWidth: 1,
-												borderColor: THEME_COLORS.border,
-											})}
+											className="flex-row items-center gap-[6px] px-3 py-[6px] rounded-md border border-border hover:bg-surface-raised"
 										>
 											<Ionicons
-												color={THEME_COLORS.primary}
 												name="play-circle"
 												size={16}
+												className="text-primary"
 											/>
-											<Text
-												style={{
-													fontSize: 13,
-													fontWeight: "500",
-													color: THEME_COLORS.primary,
-												}}
-											>
+											<Text className="text-[13px] font-medium text-primary">
 												Watch Recording
 											</Text>
 										</Pressable>
@@ -1035,87 +663,41 @@ export default function CommunityEventsPage() {
 			</View>
 
 			{/* Newsletter CTA */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.foreground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 600,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="py-16 px-6 bg-foreground">
+				<View className="max-w-[600px] mx-auto w-full items-center">
 					<Ionicons
-						color={THEME_COLORS.primary}
 						name="notifications-outline"
 						size={48}
-						style={{ marginBottom: 20 }}
+						className="mb-5 text-primary"
 					/>
-					<Text
-						style={{
-							fontSize: 28,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
-					>
+					<Text className="text-[28px] font-bold text-primaryForeground text-center mb-3">
 						Never Miss an Event
 					</Text>
 					<Text
-						style={{
-							fontSize: 16,
-							color: "#a0a0a0",
-							textAlign: "center",
-							marginBottom: 32,
-							lineHeight: 24,
-						}}
+						className="text-base text-center mb-8 text-muted"
+						style={{ lineHeight: 24 }}
 					>
 						Subscribe to get notified about upcoming events, webinars, and
 						community meetups in your area.
 					</Text>
 					<View
+						className="gap-3 w-full max-w-[400px]"
 						style={{
 							flexDirection: isMobile ? "column" : "row",
-							gap: 12,
-							width: "100%",
-							maxWidth: 400,
 						}}
 					>
 						<View
-							style={{
-								flex: 1,
-								backgroundColor: "rgba(255,255,255,0.1)",
-								borderRadius: 8,
-								paddingHorizontal: 16,
-								paddingVertical: 14,
-							}}
+							className="flex-1 rounded-lg px-4 py-[14px]"
+							style={{ backgroundColor: "rgba(255,255,255,0.1)" }}
 						>
-							<Text style={{ fontSize: 15, color: "#666" }}>
+							<Text className="text-[15px] text-muted">
 								Enter your email
 							</Text>
 						</View>
 						<Pressable
-							style={({ hovered }) => ({
-								paddingHorizontal: 24,
-								paddingVertical: 14,
-								backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-								borderRadius: 8,
-							})}
+							className="px-6 py-[14px] rounded-lg bg-primary hover:bg-hover-primary"
 						>
-							<Text
-								style={{
-									fontSize: 15,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-									textAlign: "center",
-								}}
-							>
+							<Text className="text-[15px] font-semibold text-primaryForeground text-center">
 								Subscribe
 							</Text>
 						</Pressable>

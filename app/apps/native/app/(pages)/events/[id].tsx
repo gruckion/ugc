@@ -32,6 +32,7 @@ import {
   parseEventDateTime,
   useAddToCalendar,
 } from "../../../lib/useAddToCalendar";
+import { cn } from "@/lib/utils";
 import { EVENTS } from "./index";
 
 // Blurhash for event images
@@ -197,16 +198,8 @@ export default function EventDetail() {
 
   if (!event) {
     return (
-      <View
-        className="flex-1 bg-background"
-        style={{
-          justifyContent: "center",
-          alignItems: "center",
-        }}
-      >
-        <Text className="text-foreground" style={{ fontSize: 18 }}>
-          Event not found
-        </Text>
+      <View className="flex-1 bg-background items-center justify-center">
+        <Text className="text-foreground text-lg">Event not found</Text>
       </View>
     );
   }
@@ -215,7 +208,7 @@ export default function EventDetail() {
     <View className="flex-1 bg-background">
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
-        style={{ flex: 1 }}
+        className="flex-1"
       >
         <ScrollView
           onScroll={(e) => {
@@ -223,7 +216,7 @@ export default function EventDetail() {
           }}
           scrollEventThrottle={16}
           showsVerticalScrollIndicator={false}
-          style={{ flex: 1 }}
+          className="flex-1"
         >
           {/* Hero Image */}
           <Animated.View style={headerAnimatedStyle}>
@@ -232,7 +225,7 @@ export default function EventDetail() {
                 contentFit="cover"
                 placeholder={{ blurhash: EVENT_BLURHASH }}
                 source={event.image}
-                style={{ width: "100%", height: 280 }}
+                className="w-full h-[280px]"
                 transition={300}
               />
             </Animated.View>
@@ -241,17 +234,13 @@ export default function EventDetail() {
           {/* Back Button - Fixed Position */}
           <Pressable
             onPress={() => router.back()}
+            className="absolute items-center justify-center z-10 bg-overlay"
             style={{
-              position: "absolute",
               top: insets.top + 12,
               left: 16,
               width: 44,
               height: 44,
               borderRadius: 22,
-              backgroundColor: "rgba(0, 0, 0, 0.4)",
-              alignItems: "center",
-              justifyContent: "center",
-              zIndex: 10,
             }}
           >
             <Ionicons color={primaryForeground} name="arrow-back" size={24} />
@@ -259,56 +248,30 @@ export default function EventDetail() {
 
           {/* Content Container */}
           <Animated.View
-            className="bg-background"
+            className="bg-background px-5 pt-6 pb-8"
             entering={FadeInUp.delay(200).springify()}
             style={{
               borderTopLeftRadius: 24,
               borderTopRightRadius: 24,
               marginTop: -24,
-              paddingTop: 24,
-              paddingHorizontal: 20,
-              paddingBottom: 32,
             }}
           >
             {/* Event Title & Badge */}
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "flex-start",
-                marginBottom: 16,
-              }}
-            >
-              <View style={{ flex: 1 }}>
+            <View className="flex-row items-start mb-4">
+              <View className="flex-1">
                 <Text
-                  className="text-foreground"
-                  style={{
-                    fontSize: 28,
-                    fontWeight: "300",
-                    fontFamily: "serif",
-                    lineHeight: 34,
-                  }}
+                  className="text-foreground text-[28px] font-light font-serif"
+                  style={{ lineHeight: 34 }}
                 >
                   {event.title}
                 </Text>
               </View>
               {event.type === "special" && (
                 <Animated.View
-                  className="bg-accent"
+                  className="bg-accent px-3 py-1.5 rounded-2xl ml-3"
                   entering={SlideInRight.delay(400)}
-                  style={{
-                    paddingHorizontal: 12,
-                    paddingVertical: 6,
-                    borderRadius: 16,
-                    marginLeft: 12,
-                  }}
                 >
-                  <Text
-                    className="text-foreground"
-                    style={{
-                      fontSize: 12,
-                      fontWeight: "600",
-                    }}
-                  >
+                  <Text className="text-foreground text-xs font-semibold">
                     Special
                   </Text>
                 </Animated.View>
@@ -317,13 +280,8 @@ export default function EventDetail() {
 
             {/* Event Info Grid */}
             <Animated.View
-              className="bg-surface"
+              className="bg-surface rounded-2xl p-4 mb-5"
               entering={FadeInDown.delay(300).springify()}
-              style={{
-                borderRadius: 16,
-                padding: 16,
-                marginBottom: 20,
-              }}
             >
               <InfoRow
                 icon="calendar-outline"
@@ -346,23 +304,12 @@ export default function EventDetail() {
 
             {/* Description */}
             <Animated.View entering={FadeInDown.delay(400).springify()}>
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 18,
-                  fontWeight: "600",
-                  marginBottom: 12,
-                }}
-              >
+              <Text className="text-foreground text-lg font-semibold mb-3">
                 About This Event
               </Text>
               <Text
-                className="text-muted"
-                style={{
-                  fontSize: 15,
-                  lineHeight: 24,
-                  marginBottom: 24,
-                }}
+                className="text-muted text-[15px] mb-6"
+                style={{ lineHeight: 24 }}
               >
                 {event.fullDescription}
               </Text>
@@ -370,12 +317,8 @@ export default function EventDetail() {
 
             {/* RSVP Section */}
             <Animated.View
-              className="bg-primary"
+              className="bg-primary rounded-[20px] p-5"
               entering={FadeInDown.delay(500).springify()}
-              style={{
-                borderRadius: 20,
-                padding: 20,
-              }}
             >
               {isAuthenticated ? (
                 hasRsvp ? (
@@ -432,93 +375,42 @@ function RsvpConfirmation({
 
   return (
     <>
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 16,
-        }}
-      >
+      <View className="flex-row items-center mb-4">
         <View
-          className="bg-accent"
+          className="bg-accent items-center justify-center mr-3"
           style={{
             width: 48,
             height: 48,
             borderRadius: 24,
-            alignItems: "center",
-            justifyContent: "center",
-            marginRight: 12,
           }}
         >
           <Ionicons color={foreground} name="checkmark-circle" size={28} />
         </View>
-        <View style={{ flex: 1 }}>
-          <Text
-            className="text-primary-foreground"
-            style={{
-              fontSize: 20,
-              fontWeight: "600",
-            }}
-          >
+        <View className="flex-1">
+          <Text className="text-primary-foreground text-[20px] font-semibold">
             You're Going!
           </Text>
-          <Text
-            className="text-accent"
-            style={{
-              fontSize: 14,
-            }}
-          >
-            RSVP confirmed
-          </Text>
+          <Text className="text-accent text-sm">RSVP confirmed</Text>
         </View>
       </View>
 
       {/* RSVP Details */}
-      <View
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.08)",
-          borderRadius: 12,
-          padding: 16,
-          marginBottom: 16,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: 8,
-          }}
-        >
-          <Text style={{ color: "rgba(255, 255, 255, 0.7)" }}>Guests</Text>
-          <Text
-            className="text-primary-foreground"
-            style={{ fontWeight: "500" }}
-          >
+      <View className="rounded-xl p-4 mb-4 bg-white/10">
+        <View className="flex-row justify-between mb-2">
+          <Text className="text-primary-foreground/70">Guests</Text>
+          <Text className="text-primary-foreground font-medium">
             {existingRsvp.guests}
           </Text>
         </View>
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-          }}
-        >
-          <Text style={{ color: "rgba(255, 255, 255, 0.7)" }}>Total</Text>
-          <Text
-            className="text-primary-foreground"
-            style={{ fontWeight: "500" }}
-          >
+        <View className="flex-row justify-between">
+          <Text className="text-primary-foreground/70">Total</Text>
+          <Text className="text-primary-foreground font-medium">
             £{totalPrice}
           </Text>
         </View>
         {existingRsvp.notes && (
-          <View style={{ marginTop: 12 }}>
-            <Text
-              style={{
-                color: "rgba(255, 255, 255, 0.7)",
-                marginBottom: 4,
-              }}
-            >
+          <View className="mt-3">
+            <Text className="mb-1 text-primary-foreground/70">
               Notes
             </Text>
             <Text className="text-primary-foreground">
@@ -545,7 +437,7 @@ function RsvpConfirmation({
         isLoading={isCancelling}
         label="Cancel RSVP"
         onPress={onCancelRsvp}
-        style={{ marginTop: 12 }}
+        className="mt-3"
         variant="destructive"
       />
     </>
@@ -571,94 +463,50 @@ function RsvpForm({
   onSubmit: () => void;
 }) {
   const accent = useThemeColor("accent");
-  const primaryForeground = "#FFFFFF";
 
   return (
     <>
       <Text
-        className="text-primary-foreground"
-        style={{
-          fontSize: 22,
-          fontWeight: "300",
-          fontFamily: "serif",
-          marginBottom: 4,
-        }}
+        className="text-primary-foreground mb-1 text-[22px] font-light font-serif"
       >
         Reserve Your Spot
       </Text>
-      <Text
-        className="text-accent"
-        style={{
-          fontSize: 14,
-          marginBottom: 20,
-        }}
-      >
+      <Text className="text-accent text-sm mb-5">
         Complete the form below to RSVP
       </Text>
 
       {/* User Info Display */}
-      <View
-        style={{
-          backgroundColor: "rgba(255, 255, 255, 0.08)",
-          borderRadius: 12,
-          padding: 16,
-          marginBottom: 16,
-        }}
-      >
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 8,
-          }}
-        >
+      <View className="rounded-xl p-4 mb-4 bg-white/10">
+        <View className="flex-row items-center mb-2">
           <Ionicons
             color={accent}
             name="person-circle-outline"
             size={20}
             style={{ marginRight: 10 }}
           />
-          <Text
-            className="text-primary-foreground"
-            style={{
-              fontSize: 16,
-              fontWeight: "500",
-            }}
-          >
+          <Text className="text-primary-foreground text-base font-medium">
             {user?.name || "Loading..."}
           </Text>
         </View>
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View className="flex-row items-center">
           <Ionicons
             color={accent}
             name="mail-outline"
             size={18}
             style={{ marginRight: 10 }}
           />
-          <Text
-            style={{
-              color: "rgba(255, 255, 255, 0.7)",
-              fontSize: 14,
-            }}
-          >
+          <Text className="text-sm text-primary-foreground/70">
             {user?.email || "Loading..."}
           </Text>
         </View>
       </View>
 
       {/* Number of Guests */}
-      <View style={{ marginBottom: 16 }}>
-        <Text
-          className="text-accent"
-          style={{
-            fontSize: 13,
-            marginBottom: 8,
-            fontWeight: "500",
-          }}
-        >
+      <View className="mb-4">
+        <Text className="text-accent text-[13px] mb-2 font-medium">
           Number of Guests
         </Text>
-        <View style={{ flexDirection: "row", gap: 10 }}>
+        <View className="flex-row gap-2.5">
           {["1", "2", "3", "4", "5+"].map((num) => (
             <GuestButton
               key={num}
@@ -671,15 +519,8 @@ function RsvpForm({
       </View>
 
       {/* Special Requirements */}
-      <View style={{ marginBottom: 20 }}>
-        <Text
-          className="text-accent"
-          style={{
-            fontSize: 13,
-            marginBottom: 8,
-            fontWeight: "500",
-          }}
-        >
+      <View className="mb-5">
+        <Text className="text-accent text-[13px] mb-2 font-medium">
           Special Requirements (Optional)
         </Text>
         <TextInput
@@ -689,13 +530,9 @@ function RsvpForm({
           }
           placeholder="Dietary requirements, accessibility needs, etc."
           placeholderTextColor="rgba(255, 255, 255, 0.4)"
+          className="rounded-xl px-4 text-base text-primary-foreground bg-white/10"
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.1)",
-            borderRadius: 12,
-            paddingHorizontal: 16,
             paddingVertical: 14,
-            color: primaryForeground,
-            fontSize: 16,
             minHeight: 80,
             textAlignVertical: "top",
           }}
@@ -719,41 +556,18 @@ function SignInPrompt({ onSignIn }: { onSignIn: () => void }) {
   return (
     <>
       <Text
-        className="text-primary-foreground"
-        style={{
-          fontSize: 22,
-          fontWeight: "300",
-          fontFamily: "serif",
-          marginBottom: 4,
-        }}
+        className="text-primary-foreground mb-1 text-[22px] font-light font-serif"
       >
         Reserve Your Spot
       </Text>
-      <Text
-        className="text-accent"
-        style={{
-          fontSize: 14,
-          marginBottom: 20,
-        }}
-      >
+      <Text className="text-accent text-sm mb-5">
         Sign in to reserve your spot at this event
       </Text>
       <Pressable
-        className="bg-primary-foreground"
+        className="bg-primary-foreground items-center rounded-[14px] py-4"
         onPress={onSignIn}
-        style={{
-          borderRadius: 14,
-          paddingVertical: 16,
-          alignItems: "center",
-        }}
       >
-        <Text
-          className="text-foreground"
-          style={{
-            fontSize: 17,
-            fontWeight: "600",
-          }}
-        >
+        <Text className="text-foreground text-[17px] font-semibold">
           Sign In to RSVP
         </Text>
       </Pressable>
@@ -776,38 +590,20 @@ function InfoRow({
 
   return (
     <View
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        paddingVertical: 12,
-        borderBottomWidth: isLast ? 0 : 1,
-        borderBottomColor: "rgba(0, 0, 0, 0.06)",
-      }}
+      className={cn("flex-row items-center py-3 border-border", !isLast && "border-b")}
     >
       <View
+        className="items-center justify-center mr-3 rounded-[10px] bg-accent/20"
         style={{
           width: 36,
           height: 36,
-          borderRadius: 10,
-          backgroundColor: `${accent}20`,
-          alignItems: "center",
-          justifyContent: "center",
-          marginRight: 12,
         }}
       >
         <Ionicons color={accent} name={icon} size={18} />
       </View>
-      <View style={{ flex: 1 }}>
-        <Text className="text-muted" style={{ fontSize: 12, marginBottom: 2 }}>
-          {label}
-        </Text>
-        <Text
-          className="text-foreground"
-          style={{
-            fontSize: 15,
-            fontWeight: "500",
-          }}
-        >
+      <View className="flex-1">
+        <Text className="text-muted text-xs mb-0.5">{label}</Text>
+        <Text className="text-foreground text-[15px] font-medium">
           {value}
         </Text>
       </View>
@@ -825,9 +621,8 @@ function GuestButton({
   onPress: () => void;
 }) {
   const scale = useSharedValue(1);
-  // Add fallbacks to handle timing issue where useThemeColor may return "invalid" before theme loads
-  const accent = useThemeColor("accent") || "#85b09a";
-  const foreground = useThemeColor("foreground") || "#222325";
+  const accent = useThemeColor("accent");
+  const foreground = useThemeColor("foreground");
   const primaryForeground = "#FFFFFF";
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -845,24 +640,23 @@ function GuestButton({
       }}
     >
       <Animated.View
+        className={cn(
+          "items-center justify-center rounded-xl",
+          selected ? "bg-accent" : "bg-white/10"
+        )}
         style={[
           animatedStyle,
           {
             width: 48,
             height: 48,
-            borderRadius: 12,
-            backgroundColor: selected ? accent : "rgba(255, 255, 255, 0.1)",
-            alignItems: "center",
-            justifyContent: "center",
           },
         ]}
       >
         <Text
-          style={{
-            color: selected ? foreground : primaryForeground,
-            fontSize: 16,
-            fontWeight: selected ? "600" : "400",
-          }}
+          className={cn(
+            "text-base",
+            selected ? "text-foreground font-semibold" : "text-primary-foreground font-normal"
+          )}
         >
           {value}
         </Text>
@@ -883,9 +677,6 @@ function SubmitButton({
   guests: string;
 }) {
   const scale = useSharedValue(1);
-  // Add fallbacks to handle timing issue where useThemeColor may return "invalid" before theme loads
-  const foreground = useThemeColor("foreground") || "#222325";
-  const accent = useThemeColor("accent") || "#85b09a";
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -906,33 +697,16 @@ function SubmitButton({
       }}
     >
       <Animated.View
-        className="bg-primary-foreground"
+        className="bg-primary-foreground items-center rounded-[14px] py-4"
         style={[
           animatedStyle,
-          {
-            borderRadius: 14,
-            paddingVertical: 16,
-            alignItems: "center",
-            opacity: isSubmitting ? 0.7 : 1,
-          },
+          { opacity: isSubmitting ? 0.7 : 1 },
         ]}
       >
-        <Text
-          style={{
-            color: foreground,
-            fontSize: 17,
-            fontWeight: "600",
-          }}
-        >
+        <Text className="text-[17px] font-semibold text-foreground">
           {isSubmitting ? "Submitting..." : "Confirm RSVP"}
         </Text>
-        <Text
-          style={{
-            color: accent,
-            fontSize: 13,
-            marginTop: 2,
-          }}
-        >
+        <Text className="text-[13px] mt-0.5 text-accent">
           {guestCount} {guestCount === 1 ? "guest" : "guests"} - Total: £
           {totalPrice}
         </Text>
@@ -948,7 +722,7 @@ function ActionButton({
   variant = "primary",
   disabled,
   isLoading,
-  style,
+  className: extraClassName,
 }: {
   label: string;
   icon: keyof typeof Ionicons.glyphMap;
@@ -956,12 +730,11 @@ function ActionButton({
   variant?: "primary" | "destructive";
   disabled?: boolean;
   isLoading?: boolean;
-  style?: object;
+  className?: string;
 }) {
   const scale = useSharedValue(1);
-  // Add fallbacks to handle timing issue where useThemeColor may return "invalid" before theme loads
-  const accent = useThemeColor("accent") || "#85b09a";
-  const foreground = useThemeColor("foreground") || "#222325";
+  const accent = useThemeColor("accent");
+  const foreground = useThemeColor("foreground");
   const primaryForeground = "#FFFFFF";
 
   const animatedStyle = useAnimatedStyle(() => ({
@@ -980,21 +753,17 @@ function ActionButton({
       onPressOut={() => {
         scale.value = withSpring(1, { damping: 15, stiffness: 400 });
       }}
-      style={style}
+      className={extraClassName}
     >
       <Animated.View
+        className={cn(
+          "flex-row items-center justify-center gap-2 rounded-[14px]",
+          isPrimary ? "bg-accent" : "bg-transparent border border-white/30"
+        )}
         style={[
           animatedStyle,
           {
-            backgroundColor: isPrimary ? accent : "transparent",
-            borderRadius: 14,
             paddingVertical: 14,
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 8,
-            borderWidth: isPrimary ? 0 : 1,
-            borderColor: "rgba(255, 255, 255, 0.3)",
             opacity: disabled ? 0.6 : 1,
           },
         ]}
@@ -1012,11 +781,10 @@ function ActionButton({
               size={20}
             />
             <Text
-              style={{
-                color: isPrimary ? foreground : primaryForeground,
-                fontSize: 16,
-                fontWeight: "600",
-              }}
+              className={cn(
+                "text-base font-semibold",
+                isPrimary ? "text-foreground" : "text-primary-foreground"
+              )}
             >
               {label}
             </Text>

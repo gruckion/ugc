@@ -25,7 +25,7 @@ export function Container({
       }}
       {...props}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+      <ScrollView contentContainerClassName="grow">
         {children}
       </ScrollView>
     </AnimatedView>

@@ -31,8 +31,9 @@ export default function Contact() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  // Theme colors for Ionicons
+  // Theme colors for Ionicons and placeholderTextColor (which don't support className)
   const accent = useThemeColor("accent");
+  const muted = useThemeColor("muted");
   const primaryForeground = "#FFFFFF";
 
   // Get session - authenticated users don't need to enter name/email/phone
@@ -134,29 +135,14 @@ export default function Contact() {
           paddingTop: insets.top + 8,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center" }}>
+        <View className="flex-row items-center">
           <Pressable
+            className="size-10 rounded-full bg-white/15 items-center justify-center mr-3"
             onPress={() => router.back()}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: "rgba(255, 255, 255, 0.15)",
-              alignItems: "center",
-              justifyContent: "center",
-              marginRight: 12,
-            }}
           >
             <Ionicons color={primaryForeground} name="arrow-back" size={22} />
           </Pressable>
-          <Text
-            className="text-primary-foreground"
-            style={{
-              fontSize: 20,
-              fontWeight: "300",
-              fontFamily: "serif",
-            }}
-          >
+          <Text className="text-primary-foreground text-xl font-light font-serif">
             Contact Us
           </Text>
         </View>
@@ -164,21 +150,18 @@ export default function Contact() {
 
       <KeyboardAvoidingView
         behavior={Platform.OS === "ios" ? "padding" : "height"}
+        className="flex-1"
         keyboardVerticalOffset={0}
-        style={{ flex: 1 }}
       >
         <ScrollView
+          className="flex-1"
           contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
           keyboardShouldPersistTaps="handled"
-          style={{ flex: 1 }}
         >
           {/* Contact Info Card */}
           <View
-            className="bg-surface"
+            className="bg-surface rounded-xl p-4 mb-5"
             style={{
-              borderRadius: 12,
-              padding: 16,
-              marginBottom: 20,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.08,
@@ -186,61 +169,35 @@ export default function Contact() {
               elevation: 2,
             }}
           >
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 16,
-                fontWeight: "600",
-                marginBottom: 12,
-              }}
-            >
+            <Text className="text-foreground text-base font-semibold mb-3">
               Get in Touch
             </Text>
 
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 10,
-              }}
-            >
+            <View className="flex-row items-center mb-2.5">
               <Ionicons color={accent} name="location-outline" size={18} />
-              <Text
-                className="text-muted"
-                style={{ fontSize: 14, marginLeft: 10 }}
-              >
+              <Text className="text-muted text-sm ml-2.5">
                 42 Crutched Friars, London EC3N 2AP
               </Text>
             </View>
 
             <Pressable
+              className="flex-row items-center mb-2.5"
               onPress={() => Linking.openURL("tel:02071676682")}
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                marginBottom: 10,
-              }}
             >
               <Ionicons color={accent} name="call-outline" size={18} />
-              <Text
-                className="text-foreground"
-                style={{ fontSize: 14, marginLeft: 10 }}
-              >
+              <Text className="text-foreground text-sm ml-2.5">
                 020 7167 6682
               </Text>
             </Pressable>
 
             <Pressable
+              className="flex-row items-center"
               onPress={() =>
                 Linking.openURL("mailto:info@ugc.com")
               }
-              style={{ flexDirection: "row", alignItems: "center" }}
             >
               <Ionicons color={accent} name="mail-outline" size={18} />
-              <Text
-                className="text-foreground"
-                style={{ fontSize: 14, marginLeft: 10 }}
-              >
+              <Text className="text-foreground text-sm ml-2.5">
                 info@ugc.com
               </Text>
             </Pressable>
@@ -248,10 +205,8 @@ export default function Contact() {
 
           {/* Contact Form */}
           <View
-            className="bg-surface"
+            className="bg-surface rounded-xl p-4"
             style={{
-              borderRadius: 12,
-              padding: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.08,
@@ -259,45 +214,23 @@ export default function Contact() {
               elevation: 2,
             }}
           >
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 16,
-                fontWeight: "600",
-                marginBottom: 16,
-              }}
-            >
+            <Text className="text-foreground text-base font-semibold mb-4">
               Send us a Message
             </Text>
 
             {/* Authenticated User Info */}
             {isAuthenticated && (
-              <View
-                className="bg-accent/15"
-                style={{
-                  borderRadius: 8,
-                  padding: 12,
-                  marginBottom: 16,
-                  flexDirection: "row",
-                  alignItems: "center",
-                }}
-              >
+              <View className="bg-accent/15 rounded-lg p-3 mb-4 flex-row items-center">
                 <Ionicons
                   color={accent}
                   name="person-circle-outline"
                   size={20}
                 />
-                <View style={{ marginLeft: 10, flex: 1 }}>
-                  <Text
-                    className="text-foreground"
-                    style={{
-                      fontSize: 14,
-                      fontWeight: "500",
-                    }}
-                  >
+                <View className="ml-2.5 flex-1">
+                  <Text className="text-foreground text-sm font-medium">
                     {session.user.name || "Member"}
                   </Text>
-                  <Text className="text-muted" style={{ fontSize: 13 }}>
+                  <Text className="text-muted text-[13px]">
                     {session.user.email}
                   </Text>
                 </View>
@@ -308,90 +241,49 @@ export default function Contact() {
             {!isAuthenticated && (
               <>
                 {/* Name Field */}
-                <View style={{ marginBottom: 16 }}>
-                  <Text
-                    className="text-foreground"
-                    style={{
-                      fontSize: 14,
-                      fontWeight: "500",
-                      marginBottom: 6,
-                    }}
-                  >
-                    Name <Text style={{ color: "#dc2626" }}>*</Text>
+                <View className="mb-4">
+                  <Text className="text-foreground text-sm font-medium mb-1.5">
+                    Name <Text className="text-red-600">*</Text>
                   </Text>
                   <TextInput
-                    className="border-border bg-surface text-foreground"
+                    className="border-border bg-surface text-foreground border rounded-lg p-3.5 text-[15px]"
                     onChangeText={(value) => updateField("name", value)}
                     placeholder="Your full name"
-                    placeholderTextColor="#999"
-                    style={{
-                      borderWidth: 1,
-                      borderRadius: 8,
-                      padding: 14,
-                      fontSize: 15,
-                    }}
+                    placeholderTextColor={muted}
                     value={formData.name}
                   />
                 </View>
 
                 {/* Email and Phone Row */}
-                <View
-                  style={{ flexDirection: "row", gap: 12, marginBottom: 16 }}
-                >
+                <View className="flex-row gap-3 mb-4">
                   {/* Email Field */}
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      className="text-foreground"
-                      style={{
-                        fontSize: 14,
-                        fontWeight: "500",
-                        marginBottom: 6,
-                      }}
-                    >
-                      Email <Text style={{ color: "#dc2626" }}>*</Text>
+                  <View className="flex-1">
+                    <Text className="text-foreground text-sm font-medium mb-1.5">
+                      Email <Text className="text-red-600">*</Text>
                     </Text>
                     <TextInput
                       autoCapitalize="none"
                       autoCorrect={false}
-                      className="border-border bg-surface text-foreground"
+                      className="border-border bg-surface text-foreground border rounded-lg p-3.5 text-[15px]"
                       keyboardType="email-address"
                       onChangeText={(value) => updateField("email", value)}
                       placeholder="Email address"
-                      placeholderTextColor="#999"
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        padding: 14,
-                        fontSize: 15,
-                      }}
+                      placeholderTextColor={muted}
                       value={formData.email}
                     />
                   </View>
 
                   {/* Phone Field */}
-                  <View style={{ flex: 1 }}>
-                    <Text
-                      className="text-foreground"
-                      style={{
-                        fontSize: 14,
-                        fontWeight: "500",
-                        marginBottom: 6,
-                      }}
-                    >
+                  <View className="flex-1">
+                    <Text className="text-foreground text-sm font-medium mb-1.5">
                       Phone
                     </Text>
                     <TextInput
-                      className="border-border bg-surface text-foreground"
+                      className="border-border bg-surface text-foreground border rounded-lg p-3.5 text-[15px]"
                       keyboardType="phone-pad"
                       onChangeText={(value) => updateField("phone", value)}
                       placeholder="Phone number"
-                      placeholderTextColor="#999"
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 8,
-                        padding: 14,
-                        fontSize: 15,
-                      }}
+                      placeholderTextColor={muted}
                       value={formData.phone}
                     />
                   </View>
@@ -400,58 +292,32 @@ export default function Contact() {
             )}
 
             {/* Subject Field */}
-            <View style={{ marginBottom: 16 }}>
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                  marginBottom: 6,
-                }}
-              >
+            <View className="mb-4">
+              <Text className="text-foreground text-sm font-medium mb-1.5">
                 Subject
               </Text>
               <TextInput
-                className="border-border bg-surface text-foreground"
+                className="border-border bg-surface text-foreground border rounded-lg p-3.5 text-[15px]"
                 onChangeText={(value) => updateField("subject", value)}
                 placeholder="What is this regarding?"
-                placeholderTextColor="#999"
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 8,
-                  padding: 14,
-                  fontSize: 15,
-                }}
+                placeholderTextColor={muted}
                 value={formData.subject}
               />
             </View>
 
             {/* Message Field */}
-            <View style={{ marginBottom: 20 }}>
-              <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                  marginBottom: 6,
-                }}
-              >
+            <View className="mb-5">
+              <Text className="text-foreground text-sm font-medium mb-1.5">
                 Message
               </Text>
               <TextInput
-                className="border-border bg-surface text-foreground"
+                className="border-border bg-surface text-foreground border rounded-lg p-3.5 text-[15px]"
                 multiline
                 numberOfLines={5}
                 onChangeText={(value) => updateField("message", value)}
                 placeholder="Your message..."
-                placeholderTextColor="#999"
-                style={{
-                  borderWidth: 1,
-                  borderRadius: 8,
-                  padding: 14,
-                  fontSize: 15,
-                  height: 120,
-                }}
+                placeholderTextColor={muted}
+                style={{ height: 120 }}
                 textAlignVertical="top"
                 value={formData.message}
               />
@@ -459,59 +325,29 @@ export default function Contact() {
 
             {/* Submit Button */}
             <Pressable
-              className="bg-primary"
+              className="bg-primary rounded-lg p-4 items-center justify-center"
               disabled={isSubmitting}
               onPress={handleSubmit}
               style={({ pressed }) => ({
                 opacity: pressed || isSubmitting ? 0.8 : 1,
-                borderRadius: 8,
-                padding: 16,
-                alignItems: "center",
-                justifyContent: "center",
               })}
             >
-              <Text
-                className="text-primary-foreground"
-                style={{
-                  fontSize: 16,
-                  fontWeight: "600",
-                }}
-              >
+              <Text className="text-primary-foreground text-base font-semibold">
                 {isSubmitting ? "Sending..." : "Send Message"}
               </Text>
             </Pressable>
           </View>
 
           {/* Opening Hours */}
-          <View
-            className="bg-primary"
-            style={{
-              borderRadius: 12,
-              padding: 20,
-              marginTop: 20,
-            }}
-          >
-            <Text
-              className="text-primary-foreground"
-              style={{
-                fontSize: 16,
-                fontWeight: "600",
-                marginBottom: 12,
-              }}
-            >
+          <View className="bg-primary rounded-xl p-5 mt-5">
+            <Text className="text-primary-foreground text-base font-semibold mb-3">
               Opening Hours
             </Text>
-            <Text
-              className="text-primary-foreground"
-              style={{ fontSize: 14, lineHeight: 22 }}
-            >
+            <Text className="text-primary-foreground text-sm leading-[22px]">
               Monday to Friday{"\n"}
               9:00 AM - 5:00 PM
             </Text>
-            <Text
-              className="text-accent"
-              style={{ fontSize: 13, marginTop: 8 }}
-            >
+            <Text className="text-accent text-[13px] mt-2">
               Lunch: 12:00 PM - Last orders 2:30 PM
             </Text>
           </View>

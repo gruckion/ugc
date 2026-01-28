@@ -1,8 +1,7 @@
 import { Link } from "expo-router";
 import { Card } from "heroui-native";
 import { Pressable, Text, View } from "react-native";
-
-// Theme colors are now defined in global.css and accessed via Tailwind classes
+import { cn } from "@/lib/utils";
 
 // Category color mappings (dynamic colors require inline style)
 const CATEGORY_COLORS: Record<string, string> = {
@@ -39,20 +38,17 @@ export function GuideCard({
       <Pressable>
         {({ hovered }) => (
           <Card
-            className={`rounded-xl overflow-hidden bg-background ${
-              hovered ? "shadow-lg -translate-y-1" : "shadow-sm"
-            } transition-all`}
+            className={cn(
+              "rounded-xl overflow-hidden bg-background transition-all",
+              hovered ? "shadow-lg -translate-y-1" : "shadow-sm",
+            )}
           >
             {/* Image Section */}
-            <View className="h-40 bg-gray-100 overflow-hidden">
+            <View className="h-40 bg-surface-raised overflow-hidden">
               <img
                 alt={title}
+                className="w-full h-full object-cover"
                 src={imageUrl}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
               />
             </View>
 

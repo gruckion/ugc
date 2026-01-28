@@ -1,11 +1,18 @@
 import { useLocalSearchParams, useRouter } from "expo-router";
-import { InputOTP, useThemeColor } from "heroui-native";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { InputOTP } from "heroui-native";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { Alert, Pressable, Text, View, type ViewStyle } from "react-native";
 import { SystemBars } from "react-native-edge-to-edge";
 import FormHeader, { StyledButton } from "@/components/form";
 import { KeyboardAwareForm } from "@/components/keyboard";
 import { authClient } from "@/lib/auth-client";
+
+// OTP slot layout style (dimensions and border width only)
+const otpSlotLayoutStyle: ViewStyle = {
+  width: 48,
+  height: 56,
+  borderWidth: 2,
+};
 
 export default function VerifyResetCodeRoute() {
   const router = useRouter();
@@ -16,25 +23,6 @@ export default function VerifyResetCodeRoute() {
 
   const [otp, setOtp] = useState(prefilledOtp || "");
   const [isResending, setIsResending] = useState(false);
-
-  // Theme colors
-  const foreground = useThemeColor("foreground");
-  const surface = useThemeColor("surface");
-
-  // OTP slot style using theme colors
-  const otpSlotStyle: ViewStyle = useMemo(
-    () => ({
-      width: 48,
-      height: 56,
-      borderWidth: 2,
-      borderColor: foreground,
-      borderRadius: 12,
-      backgroundColor: surface,
-      alignItems: "center",
-      justifyContent: "center",
-    }),
-    [foreground, surface]
-  );
 
   // Auto-navigate if OTP was pre-filled from deep link
   const hasAutoNavigated = useRef(false);
@@ -118,22 +106,14 @@ export default function VerifyResetCodeRoute() {
   // No email provided - show error state
   if (!email) {
     return (
-      <View
-        className="bg-background"
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          paddingHorizontal: 24,
-        }}
-      >
-        <View style={{ alignItems: "center", marginBottom: 32 }}>
+      <View className="flex-1 justify-center bg-background px-6">
+        <View className="mb-8 items-center">
           <Text
-            className="text-center text-foreground"
+            className="mb-3 text-center text-foreground"
             style={{
               fontSize: 28,
               fontWeight: "300",
               fontFamily: "serif",
-              marginBottom: 12,
             }}
           >
             Something Went Wrong
@@ -150,23 +130,12 @@ export default function VerifyResetCodeRoute() {
           </Text>
         </View>
         <Pressable
-          className="bg-primary"
+          className="items-center rounded-xl bg-primary py-4"
           onPress={() =>
             router.replace("/(auth)/email/(reset)/request-password-reset")
           }
-          style={{
-            borderRadius: 12,
-            paddingVertical: 16,
-            alignItems: "center",
-          }}
         >
-          <Text
-            className="text-primary-foreground"
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-            }}
-          >
+          <Text className="text-base font-semibold text-primary-foreground">
             Request New Code
           </Text>
         </Pressable>
@@ -181,15 +150,8 @@ export default function VerifyResetCodeRoute() {
         title="Verify Code"
       />
 
-      <View style={{ alignItems: "center", marginBottom: 8 }}>
-        <Text
-          className="text-foreground"
-          style={{
-            fontSize: 14,
-            fontWeight: "500",
-            marginBottom: 12,
-          }}
-        >
+      <View className="mb-2 items-center">
+        <Text className="mb-3 text-sm font-medium text-foreground">
           Verification Code
         </Text>
         <InputOTP
@@ -203,31 +165,33 @@ export default function VerifyResetCodeRoute() {
           }}
           value={otp}
         >
-          <InputOTP.Group style={{ flexDirection: "row", gap: 8 }}>
+          <InputOTP.Group className="flex-row gap-2">
             {[0, 1, 2].map((index) => (
-              <InputOTP.Slot index={index} key={index} style={otpSlotStyle} />
+              <InputOTP.Slot
+                className="items-center justify-center rounded-xl border-foreground bg-surface"
+                index={index}
+                key={index}
+                style={otpSlotLayoutStyle}
+              />
             ))}
           </InputOTP.Group>
           <InputOTP.Separator>
-            <Text
-              className="text-foreground"
-              style={{
-                fontSize: 24,
-                paddingHorizontal: 8,
-              }}
-            >
-              -
-            </Text>
+            <Text className="px-2 text-2xl text-foreground">-</Text>
           </InputOTP.Separator>
-          <InputOTP.Group style={{ flexDirection: "row", gap: 8 }}>
+          <InputOTP.Group className="flex-row gap-2">
             {[3, 4, 5].map((index) => (
-              <InputOTP.Slot index={index} key={index} style={otpSlotStyle} />
+              <InputOTP.Slot
+                className="items-center justify-center rounded-xl border-foreground bg-surface"
+                index={index}
+                key={index}
+                style={otpSlotLayoutStyle}
+              />
             ))}
           </InputOTP.Group>
         </InputOTP>
       </View>
 
-      <View style={{ marginTop: 8, gap: 12 }}>
+      <View className="mt-2 gap-3">
         <StyledButton label="Continue" onPress={() => handleVerifyCode()} />
 
         <StyledButton
@@ -238,10 +202,8 @@ export default function VerifyResetCodeRoute() {
         />
       </View>
 
-      <View style={{ marginTop: 16, alignItems: "center" }}>
-        <Text className="text-muted" style={{ fontSize: 14 }}>
-          Code expires in 5 minutes
-        </Text>
+      <View className="mt-4 items-center">
+        <Text className="text-sm text-muted">Code expires in 5 minutes</Text>
       </View>
     </KeyboardAwareForm>
   );

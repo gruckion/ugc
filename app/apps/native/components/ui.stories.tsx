@@ -143,7 +143,7 @@ export const ExternalLinkSubtle: StoryObj = {
 
 export const AllExternalLinkVariants: StoryObj = {
   render: () => (
-    <View style={{ gap: 16 }}>
+    <View className="gap-4">
       <ExternalLinkButton
         label="Book a Table"
         url="https://example.com"
@@ -162,8 +162,8 @@ export const AllExternalLinkVariants: StoryObj = {
 
 export const LastUsedIndicatorDefault: StoryObj = {
   render: () => (
-    <View style={{ flexDirection: "row", alignItems: "center", padding: 16 }}>
-      <Text className="text-foreground" style={{ fontSize: 16 }}>
+    <View className="flex-row items-center p-4">
+      <Text className="text-foreground text-base">
         Sign in with Google
       </Text>
       <LastUsedIndicator />
@@ -173,47 +173,20 @@ export const LastUsedIndicatorDefault: StoryObj = {
 
 export const LastUsedIndicatorInContext: StoryObj = {
   render: () => (
-    <View style={{ gap: 12 }}>
-      <View
-        className="border-border bg-surface"
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 16,
-          borderRadius: 12,
-          borderWidth: 1,
-        }}
-      >
-        <Text className="text-foreground" style={{ fontSize: 16, flex: 1 }}>
+    <View className="gap-3">
+      <View className="border-border bg-surface flex-row items-center p-4 rounded-xl border">
+        <Text className="text-foreground text-base flex-1">
           Continue with Apple
         </Text>
         <LastUsedIndicator />
       </View>
-      <View
-        className="border-border bg-surface"
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 16,
-          borderRadius: 12,
-          borderWidth: 1,
-        }}
-      >
-        <Text className="text-foreground" style={{ fontSize: 16, flex: 1 }}>
+      <View className="border-border bg-surface flex-row items-center p-4 rounded-xl border">
+        <Text className="text-foreground text-base flex-1">
           Continue with Google
         </Text>
       </View>
-      <View
-        className="border-border bg-surface"
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          padding: 16,
-          borderRadius: 12,
-          borderWidth: 1,
-        }}
-      >
-        <Text className="text-foreground" style={{ fontSize: 16, flex: 1 }}>
+      <View className="border-border bg-surface flex-row items-center p-4 rounded-xl border">
+        <Text className="text-foreground text-base flex-1">
           Continue with Email
         </Text>
       </View>
@@ -226,21 +199,15 @@ export const LastUsedIndicatorInContext: StoryObj = {
 export const ContainerDefault: StoryObj = {
   render: () => (
     <Container>
-      <View style={{ padding: 16, gap: 16 }}>
-        <Text
-          className="text-foreground"
-          style={{ fontSize: 24, fontWeight: "bold" }}
-        >
+      <View className="p-4 gap-4">
+        <Text className="text-foreground text-2xl font-bold">
           Container Component
         </Text>
-        <Text className="text-muted" style={{ fontSize: 16, lineHeight: 24 }}>
+        <Text className="text-muted text-base leading-6">
           The Container component provides consistent padding, safe area insets,
           and a scrollable content area for screens.
         </Text>
-        <View
-          className="border-border bg-surface"
-          style={{ padding: 16, borderRadius: 12, borderWidth: 1 }}
-        >
+        <View className="border-border bg-surface p-4 rounded-xl border">
           <Text className="text-foreground">
             This content is wrapped in a Card-like view inside the Container.
           </Text>
@@ -254,8 +221,8 @@ export const ContainerDefault: StoryObj = {
 
 export const ThemeToggleDefault: StoryObj = {
   render: () => (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 16 }}>
-      <Text className="text-foreground" style={{ fontSize: 16 }}>
+    <View className="flex-row items-center gap-4">
+      <Text className="text-foreground text-base">
         Toggle Theme:
       </Text>
       <ThemeToggle />
@@ -265,21 +232,8 @@ export const ThemeToggleDefault: StoryObj = {
 
 export const ThemeToggleInHeader: StoryObj = {
   render: () => (
-    <View
-      className="border-border bg-surface"
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        padding: 16,
-        borderRadius: 12,
-        borderWidth: 1,
-      }}
-    >
-      <Text
-        className="text-foreground"
-        style={{ fontSize: 18, fontWeight: "600" }}
-      >
+    <View className="border-border bg-surface flex-row items-center justify-between p-4 rounded-xl border">
+      <Text className="text-foreground text-lg font-semibold">
         Settings
       </Text>
       <ThemeToggle />
@@ -296,12 +250,9 @@ export const UIShowcase: StoryObj = {
     );
 
     return (
-      <View style={{ gap: 24 }}>
+      <View className="gap-6">
         <View>
-          <Text
-            className="text-foreground"
-            style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}
-          >
+          <Text className="text-foreground text-xl font-bold mb-3">
             Category Filter
           </Text>
           <CategoryFilter
@@ -312,10 +263,7 @@ export const UIShowcase: StoryObj = {
         </View>
 
         <View>
-          <Text
-            className="text-foreground"
-            style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}
-          >
+          <Text className="text-foreground text-xl font-bold mb-3">
             Membership Card
           </Text>
           <MembershipCard
@@ -326,13 +274,10 @@ export const UIShowcase: StoryObj = {
         </View>
 
         <View>
-          <Text
-            className="text-foreground"
-            style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}
-          >
+          <Text className="text-foreground text-xl font-bold mb-3">
             External Links
           </Text>
-          <View style={{ gap: 12 }}>
+          <View className="gap-3">
             <ExternalLinkButton
               label="Visit Website"
               url="https://example.com"
@@ -347,23 +292,11 @@ export const UIShowcase: StoryObj = {
         </View>
 
         <View>
-          <Text
-            className="text-foreground"
-            style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}
-          >
+          <Text className="text-foreground text-xl font-bold mb-3">
             Last Used Indicator
           </Text>
-          <View
-            className="border-border bg-surface"
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              padding: 16,
-              borderRadius: 12,
-              borderWidth: 1,
-            }}
-          >
-            <Text className="text-foreground" style={{ fontSize: 16, flex: 1 }}>
+          <View className="border-border bg-surface flex-row items-center p-4 rounded-xl border">
+            <Text className="text-foreground text-base flex-1">
               Sign in with Apple
             </Text>
             <LastUsedIndicator />
@@ -371,14 +304,11 @@ export const UIShowcase: StoryObj = {
         </View>
 
         <View>
-          <Text
-            className="text-foreground"
-            style={{ fontSize: 20, fontWeight: "bold", marginBottom: 12 }}
-          >
+          <Text className="text-foreground text-xl font-bold mb-3">
             Theme Toggle
           </Text>
-          <View style={{ flexDirection: "row", alignItems: "center", gap: 16 }}>
-            <Text className="text-foreground" style={{ fontSize: 16 }}>
+          <View className="flex-row items-center gap-4">
+            <Text className="text-foreground text-base">
               Toggle Theme:
             </Text>
             <ThemeToggle />

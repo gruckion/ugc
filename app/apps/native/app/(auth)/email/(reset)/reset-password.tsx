@@ -140,52 +140,18 @@ export default function ResetPasswordRoute() {
   // Invalid state - no token or email+otp
   if (error === "INVALID_TOKEN" || !hasValidParams) {
     return (
-      <View
-        className="bg-background"
-        style={{
-          flex: 1,
-          justifyContent: "center",
-          paddingHorizontal: 24,
-        }}
-      >
-        <View style={{ alignItems: "center", marginBottom: 32 }}>
-          <Text
-            className="text-center text-foreground"
-            style={{
-              fontSize: 28,
-              fontWeight: "300",
-              fontFamily: "serif",
-              marginBottom: 12,
-            }}
-          >
+      <View className="flex-1 justify-center px-6 bg-background">
+        <View className="items-center mb-8">
+          <Text className="text-center text-foreground text-3xl font-light font-serif mb-3">
             Invalid Link
           </Text>
-          <Text
-            className="text-center text-muted"
-            style={{
-              fontSize: 15,
-              lineHeight: 22,
-            }}
-          >
+          <Text className="text-center text-muted text-[15px] leading-[22px]">
             This reset link has expired or is invalid. Please request a new one.
           </Text>
         </View>
         <Link asChild href="/(auth)/email/signin">
-          <Pressable
-            className="bg-primary"
-            style={{
-              borderRadius: 12,
-              paddingVertical: 16,
-              alignItems: "center",
-            }}
-          >
-            <Text
-              className="text-primary-foreground"
-              style={{
-                fontSize: 16,
-                fontWeight: "600",
-              }}
-            >
+          <Pressable className="bg-primary rounded-xl py-4 items-center">
+            <Text className="text-primary-foreground text-base font-semibold">
               Back to Sign In
             </Text>
           </Pressable>
@@ -227,7 +193,7 @@ export default function ResetPasswordRoute() {
         value={confirmPassword}
       />
 
-      <View style={{ marginTop: 8 }}>
+      <View className="mt-2">
         <StyledButton
           isLoading={isLoading}
           label="Reset Password"

@@ -13,7 +13,7 @@ export default function DiningRoom() {
   const router = useRouter();
   const insets = useSafeAreaInsets();
 
-  // Theme colors for Ionicons
+  // Theme colors for Ionicons (which don't support className)
   const foreground = useThemeColor("foreground");
   const accent = useThemeColor("accent");
   const primaryForeground = "#FFFFFF";
@@ -35,37 +35,24 @@ export default function DiningRoom() {
           paddingTop: insets.top + 8,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 12 }}>
+        <View className="flex-row items-center gap-3">
           <Pressable
+            className="w-10 h-10 rounded-full bg-white/15 items-center justify-center"
             onPress={() => router.back()}
-            style={{
-              width: 40,
-              height: 40,
-              borderRadius: 20,
-              backgroundColor: "rgba(255, 255, 255, 0.15)",
-              alignItems: "center",
-              justifyContent: "center",
-            }}
           >
             <Ionicons color={primaryForeground} name="arrow-back" size={22} />
           </Pressable>
-          <View style={{ flex: 1 }}>
+          <View className="flex-1">
             <Text
-              className="text-primary-foreground"
+              className="text-primary-foreground text-2xl font-light"
               style={{
-                fontSize: 24,
-                fontWeight: "300",
                 fontFamily: "serif",
               }}
             >
               Dining Room
             </Text>
             <Text
-              className="text-accent"
-              style={{
-                fontSize: 13,
-                marginTop: 2,
-              }}
+              className="text-accent text-[13px] mt-0.5"
             >
               A quiet haven in the heart of the City
             </Text>
@@ -74,25 +61,22 @@ export default function DiningRoom() {
       </View>
 
       <ScrollView
+        className="flex-1"
         contentContainerStyle={{ paddingBottom: 32 }}
-        style={{ flex: 1 }}
       >
         {/* Hero Image */}
         <Image
           cachePolicy="memory-disk"
           contentFit="cover"
+          className="w-full h-[220px]"
           source={{ uri: DINING_ROOM_IMAGE }}
-          style={{ width: "100%", height: 220 }}
         />
 
         {/* Description Section */}
-        <View style={{ padding: 16 }}>
+        <View className="p-4">
           <View
-            className="bg-surface"
+            className="bg-surface rounded-xl p-5 mb-4"
             style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.08,
@@ -101,33 +85,19 @@ export default function DiningRoom() {
             }}
           >
             <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-                marginBottom: 12,
-              }}
+              className="text-foreground text-lg font-semibold mb-3"
             >
               About Our Dining Rooms
             </Text>
             <Text
-              className="text-muted"
-              style={{
-                fontSize: 15,
-                lineHeight: 24,
-              }}
+              className="text-muted text-[15px] leading-6"
             >
               The dining rooms are a quiet haven in the heart of the City of
               London for members and their guests, offering excellent food and
               superb service.
             </Text>
             <Text
-              className="text-muted"
-              style={{
-                fontSize: 15,
-                lineHeight: 24,
-                marginTop: 12,
-              }}
+              className="text-muted text-[15px] leading-6 mt-3"
             >
               The welfare and happiness of our members and their guests is of
               paramount importance, so we will always try to cater for
@@ -137,82 +107,49 @@ export default function DiningRoom() {
 
           {/* Opening Hours */}
           <View
-            className="bg-primary"
-            style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
-            }}
+            className="bg-primary rounded-xl p-5 mb-4"
           >
             <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                gap: 10,
-                marginBottom: 16,
-              }}
+              className="flex-row items-center gap-2.5 mb-4"
             >
               <Ionicons color={accent} name="time-outline" size={22} />
               <Text
-                className="text-primary-foreground"
-                style={{
-                  fontSize: 18,
-                  fontWeight: "600",
-                }}
+                className="text-primary-foreground text-lg font-semibold"
               >
                 Opening Hours
               </Text>
             </View>
 
-            <View style={{ gap: 12 }}>
+            <View className="gap-3">
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
+                className="flex-row justify-between items-center"
               >
                 <Text
-                  className="text-primary-foreground"
-                  style={{ fontSize: 15 }}
+                  className="text-primary-foreground text-[15px]"
                 >
                   Lunch Service
                 </Text>
-                <Text className="text-accent" style={{ fontSize: 15 }}>
+                <Text className="text-accent text-[15px]">
                   12:00 noon onwards
                 </Text>
               </View>
               <View
-                style={{
-                  flexDirection: "row",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
+                className="flex-row justify-between items-center"
               >
                 <Text
-                  className="text-primary-foreground"
-                  style={{ fontSize: 15 }}
+                  className="text-primary-foreground text-[15px]"
                 >
                   Last Orders
                 </Text>
-                <Text className="text-accent" style={{ fontSize: 15 }}>
+                <Text className="text-accent text-[15px]">
                   2:30 PM
                 </Text>
               </View>
               <View
-                style={{
-                  height: 1,
-                  backgroundColor: "rgba(255, 255, 255, 0.2)",
-                  marginVertical: 4,
-                }}
+                className="h-px bg-white/20 my-1"
               />
               <Text
-                className="text-primary-foreground"
-                style={{
-                  fontSize: 13,
-                  opacity: 0.8,
-                  fontStyle: "italic",
-                }}
+                className="text-primary-foreground text-[13px] opacity-80 italic"
               >
                 Later orders available by prior arrangement with the Secretary
               </Text>
@@ -221,11 +158,8 @@ export default function DiningRoom() {
 
           {/* Services */}
           <View
-            className="bg-surface"
+            className="bg-surface rounded-xl p-5 mb-4"
             style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.08,
@@ -234,17 +168,12 @@ export default function DiningRoom() {
             }}
           >
             <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-                marginBottom: 16,
-              }}
+              className="text-foreground text-lg font-semibold mb-4"
             >
               Our Services
             </Text>
 
-            <View style={{ gap: 16 }}>
+            <View className="gap-4">
               <ServiceItem
                 description="Start your day at the Club"
                 foreground={foreground}
@@ -286,11 +215,8 @@ export default function DiningRoom() {
 
           {/* Booking Information */}
           <View
-            className="bg-surface"
+            className="bg-surface rounded-xl p-5 mb-4"
             style={{
-              borderRadius: 12,
-              padding: 20,
-              marginBottom: 16,
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 2 },
               shadowOpacity: 0.08,
@@ -299,70 +225,36 @@ export default function DiningRoom() {
             }}
           >
             <Text
-              className="text-foreground"
-              style={{
-                fontSize: 18,
-                fontWeight: "600",
-                marginBottom: 12,
-              }}
+              className="text-foreground text-lg font-semibold mb-3"
             >
               Make a Reservation
             </Text>
             <Text
-              className="text-muted"
-              style={{
-                fontSize: 15,
-                lineHeight: 24,
-                marginBottom: 16,
-              }}
+              className="text-muted text-[15px] leading-6 mb-4"
             >
               Contact the Secretary to make a reservation or enquire about
               private dining and meeting room hire.
             </Text>
 
-            <View style={{ flexDirection: "row", gap: 12 }}>
+            <View className="flex-row gap-3">
               <Pressable
-                className="flex-1 bg-accent"
+                className="flex-1 bg-accent rounded-lg p-3.5 flex-row items-center justify-center gap-2"
                 onPress={handleCall}
-                style={{
-                  borderRadius: 8,
-                  padding: 14,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                }}
               >
                 <Ionicons color={foreground} name="call" size={18} />
                 <Text
-                  className="text-foreground"
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "600",
-                  }}
+                  className="text-foreground text-sm font-semibold"
                 >
                   Call
                 </Text>
               </Pressable>
               <Pressable
-                className="flex-1 bg-primary"
+                className="flex-1 bg-primary rounded-lg p-3.5 flex-row items-center justify-center gap-2"
                 onPress={handleEmail}
-                style={{
-                  borderRadius: 8,
-                  padding: 14,
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  gap: 8,
-                }}
               >
                 <Ionicons color={primaryForeground} name="mail" size={18} />
                 <Text
-                  className="text-primary-foreground"
-                  style={{
-                    fontSize: 14,
-                    fontWeight: "600",
-                  }}
+                  className="text-primary-foreground text-sm font-semibold"
                 >
                   Email
                 </Text>
@@ -372,32 +264,17 @@ export default function DiningRoom() {
 
           {/* Location Note */}
           <View
-            className="bg-accent/15"
-            style={{
-              borderRadius: 12,
-              padding: 16,
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 12,
-            }}
+            className="bg-accent/15 rounded-xl p-4 flex-row items-center gap-3"
           >
             <Ionicons color={accent} name="location" size={22} />
-            <View style={{ flex: 1 }}>
+            <View className="flex-1">
               <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 14,
-                  fontWeight: "500",
-                }}
+                className="text-foreground text-sm font-medium"
               >
                 42 Crutched Friars
               </Text>
               <Text
-                className="text-muted"
-                style={{
-                  fontSize: 13,
-                  marginTop: 2,
-                }}
+                className="text-muted text-[13px] mt-0.5"
               >
                 London EC3N 2AP
               </Text>
@@ -421,35 +298,20 @@ function ServiceItem({
   foreground: string;
 }) {
   return (
-    <View style={{ flexDirection: "row", alignItems: "flex-start", gap: 12 }}>
+    <View className="flex-row items-start gap-3">
       <View
-        className="bg-primary/10"
-        style={{
-          width: 40,
-          height: 40,
-          borderRadius: 20,
-          alignItems: "center",
-          justifyContent: "center",
-        }}
+        className="bg-primary/10 w-10 h-10 rounded-full items-center justify-center"
       >
         <Ionicons color={foreground} name={icon} size={20} />
       </View>
-      <View style={{ flex: 1 }}>
+      <View className="flex-1">
         <Text
-          className="text-foreground"
-          style={{
-            fontSize: 15,
-            fontWeight: "500",
-          }}
+          className="text-foreground text-[15px] font-medium"
         >
           {title}
         </Text>
         <Text
-          className="text-muted"
-          style={{
-            fontSize: 13,
-            marginTop: 2,
-          }}
+          className="text-muted text-[13px] mt-0.5"
         >
           {description}
         </Text>

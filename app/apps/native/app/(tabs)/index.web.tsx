@@ -5,7 +5,8 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { WebHero } from "@/components/web/WebHero";
 import { CategoryCardsSection } from "@/components/web/CategoryCardsSection";
 import { PopularServicesCarousel } from "@/components/web/PopularServicesCarousel";
-import { PromoBanner } from "@/components/web/PromoBanner";
+import { HelpPromoBanner } from "@/components/web/HelpPromoBanner";
+import { ProPromoBanner } from "@/components/web/ProPromoBanner";
 import { MadeOnUGCGallery } from "@/components/web/MadeOnUGCGallery";
 import { GuidesSection } from "@/components/web/GuidesSection";
 import { JoinCTASection } from "@/components/web/JoinCTASection";
@@ -16,6 +17,7 @@ import {
   websiteJsonLd,
   serviceJsonLd,
 } from "@/components/web/SEO";
+import { cn } from "@/lib/utils";
 
 // Theme colors are now defined in global.css and accessed via Tailwind classes:
 // - text-foreground, text-muted, text-primary, text-primary-foreground
@@ -111,11 +113,11 @@ function BriefCardSimple({
   return (
     <Card className="w-[280px] p-5 rounded-xl bg-background border border-border shadow-sm hover:shadow-md hover:-translate-y-0.5 transition-all">
       <View className="flex-row justify-between mb-3">
-        <View className="bg-green-50 px-2.5 py-1 rounded-xl">
+        <View className="bg-chip-bg px-2.5 py-1 rounded-xl">
           <Text className="text-xs text-primary font-semibold">{category}</Text>
         </View>
         <View className="flex-row items-center gap-1">
-          <Ionicons color="#1DBF73" name="checkmark-circle" size={14} />
+          <Ionicons className="text-primary" name="checkmark-circle" size={14} />
           <Text className="text-xs text-primary font-medium">
             Payment Secured
           </Text>
@@ -130,7 +132,7 @@ function BriefCardSimple({
       <View className="flex-row justify-between items-center">
         <Text className="text-lg font-bold text-foreground">${budget}</Text>
         <View className="flex-row items-center gap-1">
-          <Ionicons color="#62646a" name="time-outline" size={14} />
+          <Ionicons className="text-muted" name="time-outline" size={14} />
           <Text className="text-sm text-muted">{daysRemaining} days left</Text>
         </View>
       </View>
@@ -163,7 +165,7 @@ function CreatorCardSimple({
         <View className="flex-1">
           <Text className="text-base font-semibold text-foreground">{name}</Text>
           <View className="flex-row items-center gap-1">
-            <Ionicons color="#fbbf24" name="star" size={12} />
+            <Ionicons className="text-star" name="star" size={12} />
             <Text className="text-sm text-muted">{trustScore} Trust Score</Text>
           </View>
         </View>
@@ -175,8 +177,8 @@ function CreatorCardSimple({
 
       <View className="flex-row gap-1.5 mb-4">
         {niches.map((niche) => (
-          <View key={niche} className="bg-gray-100 px-2.5 py-1 rounded-xl">
-            <Text className="text-xs text-foreground">{niche}</Text>
+          <View key={niche} className="bg-chip-muted-bg px-2.5 py-1 rounded-xl">
+            <Text className="text-xs text-chip-muted-text">{niche}</Text>
           </View>
         ))}
       </View>
@@ -207,12 +209,15 @@ function SectionHeader({
             {({ hovered }) => (
               <>
                 <Text
-                  className={`text-base font-medium ${hovered ? "text-primary" : "text-foreground"}`}
+                  className={cn(
+                    "text-base font-medium",
+                    hovered ? "text-primary" : "text-foreground",
+                  )}
                 >
                   {linkText}
                 </Text>
                 <Ionicons
-                  color={hovered ? "#1DBF73" : "#222325"}
+                  className={cn(hovered ? "text-primary" : "text-foreground")}
                   name="arrow-forward"
                   size={18}
                 />
@@ -239,8 +244,8 @@ function HowItWorksStep({
 }) {
   return (
     <View className="items-center flex-1 px-4">
-      <View className="w-16 h-16 rounded-full bg-green-50 items-center justify-center mb-4">
-        <Ionicons color="#1DBF73" name={icon} size={28} />
+      <View className="w-16 h-16 rounded-full bg-chip-bg items-center justify-center mb-4">
+        <Ionicons className="text-primary" name={icon} size={28} />
       </View>
       <Text className="text-xs font-semibold text-primary mb-2">
         STEP {number}
@@ -267,7 +272,7 @@ export default function WebHomePage() {
   const homepageJsonLd = [organizationJsonLd, websiteJsonLd, serviceJsonLd];
 
   return (
-    <View style={{ flex: 1 }}>
+    <View className="flex-1">
       <SEO
         title="UGC Marketplace - Connect Brands with Creators"
         description="Find authentic user-generated content for your brand. Connect with talented creators and get high-quality UGC that converts. Browse briefs, discover creators, and start creating today."
@@ -294,14 +299,7 @@ export default function WebHomePage() {
       <PopularServicesCarousel />
 
       {/* First Promo Banner - UGC Videos */}
-      <PromoBanner
-        backgroundColor="#9d7c93"
-        ctaText="Explore UGC Services"
-        ctaHref="/browse/creators?service=ugc-videos"
-        heading="Need help with UGC videos?"
-        subheading="Connect with talented creators who specialize in authentic user-generated content that converts."
-        videoSrc="/videos/vibe-coding-banner.mp4"
-      />
+      <HelpPromoBanner />
 
       {/* Ready Briefs Section */}
       <View className="py-16 px-6 bg-background">
@@ -358,16 +356,7 @@ export default function WebHomePage() {
       </View>
 
       {/* Second Promo Banner - UGC Pro */}
-      <PromoBanner
-        backgroundColor="#faf5e4"
-        badge="pro"
-        ctaText="Learn More"
-        ctaHref="/pro"
-        heading="Get matched with vetted creators"
-        subheading="UGC Pro connects you with our top-tier creators for premium content that elevates your brand."
-        variant="pro"
-        videoSrc="/videos/ugp-pro-banner.mp4"
-      />
+      <ProPromoBanner />
 
       {/* Made on UGC Gallery */}
       <MadeOnUGCGallery />
@@ -381,7 +370,7 @@ export default function WebHomePage() {
           <Text className="text-2xl font-bold text-foreground text-center mb-12">
             How It Works
           </Text>
-          <View className={isMobile ? "flex-col gap-10" : "flex-row"}>
+          <View className={cn(isMobile ? "flex-col gap-10" : "flex-row")}>
             <HowItWorksStep
               description="Define your product, audience, and deliverables with our guided form"
               icon="create-outline"
@@ -420,12 +409,12 @@ export default function WebHomePage() {
             See what our community has to say about their experience
           </Text>
 
-          <View className={`gap-6 ${isMobile ? "flex-col" : "flex-row"}`}>
+          <View className={cn("gap-6", isMobile ? "flex-col" : "flex-row")}>
             {/* Testimonial 1 */}
             <Card className="flex-1 p-8 rounded-2xl bg-surface border border-border">
               <View className="flex-row gap-1 mb-4">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <Ionicons color="#ffbe5b" key={star} name="star" size={18} />
+                  <Ionicons className="text-accent" key={star} name="star" size={18} />
                 ))}
               </View>
               <Card.Description className="text-base text-foreground leading-6 mb-6">
@@ -457,7 +446,7 @@ export default function WebHomePage() {
             <Card className="flex-1 p-8 rounded-2xl bg-surface border border-border">
               <View className="flex-row gap-1 mb-4">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <Ionicons color="#ffbe5b" key={star} name="star" size={18} />
+                  <Ionicons className="text-accent" key={star} name="star" size={18} />
                 ))}
               </View>
               <Card.Description className="text-base text-foreground leading-6 mb-6">
@@ -489,7 +478,7 @@ export default function WebHomePage() {
             <Card className="flex-1 p-8 rounded-2xl bg-surface border border-border">
               <View className="flex-row gap-1 mb-4">
                 {[1, 2, 3, 4, 5].map((star) => (
-                  <Ionicons color="#ffbe5b" key={star} name="star" size={18} />
+                  <Ionicons className="text-accent" key={star} name="star" size={18} />
                 ))}
               </View>
               <Card.Description className="text-base text-foreground leading-6 mb-6">

@@ -84,10 +84,9 @@ export default function More() {
   const { isAuthenticated } = useConvexAuth();
   const user = useQuery(api.auth.getCurrentUser, isAuthenticated ? {} : "skip");
 
-  // Theme colors for icons (with fallbacks)
-  // Fiverr-style theme colors
-  const foreground = useThemeColor("foreground") || "#222325";
-  const border = useThemeColor("border") || "#e5e5e5";
+  // Theme colors for Ionicons (which don't support className)
+  const foreground = useThemeColor("foreground");
+  const border = useThemeColor("border");
 
   const handleMenuPress = (id: MenuId) => {
     const route = MENU_ROUTES[id];
@@ -98,37 +97,27 @@ export default function More() {
     <View className="flex-1 bg-background">
       {/* Header */}
       <View
-        className="bg-primary"
+        className="bg-primary pb-6 px-5"
         style={{
           paddingTop: insets.top + 16,
-          paddingBottom: 24,
-          paddingHorizontal: 20,
         }}
       >
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 16 }}>
+        <View className="flex-row items-center gap-4">
           {/* Logo - White circle variant for primary background */}
           <UGCLogo
-            backgroundColor="#FFFFFF"
+            bgClassName="bg-background"
             size={60}
-            textColor="#1DBF73"
+            textClassName="text-primary"
           />
-          <View style={{ flex: 1 }}>
+          <View className="flex-1">
             <Text
-              className="text-primary-foreground"
-              style={{
-                fontSize: 22,
-                fontWeight: "600",
-              }}
+              className="text-primary-foreground text-[22px] font-semibold"
             >
               UGC Marketplace
             </Text>
             {isAuthenticated && user?.name && (
               <Text
-                className="text-accent"
-                style={{
-                  fontSize: 14,
-                  marginTop: 2,
-                }}
+                className="text-accent text-sm mt-[2px]"
               >
                 {user.name}
               </Text>
@@ -138,18 +127,13 @@ export default function More() {
       </View>
 
       <ScrollView
+        className="flex-1"
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
-        style={{ flex: 1 }}
       >
         {/* Quick Contact */}
         <View
-          className="bg-surface"
+          className="bg-surface rounded-xl p-4 mb-5 flex-row items-center"
           style={{
-            borderRadius: 12,
-            padding: 16,
-            marginBottom: 20,
-            flexDirection: "row",
-            alignItems: "center",
             shadowColor: "#000",
             shadowOffset: { width: 0, height: 2 },
             shadowOpacity: 0.08,
@@ -157,36 +141,24 @@ export default function More() {
             elevation: 2,
           }}
         >
-          <View style={{ flex: 1 }}>
+          <View className="flex-1">
             <Text
-              className="text-foreground"
-              style={{
-                fontSize: 15,
-                fontWeight: "600",
-              }}
+              className="text-foreground text-[15px] font-semibold"
             >
               42 Crutched Friars
             </Text>
-            <Text className="text-muted" style={{ fontSize: 14, marginTop: 2 }}>
+            <Text className="text-muted text-sm mt-[2px]">
               London EC3N 2AP
             </Text>
             <Text
-              className="text-accent"
-              style={{ fontSize: 14, marginTop: 4 }}
+              className="text-accent text-sm mt-1"
             >
               020 7167 6682
             </Text>
           </View>
           <Pressable
-            className="bg-accent"
+            className="bg-accent w-12 h-12 rounded-full items-center justify-center"
             onPress={() => Linking.openURL("tel:02071676682")}
-            style={{
-              width: 48,
-              height: 48,
-              borderRadius: 24,
-              alignItems: "center",
-              justifyContent: "center",
-            }}
           >
             <Ionicons color={foreground} name="call" size={22} />
           </Pressable>
@@ -195,15 +167,10 @@ export default function More() {
         {/* Menu Items */}
         {MENU_ITEMS.map((item) => (
           <Pressable
-            className="bg-surface"
+            className="bg-surface rounded-xl p-4 mb-3 flex-row items-center"
             key={item.id}
             onPress={() => handleMenuPress(item.id)}
             style={{
-              borderRadius: 12,
-              padding: 16,
-              marginBottom: 12,
-              flexDirection: "row",
-              alignItems: "center",
               shadowColor: "#000",
               shadowOffset: { width: 0, height: 1 },
               shadowOpacity: 0.05,
@@ -212,31 +179,18 @@ export default function More() {
             }}
           >
             <View
-              className="bg-primary/10"
-              style={{
-                width: 44,
-                height: 44,
-                borderRadius: 22,
-                alignItems: "center",
-                justifyContent: "center",
-                marginRight: 14,
-              }}
+              className="bg-primary/10 w-11 h-11 rounded-full items-center justify-center mr-[14px]"
             >
               <Ionicons color={foreground} name={item.icon} size={22} />
             </View>
-            <View style={{ flex: 1 }}>
+            <View className="flex-1">
               <Text
-                className="text-foreground"
-                style={{
-                  fontSize: 16,
-                  fontWeight: "500",
-                }}
+                className="text-foreground text-base font-medium"
               >
                 {item.title}
               </Text>
               <Text
-                className="text-muted"
-                style={{ fontSize: 13, marginTop: 2 }}
+                className="text-muted text-[13px] mt-[2px]"
               >
                 {item.subtitle}
               </Text>
@@ -247,32 +201,20 @@ export default function More() {
 
         {/* Opening Hours */}
         <View
-          className="bg-primary"
-          style={{
-            borderRadius: 12,
-            padding: 20,
-            marginTop: 8,
-            marginBottom: 16,
-          }}
+          className="bg-primary rounded-xl p-5 mt-2 mb-4"
         >
           <Text
-            className="text-primary-foreground"
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-              marginBottom: 12,
-            }}
+            className="text-primary-foreground text-base font-semibold mb-3"
           >
             Opening Hours
           </Text>
           <Text
-            className="text-primary-foreground"
-            style={{ fontSize: 14, lineHeight: 22 }}
+            className="text-primary-foreground text-sm leading-[22px]"
           >
             Monday to Friday{"\n"}
             9:00 AM - 5:00 PM
           </Text>
-          <Text className="text-accent" style={{ fontSize: 13, marginTop: 8 }}>
+          <Text className="text-accent text-[13px] mt-2">
             Lunch: 12:00 PM - Last orders 2:30 PM
           </Text>
         </View>
@@ -280,23 +222,17 @@ export default function More() {
         {/* Sign Out Button */}
         {isAuthenticated && (
           <Pressable
-            className="border-border bg-surface"
+            className="border-border bg-surface rounded-xl p-4 items-center border"
             onPress={() => authClient.signOut()}
-            style={{
-              borderRadius: 12,
-              padding: 16,
-              alignItems: "center",
-              borderWidth: 1,
-            }}
           >
-            <Text style={{ color: "#dc2626", fontSize: 15, fontWeight: "500" }}>
+            <Text className="text-error text-[15px] font-medium">
               Sign Out
             </Text>
           </Pressable>
         )}
 
         {/* Website Link */}
-        <View style={{ marginTop: 16 }}>
+        <View className="mt-4">
           <ExternalLinkButton
             label="Visit Our Website"
             url="https://ugc.com/"

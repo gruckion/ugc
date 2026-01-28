@@ -4,14 +4,6 @@ import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 
-// Theme colors
-const THEME_COLORS = {
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-};
-
 interface Category {
 	id: string;
 	label: string;
@@ -44,25 +36,12 @@ function CategoryCard({ category }: CategoryCardProps) {
 				// @ts-ignore - Web-specific mouse events
 				onMouseEnter={() => setIsHovered(true)}
 				onMouseLeave={() => setIsHovered(false)}
-				style={{
-					position: "relative",
-					backgroundColor: THEME_COLORS.background,
-					borderRadius: 8,
-					borderWidth: 1,
-					borderColor: THEME_COLORS.border,
-					padding: 16,
-					minHeight: 120,
-					overflow: "hidden",
-				}}
+				className="relative rounded-lg border border-border p-4 min-h-[120px] overflow-hidden bg-background"
 			>
 				{/* Radial gradient glow on hover */}
 				<View
+					className="absolute inset-0"
 					style={{
-						position: "absolute",
-						top: 0,
-						left: 0,
-						right: 0,
-						bottom: 0,
 						opacity: isHovered ? 1 : 0,
 						// @ts-ignore - Web-specific gradient and transition
 						background: "radial-gradient(circle at center, rgba(29, 191, 115, 0.12) 0%, rgba(29, 191, 115, 0) 70%)",
@@ -71,9 +50,9 @@ function CategoryCard({ category }: CategoryCardProps) {
 				/>
 
 				{/* Icon at top-left */}
-				<View style={{ marginBottom: 24 }}>
+				<View className="mb-6">
 					<Ionicons
-						color={THEME_COLORS.foreground}
+						className="text-foreground"
 						name={category.icon}
 						size={28}
 					/>
@@ -81,12 +60,7 @@ function CategoryCard({ category }: CategoryCardProps) {
 
 				{/* Label at bottom-left */}
 				<Text
-					style={{
-						fontSize: 15,
-						fontWeight: "500",
-						color: THEME_COLORS.foreground,
-						lineHeight: 20,
-					}}
+					className="font-medium text-[15px] leading-5 text-foreground"
 				>
 					{category.label}
 				</Text>
@@ -102,18 +76,10 @@ export function CategoryCardsSection() {
 
 	return (
 		<View
-			style={{
-				paddingVertical: 40,
-				paddingHorizontal: 24,
-				backgroundColor: THEME_COLORS.background,
-			}}
+			className="py-10 px-6 bg-background"
 		>
 			<View
-				style={{
-					maxWidth: 1200,
-					marginHorizontal: "auto",
-					width: "100%",
-				}}
+				className="max-w-[1200px] mx-auto w-full"
 			>
 				{/* Grid layout */}
 				<View

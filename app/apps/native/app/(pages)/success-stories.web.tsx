@@ -4,17 +4,7 @@ import { Image, Pressable, ScrollView, Text, View } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createWebPageJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-	sectionBackground: "#fafafa",
-};
+import { cn } from "@/lib/utils";
 
 // Filter categories
 const FILTERS = [
@@ -162,7 +152,7 @@ export default function SuccessStoriesPage() {
 	);
 
 	return (
-		<ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+		<ScrollView className="flex-1 bg-background">
 			<SEO
 				title="Success Stories"
 				description="Discover how creators and brands are succeeding on UGC Marketplace. Read real stories of growth, increased revenue, and successful collaborations."
@@ -177,55 +167,34 @@ export default function SuccessStoriesPage() {
 			/>
 
 			{/* Hero Section */}
-			<View
-				style={{
-					paddingTop: 64,
-					paddingBottom: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.foreground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 800,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="px-6 py-16 bg-foreground">
+				<View className="w-full items-center" style={{ maxWidth: 800, marginHorizontal: "auto" }}>
 					<View
+						className="items-center justify-center mb-6"
 						style={{
 							width: 72,
 							height: 72,
 							borderRadius: 36,
-							backgroundColor: `${THEME_COLORS.primary}20`,
-							alignItems: "center",
-							justifyContent: "center",
-							marginBottom: 24,
+							backgroundColor: "rgba(29,191,115,0.125)",
 						}}
 					>
 						<Ionicons
-							color={THEME_COLORS.primary}
+							className="text-primary"
 							name="trophy-outline"
 							size={36}
 						/>
 					</View>
 					<Text
+						className="font-bold text-center mb-4 text-primary-foreground"
 						style={{
 							fontSize: isMobile ? 32 : 48,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 16,
 						}}
 					>
 						Real Stories, Real Results
 					</Text>
 					<Text
+						className="text-lg text-center text-muted"
 						style={{
-							fontSize: 18,
-							color: "#a0a0a0",
-							textAlign: "center",
 							maxWidth: 600,
 							lineHeight: 28,
 						}}
@@ -237,105 +206,68 @@ export default function SuccessStoriesPage() {
 			</View>
 
 			{/* Featured Story */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingVertical: 64,
-					backgroundColor: THEME_COLORS.sectionBackground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
+			<View className="px-6 py-16 bg-surface-raised">
+				<View className="w-full" style={{ maxWidth: 1200, marginHorizontal: "auto" }}>
 					<Text
+						className="font-semibold uppercase text-center mb-4 text-primary tracking-[1px]"
 						style={{
 							fontSize: 13,
-							fontWeight: "600",
-							color: THEME_COLORS.primary,
-							textTransform: "uppercase",
-							letterSpacing: 1,
-							marginBottom: 16,
-							textAlign: "center",
 						}}
 					>
 						Featured Story
 					</Text>
 
 					<View
+						className="overflow-hidden bg-background rounded-[20px] border border-border"
 						style={{
 							flexDirection: isMobile ? "column" : "row",
-							backgroundColor: THEME_COLORS.background,
-							borderRadius: 20,
-							overflow: "hidden",
-							borderWidth: 1,
-							borderColor: THEME_COLORS.border,
 						}}
 					>
 						{/* Image */}
 						<View
+							className="bg-surface-raised"
 							style={{
 								width: isMobile ? "100%" : "45%",
 								height: isMobile ? 280 : 420,
-								backgroundColor: THEME_COLORS.sectionBackground,
 							}}
 						>
 							<Image
 								source={{ uri: FEATURED_STORY.image }}
-								style={{ width: "100%", height: "100%" }}
+								className="w-full h-full"
 								resizeMode="cover"
 							/>
 						</View>
 
 						{/* Content */}
 						<View
-							style={{
-								flex: 1,
-								padding: isMobile ? 24 : 40,
-								justifyContent: "center",
-							}}
+							className="flex-1 justify-center"
+							style={{ padding: isMobile ? 24 : 40 }}
 						>
-							<View
-								style={{
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 8,
-									marginBottom: 16,
-								}}
-							>
+							<View className="flex-row items-center gap-2 mb-4">
 								<View
+									className="py-1 bg-chip-bg rounded"
 									style={{
 										paddingHorizontal: 10,
-										paddingVertical: 4,
-										borderRadius: 4,
-										backgroundColor: `${THEME_COLORS.primary}15`,
 									}}
 								>
 									<Text
+										className="font-semibold uppercase text-primary"
 										style={{
 											fontSize: 11,
-											fontWeight: "600",
-											color: THEME_COLORS.primary,
-											textTransform: "uppercase",
 										}}
 									>
 										Brand Story
 									</Text>
 								</View>
-								<Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>
+								<Text className="text-muted" style={{ fontSize: 13 }}>
 									{FEATURED_STORY.industry}
 								</Text>
 							</View>
 
 							<Text
+								className="font-bold mb-4 text-foreground"
 								style={{
 									fontSize: isMobile ? 24 : 28,
-									fontWeight: "700",
-									color: THEME_COLORS.foreground,
-									marginBottom: 16,
 									lineHeight: isMobile ? 32 : 38,
 								}}
 							>
@@ -343,52 +275,39 @@ export default function SuccessStoriesPage() {
 							</Text>
 
 							<Text
+								className="text-base italic mb-6 text-muted"
 								style={{
-									fontSize: 16,
-									color: THEME_COLORS.muted,
 									lineHeight: 26,
-									marginBottom: 24,
-									fontStyle: "italic",
 								}}
 							>
 								"{FEATURED_STORY.quote}"
 							</Text>
 
-							<View
-								style={{
-									flexDirection: "row",
-									alignItems: "center",
-									gap: 12,
-									marginBottom: 24,
-								}}
-							>
+							<View className="flex-row items-center gap-3 mb-6">
 								<View
+									className="items-center justify-center bg-surface-raised"
 									style={{
 										width: 44,
 										height: 44,
 										borderRadius: 22,
-										backgroundColor: THEME_COLORS.sectionBackground,
-										alignItems: "center",
-										justifyContent: "center",
 									}}
 								>
 									<Ionicons
-										color={THEME_COLORS.primary}
+										className="text-primary"
 										name="business"
 										size={20}
 									/>
 								</View>
 								<View>
 									<Text
+										className="font-semibold text-foreground"
 										style={{
 											fontSize: 15,
-											fontWeight: "600",
-											color: THEME_COLORS.foreground,
 										}}
 									>
 										{FEATURED_STORY.author}
 									</Text>
-									<Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>
+									<Text className="text-muted" style={{ fontSize: 13 }}>
 										{FEATURED_STORY.role}, {FEATURED_STORY.name}
 									</Text>
 								</View>
@@ -396,30 +315,22 @@ export default function SuccessStoriesPage() {
 
 							{/* Metrics */}
 							<View
-								style={{
-									flexDirection: "row",
-									flexWrap: "wrap",
-									gap: 24,
-									paddingTop: 20,
-									borderTopWidth: 1,
-									borderTopColor: THEME_COLORS.border,
-								}}
+								className="flex-row flex-wrap gap-6 pt-5 border-t border-border"
 							>
 								{FEATURED_STORY.metrics.map((metric) => (
 									<View key={metric.label}>
 										<Text
+											className="font-bold text-primary"
 											style={{
 												fontSize: 28,
-												fontWeight: "700",
-												color: THEME_COLORS.primary,
 											}}
 										>
 											{metric.value}
 										</Text>
 										<Text
+											className="text-muted"
 											style={{
 												fontSize: 13,
-												color: THEME_COLORS.muted,
 											}}
 										>
 											{metric.label}
@@ -433,60 +344,39 @@ export default function SuccessStoriesPage() {
 			</View>
 
 			{/* Filters */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingTop: 48,
-					paddingBottom: 32,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
+			<View className="px-6 pt-12 pb-8">
+				<View className="w-full" style={{ maxWidth: 1200, marginHorizontal: "auto" }}>
 					<View
+						className="justify-between gap-4"
 						style={{
 							flexDirection: isMobile ? "column" : "row",
-							justifyContent: "space-between",
 							alignItems: isMobile ? "stretch" : "center",
-							gap: 16,
 						}}
 					>
 						{/* Type Filter */}
-						<View style={{ flexDirection: "row", gap: 8 }}>
+						<View className="flex-row gap-2">
 							{FILTERS.map((filter) => (
 								<Pressable
 									key={filter.value}
 									onPress={() => setSelectedFilter(filter.value)}
-									style={({ hovered }) => ({
+									className={cn(
+										"rounded-lg border",
+										selectedFilter === filter.value
+											? "bg-primary border-primary"
+											: "bg-background border-border hover:bg-surface-raised"
+									)}
+									style={{
 										paddingHorizontal: 20,
 										paddingVertical: 10,
-										borderRadius: 8,
-										backgroundColor:
-											selectedFilter === filter.value
-												? THEME_COLORS.primary
-												: hovered
-													? THEME_COLORS.sectionBackground
-													: THEME_COLORS.background,
-										borderWidth: 1,
-										borderColor:
-											selectedFilter === filter.value
-												? THEME_COLORS.primary
-												: THEME_COLORS.border,
-									})}
+									}}
 								>
 									<Text
-										style={{
-											fontSize: 14,
-											fontWeight: "500",
-											color:
-												selectedFilter === filter.value
-													? THEME_COLORS.primaryForeground
-													: THEME_COLORS.foreground,
-										}}
+										className={cn(
+											"text-sm font-medium",
+											selectedFilter === filter.value
+												? "text-primary-foreground"
+												: "text-foreground"
+										)}
 									>
 										{filter.name}
 									</Text>
@@ -504,26 +394,26 @@ export default function SuccessStoriesPage() {
 								<Pressable
 									key={industry}
 									onPress={() => setSelectedIndustry(industry)}
-									style={({ hovered }) => ({
+									className={cn(
+										"rounded-full",
+										selectedIndustry === industry
+											? "bg-foreground"
+											: "hover:bg-surface-raised"
+									)}
+									style={{
 										paddingHorizontal: 16,
 										paddingVertical: 8,
-										borderRadius: 100,
-										backgroundColor:
-											selectedIndustry === industry
-												? THEME_COLORS.foreground
-												: hovered
-													? THEME_COLORS.sectionBackground
-													: "transparent",
-									})}
+									}}
 								>
 									<Text
+										className={cn(
+											"font-medium",
+											selectedIndustry === industry
+												? "text-primary-foreground"
+												: "text-muted"
+										)}
 										style={{
 											fontSize: 13,
-											fontWeight: "500",
-											color:
-												selectedIndustry === industry
-													? THEME_COLORS.primaryForeground
-													: THEME_COLORS.muted,
 										}}
 									>
 										{industry}
@@ -536,70 +426,45 @@ export default function SuccessStoriesPage() {
 			</View>
 
 			{/* Stories Grid */}
-			<View
-				style={{
-					paddingHorizontal: 24,
-					paddingBottom: 64,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
-				>
-					<View
-						style={{
-							flexDirection: "row",
-							flexWrap: "wrap",
-							gap: 24,
-						}}
-					>
+			<View className="px-6 pb-16">
+				<View className="w-full" style={{ maxWidth: 1200, marginHorizontal: "auto" }}>
+					<View className="flex-row flex-wrap gap-6">
 						{filteredStories.map((story) => (
 							<View
 								key={story.name}
+								className="overflow-hidden bg-background rounded-2xl border border-border"
 								style={{
 									width: isMobile ? "100%" : isTablet ? "48%" : "31%",
-									backgroundColor: THEME_COLORS.background,
-									borderRadius: 16,
-									overflow: "hidden",
-									borderWidth: 1,
-									borderColor: THEME_COLORS.border,
 								}}
 							>
 								{/* Image */}
 								<View
+									className="bg-surface-raised"
 									style={{
 										height: 200,
-										backgroundColor: THEME_COLORS.sectionBackground,
 									}}
 								>
 									<Image
 										source={{ uri: story.image }}
-										style={{ width: "100%", height: "100%" }}
+										className="w-full h-full"
 										resizeMode="cover"
 									/>
 									<View
+										className="absolute py-1 rounded"
 										style={{
-											position: "absolute",
 											top: 12,
 											left: 12,
 											paddingHorizontal: 10,
-											paddingVertical: 4,
-											borderRadius: 4,
 											backgroundColor:
 												story.type === "creator"
-													? THEME_COLORS.primary
+													? "#1DBF73"
 													: "#4F46E5",
 										}}
 									>
 										<Text
+											className="font-semibold uppercase text-primary-foreground"
 											style={{
 												fontSize: 11,
-												fontWeight: "600",
-												color: THEME_COLORS.primaryForeground,
-												textTransform: "uppercase",
 											}}
 										>
 											{story.type}
@@ -608,13 +473,10 @@ export default function SuccessStoriesPage() {
 								</View>
 
 								{/* Content */}
-								<View style={{ padding: 24 }}>
+								<View className="p-6">
 									<Text
+										className="text-lg font-semibold mb-2 text-foreground"
 										style={{
-											fontSize: 18,
-											fontWeight: "600",
-											color: THEME_COLORS.foreground,
-											marginBottom: 8,
 											lineHeight: 26,
 										}}
 									>
@@ -622,40 +484,24 @@ export default function SuccessStoriesPage() {
 									</Text>
 
 									<Text
+										className="text-sm italic mb-4 text-muted"
 										style={{
-											fontSize: 14,
-											color: THEME_COLORS.muted,
 											lineHeight: 22,
-											marginBottom: 16,
-											fontStyle: "italic",
 										}}
 										numberOfLines={3}
 									>
 										"{story.quote}"
 									</Text>
 
-									<View
-										style={{
-											flexDirection: "row",
-											alignItems: "center",
-											gap: 8,
-											marginBottom: 16,
-										}}
-									>
-										<Text
-											style={{
-												fontSize: 14,
-												fontWeight: "500",
-												color: THEME_COLORS.foreground,
-											}}
-										>
+									<View className="flex-row items-center gap-2 mb-4">
+										<Text className="text-sm font-medium text-foreground">
 											{story.name}
 										</Text>
-										<Text style={{ color: THEME_COLORS.muted }}>·</Text>
+										<Text className="text-muted">·</Text>
 										<Text
+											className="text-muted"
 											style={{
 												fontSize: 13,
-												color: THEME_COLORS.muted,
 											}}
 										>
 											{story.industry}
@@ -663,33 +509,24 @@ export default function SuccessStoriesPage() {
 									</View>
 
 									{/* Metrics */}
-									<View
-										style={{
-											flexDirection: "row",
-											justifyContent: "space-between",
-											paddingTop: 16,
-											borderTopWidth: 1,
-											borderTopColor: THEME_COLORS.border,
-										}}
-									>
+									<View className="flex-row justify-between pt-4 border-t border-border">
 										{story.metrics.map((metric) => (
-											<View key={metric.label} style={{ alignItems: "center" }}>
+											<View key={metric.label} className="items-center">
 												<Text
+													className="text-lg font-bold"
 													style={{
-														fontSize: 18,
-														fontWeight: "700",
 														color:
 															story.type === "creator"
-																? THEME_COLORS.primary
+																? "#1DBF73"
 																: "#4F46E5",
 													}}
 												>
 													{metric.value}
 												</Text>
 												<Text
+													className="text-muted"
 													style={{
 														fontSize: 11,
-														color: THEME_COLORS.muted,
 													}}
 												>
 													{metric.label}
@@ -703,34 +540,16 @@ export default function SuccessStoriesPage() {
 					</View>
 
 					{filteredStories.length === 0 && (
-						<View
-							style={{
-								padding: 48,
-								alignItems: "center",
-							}}
-						>
+						<View className="p-12 items-center">
 							<Ionicons
-								color={THEME_COLORS.muted}
+								className="text-muted mb-4"
 								name="search-outline"
 								size={48}
-								style={{ marginBottom: 16 }}
 							/>
-							<Text
-								style={{
-									fontSize: 18,
-									fontWeight: "600",
-									color: THEME_COLORS.foreground,
-									marginBottom: 8,
-								}}
-							>
+							<Text className="text-lg font-semibold mb-2 text-foreground">
 								No stories found
 							</Text>
-							<Text
-								style={{
-									fontSize: 14,
-									color: THEME_COLORS.muted,
-								}}
-							>
+							<Text className="text-sm text-muted">
 								Try adjusting your filters
 							</Text>
 						</View>
@@ -739,38 +558,19 @@ export default function SuccessStoriesPage() {
 			</View>
 
 			{/* CTA Section */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.primary,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 800,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="py-16 px-6 bg-primary">
+				<View className="w-full items-center" style={{ maxWidth: 800, marginHorizontal: "auto" }}>
 					<Text
+						className="font-bold text-center mb-4 text-primary-foreground"
 						style={{
 							fontSize: isMobile ? 28 : 36,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 16,
 						}}
 					>
 						Write Your Success Story
 					</Text>
 					<Text
+						className="text-lg text-center mb-8 text-white/90"
 						style={{
-							fontSize: 18,
-							color: "rgba(255,255,255,0.9)",
-							textAlign: "center",
-							marginBottom: 32,
 							lineHeight: 28,
 							maxWidth: 500,
 						}}
@@ -779,54 +579,30 @@ export default function SuccessStoriesPage() {
 						results on our platform.
 					</Text>
 					<View
-						style={{
-							flexDirection: isMobile ? "column" : "row",
-							gap: 16,
-						}}
+						className="gap-4"
+						style={{ flexDirection: isMobile ? "column" : "row" }}
 					>
 						<Pressable
 							onPress={() => openAuthModal("signup")}
-							style={({ hovered }) => ({
+							className="rounded-lg bg-white hover:bg-white/95"
+							style={{
 								paddingHorizontal: 32,
 								paddingVertical: 14,
-								backgroundColor: hovered
-									? "rgba(255,255,255,0.95)"
-									: THEME_COLORS.primaryForeground,
-								borderRadius: 8,
-							})}
+							}}
 						>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "600",
-									color: THEME_COLORS.primary,
-									textAlign: "center",
-								}}
-							>
+							<Text className="text-base font-semibold text-center text-primary">
 								Start as a Creator
 							</Text>
 						</Pressable>
 						<Pressable
 							onPress={() => openAuthModal("signup")}
-							style={({ hovered }) => ({
+							className="rounded-lg border-2 border-white/50 hover:border-primary-foreground"
+							style={{
 								paddingHorizontal: 32,
 								paddingVertical: 14,
-								backgroundColor: "transparent",
-								borderRadius: 8,
-								borderWidth: 2,
-								borderColor: hovered
-									? THEME_COLORS.primaryForeground
-									: "rgba(255,255,255,0.5)",
-							})}
+							}}
 						>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-									textAlign: "center",
-								}}
-							>
+							<Text className="text-base font-semibold text-center text-primary-foreground">
 								Post a Brief
 							</Text>
 						</Pressable>

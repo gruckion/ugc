@@ -2,16 +2,6 @@ import { ScrollView, Text, View } from "react-native";
 import { CategoryTag } from "./CategoryTag";
 import { type CategoryOption, SearchBar } from "./SearchBar";
 
-// Theme colors for video hero (light text on dark video)
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#FFFFFF",
-  muted: "rgba(255, 255, 255, 0.8)",
-  background: "#FFFFFF",
-  heroBackground: "#1a1a1a",
-};
-
 interface PopularTag {
   label: string;
   href: string;
@@ -54,59 +44,28 @@ export function WebHero({
   onSearch,
 }: WebHeroProps) {
   return (
-    <View
-      className="relative z-10 md:min-h-[500px] lg:min-h-[600px]"
-      style={{ backgroundColor: THEME_COLORS.heroBackground }}
-    >
+    <View className="relative z-10 md:min-h-[500px] lg:min-h-[600px] overflow-visible bg-[#1a1a1a]">
       {/* Background Video - Web only */}
       <video
         autoPlay
         loop
         muted
         playsInline
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          width: "100%",
-          height: "100%",
-          objectFit: "cover",
-          zIndex: 0,
-        }}
+        className="absolute top-0 left-0 w-full h-full object-cover z-0"
       >
         <source src="/videos/hero-background.mp4" type="video/mp4" />
       </video>
 
       {/* Dark Overlay for text readability */}
-      <View
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          backgroundColor: "rgba(0, 0, 0, 0.5)",
-          zIndex: 1,
-        }}
-      />
+      <View className="absolute inset-0 bg-black/50 z-1" />
 
       {/* Content */}
-      <View
-        className="relative z-[2] pt-[60px] md:pt-[100px] lg:pt-[140px] pb-8 md:pb-12 lg:pb-20 px-4 md:px-6"
-      >
-        <View
-          style={{
-            width: "100%",
-            maxWidth: 900,
-            marginHorizontal: "auto",
-            alignItems: "center",
-          }}
-        >
+      <View className="relative z-2 pt-[60px] md:pt-[100px] lg:pt-[140px] pb-8 md:pb-12 lg:pb-20 px-4 md:px-6">
+        <View className="w-full max-w-[900px] mx-auto items-center">
           {/* Headline */}
           <Text
-            className="text-[28px] md:text-[42px] lg:text-[56px] font-bold text-center mb-3 md:mb-4 leading-[36px] md:leading-[50px] lg:leading-[66px]"
+            className="text-[28px] md:text-[42px] lg:text-[56px] font-bold text-center mb-3 md:mb-4 leading-[36px] md:leading-[50px] lg:leading-[66px] text-white"
             style={{
-              color: THEME_COLORS.foreground,
               textShadowColor: "rgba(0, 0, 0, 0.3)",
               textShadowOffset: { width: 0, height: 2 },
               textShadowRadius: 4,
@@ -117,9 +76,8 @@ export function WebHero({
 
           {/* Subheadline */}
           <Text
-            className="text-sm md:text-lg text-center leading-[22px] md:leading-7 max-w-full md:max-w-[600px] mb-6 md:mb-8"
+            className="text-sm md:text-lg text-center leading-[22px] md:leading-7 max-w-full md:max-w-[600px] mb-6 md:mb-8 text-white opacity-80"
             style={{
-              color: THEME_COLORS.muted,
               textShadowColor: "rgba(0, 0, 0, 0.3)",
               textShadowOffset: { width: 0, height: 1 },
               textShadowRadius: 2,
@@ -134,19 +92,8 @@ export function WebHero({
           </View>
 
           {/* Popular Tags - always horizontal scroll on mobile, wrap on desktop */}
-          <View
-            className="flex-row items-center gap-2 flex-nowrap md:flex-wrap justify-center"
-            style={{ width: "100%" }}
-          >
-            <Text
-              className="hidden xs:inline"
-              style={{
-                fontSize: 14,
-                color: THEME_COLORS.muted,
-                marginRight: 4,
-                flexShrink: 0,
-              }}
-            >
+          <View className="flex-row items-center gap-2 flex-nowrap md:flex-wrap justify-center w-full">
+            <Text className="hidden xs:inline text-sm mr-1 shrink-0 text-white opacity-80">
               Popular:
             </Text>
             <ScrollView

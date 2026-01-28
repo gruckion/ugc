@@ -14,8 +14,6 @@ interface WebNavigationShellProps {
   showHeader?: boolean;
   /** Whether to show the footer */
   showFooter?: boolean;
-  /** Callback when search is submitted */
-  onSearch?: (query: string) => void;
 }
 
 /**
@@ -28,7 +26,6 @@ export function WebNavigationShell({
   children,
   showHeader = true,
   showFooter = true,
-  onSearch,
 }: WebNavigationShellProps) {
   const scrollRef = useRef<ScrollView>(null);
 
@@ -38,9 +35,9 @@ export function WebNavigationShell({
 
   return (
     <ScrollContext.Provider value={{ scrollToTop, scrollRef }}>
-      <View style={{ flex: 1, backgroundColor: "#FFFFFF" }}>
+      <View className="flex-1 bg-background">
         {/* Fixed Header */}
-        {showHeader && <WebHeader onSearch={onSearch} />}
+        {showHeader && <WebHeader />}
 
         {/* Scrollable Content Area */}
         <ScrollView
@@ -49,10 +46,10 @@ export function WebNavigationShell({
             flexGrow: 1,
             paddingTop: showHeader ? HEADER_HEIGHT : 0,
           }}
-          style={{ flex: 1 }}
+          className="flex-1"
         >
           {/* Main Content */}
-          <View style={{ flex: 1, minHeight: "100%" }}>{children}</View>
+          {children}
 
           {/* Footer */}
           {showFooter && <WebFooter />}

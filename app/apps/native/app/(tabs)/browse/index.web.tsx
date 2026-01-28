@@ -3,21 +3,8 @@ import { Link } from "expo-router";
 import { useState } from "react";
 import { Pressable, Text, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
+import { cn } from "@/lib/utils";
 import { SEO, createWebPageJsonLd, createBreadcrumbJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors (consistent with rest of app)
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  sectionBackground: "#fafafa",
-  // Semantic colors
-  success: "#1DBF73",
-  successSubtle: "#f0fdf4",
-};
 
 // Browse options data
 const BROWSE_OPTIONS = [
@@ -71,20 +58,12 @@ function BrowseCard({
 }) {
   return (
     <View
-      style={{
-        flex: isMobile ? undefined : 1,
-        width: isMobile ? "100%" : undefined,
-      }}
+      className={isMobile ? "w-full" : "flex-1"}
     >
       <Link asChild href={option.href as any}>
         <Pressable
+          className="flex-1 bg-background rounded-xl p-6 border border-border hover:border-primary"
           style={({ hovered }) => ({
-            flex: 1,
-            backgroundColor: THEME_COLORS.background,
-            borderRadius: 12,
-            padding: 24,
-            borderWidth: 1,
-            borderColor: hovered ? THEME_COLORS.primary : THEME_COLORS.border,
             shadowColor: "#000",
             shadowOffset: { width: 0, height: hovered ? 4 : 2 },
             shadowOpacity: hovered ? 0.1 : 0.05,
@@ -93,45 +72,29 @@ function BrowseCard({
           })}
         >
           {/* Header row */}
-          <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              marginBottom: 16,
-            }}
-          >
+          <View className="flex-row items-center justify-between mb-4">
             <View
+              className="items-center justify-center bg-chip-bg"
               style={{
                 width: 40,
                 height: 40,
                 borderRadius: 10,
-                backgroundColor: THEME_COLORS.successSubtle,
-                alignItems: "center",
-                justifyContent: "center",
               }}
             >
               <Ionicons
-                color={THEME_COLORS.primary}
+                className="text-primary"
                 name={option.icon}
                 size={20}
               />
             </View>
             <View
+              className="rounded-md bg-surface-raised"
               style={{
-                backgroundColor: THEME_COLORS.sectionBackground,
                 paddingHorizontal: 10,
                 paddingVertical: 4,
-                borderRadius: 6,
               }}
             >
-              <Text
-                style={{
-                  fontSize: 12,
-                  fontWeight: "500",
-                  color: THEME_COLORS.muted,
-                }}
-              >
+              <Text className="text-xs font-medium text-muted">
                 {option.subtitle}
               </Text>
             </View>
@@ -139,57 +102,33 @@ function BrowseCard({
 
           {/* Title */}
           <Text
-            style={{
-              fontSize: 20,
-              fontWeight: "600",
-              color: THEME_COLORS.foreground,
-              marginBottom: 8,
-              letterSpacing: -0.3,
-            }}
+            className="text-xl font-semibold text-foreground mb-2"
+            style={{ letterSpacing: -0.3 }}
           >
             {option.title}
           </Text>
 
           {/* Description */}
           <Text
-            style={{
-              fontSize: 14,
-              color: THEME_COLORS.muted,
-              lineHeight: 21,
-              marginBottom: 20,
-            }}
+            className="text-sm text-muted mb-5"
+            style={{ lineHeight: 21 }}
           >
             {option.description}
           </Text>
 
           {/* Stats row */}
           <View
-            style={{
-              flexDirection: "row",
-              gap: 24,
-              paddingTop: 16,
-              borderTopWidth: 1,
-              borderTopColor: THEME_COLORS.border,
-            }}
+            className="flex-row gap-6 pt-4 border-t border-border"
           >
             {option.stats.map((stat) => (
               <View key={stat.label}>
                 <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: "600",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 2,
-                  }}
+                  className="text-base font-semibold text-foreground"
+                  style={{ marginBottom: 2 }}
                 >
                   {stat.value}
                 </Text>
-                <Text
-                  style={{
-                    fontSize: 12,
-                    color: THEME_COLORS.muted,
-                  }}
-                >
+                <Text className="text-xs text-muted">
                   {stat.label}
                 </Text>
               </View>
@@ -198,24 +137,14 @@ function BrowseCard({
 
           {/* CTA */}
           <View
-            style={{
-              flexDirection: "row",
-              alignItems: "center",
-              gap: 6,
-              marginTop: 20,
-            }}
+            className="flex-row items-center mt-5"
+            style={{ gap: 6 }}
           >
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: THEME_COLORS.primary,
-              }}
-            >
+            <Text className="text-sm font-medium text-primary">
               Browse {option.id}
             </Text>
             <Ionicons
-              color={THEME_COLORS.primary}
+              className="text-primary"
               name="arrow-forward"
               size={16}
             />
@@ -233,20 +162,16 @@ function CategoryPill({ category }: { category: (typeof CATEGORIES)[0] }) {
   return (
     <Link asChild href={`/browse/creators?category=${category.id}` as any}>
       <Pressable
+        className={cn(
+          "flex-row items-center gap-2 px-4 rounded-lg border",
+          isHovered
+            ? "bg-primary border-primary"
+            : "bg-background border-border",
+        )}
         onHoverIn={() => setIsHovered(true)}
         onHoverOut={() => setIsHovered(false)}
         style={{
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 8,
-          paddingHorizontal: 16,
           paddingVertical: 10,
-          borderRadius: 8,
-          backgroundColor: isHovered
-            ? THEME_COLORS.primary
-            : THEME_COLORS.background,
-          borderWidth: 1,
-          borderColor: isHovered ? THEME_COLORS.primary : THEME_COLORS.border,
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 1 },
           shadowOpacity: isHovered ? 0 : 0.04,
@@ -254,20 +179,15 @@ function CategoryPill({ category }: { category: (typeof CATEGORIES)[0] }) {
         }}
       >
         <Ionicons
-          color={
-            isHovered ? THEME_COLORS.primaryForeground : THEME_COLORS.muted
-          }
+          className={isHovered ? "text-primary-foreground" : "text-muted"}
           name={category.icon}
           size={16}
         />
         <Text
-          style={{
-            fontSize: 13,
-            fontWeight: "500",
-            color: isHovered
-              ? THEME_COLORS.primaryForeground
-              : THEME_COLORS.foreground,
-          }}
+          className={cn(
+            "text-[13px] font-medium",
+            isHovered ? "text-primary-foreground" : "text-foreground",
+          )}
         >
           {category.label}
         </Text>
@@ -285,20 +205,17 @@ function TrustIndicator({
   text: string;
 }) {
   return (
-    <View style={{ flexDirection: "row", alignItems: "center", gap: 8 }}>
+    <View className="flex-row items-center gap-2">
       <View
+        className="items-center justify-center rounded-full bg-chip-bg"
         style={{
           width: 28,
           height: 28,
-          borderRadius: 14,
-          backgroundColor: THEME_COLORS.successSubtle,
-          alignItems: "center",
-          justifyContent: "center",
         }}
       >
-        <Ionicons color={THEME_COLORS.success} name={icon} size={14} />
+        <Ionicons className="text-success" name={icon} size={14} />
       </View>
-      <Text style={{ fontSize: 13, color: THEME_COLORS.muted }}>{text}</Text>
+      <Text className="text-[13px] text-muted">{text}</Text>
     </View>
   );
 }
@@ -320,7 +237,7 @@ export default function BrowseLandingPage() {
   ]);
 
   return (
-    <View style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+    <View className="flex-1 bg-background">
       <SEO
         title="Browse Marketplace"
         description="Browse the UGC Marketplace. Find talented creators for your brand or discover paid briefs as a creator. Connect, collaborate, and create authentic content."
@@ -337,52 +254,37 @@ export default function BrowseLandingPage() {
 
       {/* Header Section */}
       <View
+        className="px-6 bg-surface-raised"
         style={{
           paddingTop: 48,
           paddingBottom: 48,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
         }}
       >
         <View
-          style={{
-            maxWidth: 1000,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1000 }}
         >
           <Text
+            className="text-[13px] font-medium uppercase mb-3 text-center text-primary"
             style={{
-              fontSize: 13,
-              fontWeight: "500",
-              color: THEME_COLORS.primary,
               letterSpacing: 0.5,
-              textTransform: "uppercase",
-              marginBottom: 12,
-              textAlign: "center",
             }}
           >
             Marketplace
           </Text>
           <Text
+            className="font-semibold text-foreground text-center mb-3"
             style={{
               fontSize: isMobileLayout ? 28 : 36,
-              fontWeight: "600",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 12,
               letterSpacing: -0.5,
             }}
           >
             Start exploring
           </Text>
           <Text
+            className="text-base text-muted text-center mx-auto"
             style={{
-              fontSize: 16,
-              color: THEME_COLORS.muted,
-              textAlign: "center",
               maxWidth: 480,
-              marginHorizontal: "auto",
               lineHeight: 24,
             }}
           >
@@ -394,25 +296,17 @@ export default function BrowseLandingPage() {
 
       {/* Main Content */}
       <View
-        style={{
-          paddingVertical: 48,
-          paddingHorizontal: 24,
-        }}
+        className="px-6"
+        style={{ paddingVertical: 48 }}
       >
         <View
-          style={{
-            maxWidth: 1000,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="w-full mx-auto"
+          style={{ maxWidth: 1000 }}
         >
           {/* Cards Grid */}
           <View
-            style={{
-              flexDirection: isMobileLayout ? "column" : "row",
-              gap: 20,
-              marginBottom: 48,
-            }}
+            className={isMobileLayout ? "flex-col" : "flex-row"}
+            style={{ gap: 20, marginBottom: 48 }}
           >
             {BROWSE_OPTIONS.map((option) => (
               <BrowseCard
@@ -425,46 +319,19 @@ export default function BrowseLandingPage() {
 
           {/* Categories Section */}
           <View
-            style={{
-              backgroundColor: THEME_COLORS.sectionBackground,
-              borderRadius: 12,
-              padding: 24,
-              borderWidth: 1,
-              borderColor: THEME_COLORS.border,
-            }}
+            className="rounded-xl p-6 border border-border bg-surface-raised"
           >
-            <View
-              style={{
-                flexDirection: "row",
-                alignItems: "center",
-                justifyContent: "space-between",
-                marginBottom: 20,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 14,
-                  fontWeight: "600",
-                  color: THEME_COLORS.foreground,
-                }}
-              >
+            <View className="flex-row items-center justify-between mb-5">
+              <Text className="text-sm font-semibold text-foreground">
                 Browse by category
               </Text>
-              <Text
-                style={{
-                  fontSize: 13,
-                  color: THEME_COLORS.muted,
-                }}
-              >
+              <Text className="text-[13px] text-muted">
                 {CATEGORIES.length} categories
               </Text>
             </View>
             <View
-              style={{
-                flexDirection: "row",
-                flexWrap: "wrap",
-                gap: 10,
-              }}
+              className="flex-row flex-wrap"
+              style={{ gap: 10 }}
             >
               {CATEGORIES.map((category) => (
                 <CategoryPill category={category} key={category.id} />
@@ -476,22 +343,13 @@ export default function BrowseLandingPage() {
 
       {/* Trust Indicators */}
       <View
-        style={{
-          paddingVertical: 32,
-          paddingHorizontal: 24,
-          borderTopWidth: 1,
-          borderTopColor: THEME_COLORS.border,
-        }}
+        className="py-8 px-6 border-t border-border"
       >
         <View
+          className={`w-full mx-auto justify-center items-center ${isMobileLayout ? "flex-col gap-4" : "flex-row"}`}
           style={{
             maxWidth: 1000,
-            marginHorizontal: "auto",
-            width: "100%",
-            flexDirection: isMobileLayout ? "column" : "row",
-            justifyContent: "center",
-            alignItems: "center",
-            gap: isMobileLayout ? 16 : 48,
+            gap: isMobileLayout ? undefined : 48,
           }}
         >
           <TrustIndicator

@@ -13,6 +13,7 @@ import Animated, {
 import { useSafeAreaInsets } from "react-native-safe-area-context";
 import { CategoryFilter, EVENT_CATEGORIES } from "@/components/CategoryFilter";
 import { ExternalLinkButton } from "@/components/ExternalLinkButton";
+import { cn } from "@/lib/utils";
 
 // Sample events data based on the website sitemap
 export const EVENTS = [
@@ -108,21 +109,12 @@ export default function Events() {
         }}
       >
         <Text
-          className="text-primary-foreground"
-          style={{
-            fontSize: 28,
-            fontWeight: "300",
-            fontFamily: "serif",
-          }}
+          className="text-primary-foreground text-[28px] font-light font-serif"
         >
           Events
         </Text>
         <Text
-          className="text-accent"
-          style={{
-            fontSize: 14,
-            marginTop: 4,
-          }}
+          className="text-accent text-sm mt-1"
         >
           Upcoming events at UGC
         </Text>
@@ -136,42 +128,25 @@ export default function Events() {
       />
 
       <ScrollView
+        className="flex-1"
         contentContainerStyle={{ padding: 16, paddingBottom: 32 }}
-        style={{ flex: 1 }}
       >
         {filteredEvents.length === 0 ? (
           <View
-            style={{
-              padding: 32,
-              alignItems: "center",
-            }}
+            className="p-8 items-center"
           >
-            <Ionicons color={accent} name="calendar-outline" size={48} />
+            <Ionicons className="text-accent" name="calendar-outline" size={48} />
             <Text
-              className="text-foreground"
-              style={{
-                fontSize: 16,
-                marginTop: 16,
-                textAlign: "center",
-              }}
+              className="text-foreground text-base mt-4 text-center"
             >
               No events found in this category
             </Text>
             <Pressable
-              className="bg-accent"
+              className="bg-accent mt-3 px-4 py-2 rounded-lg"
               onPress={() => setSelectedCategory(null)}
-              style={{
-                marginTop: 12,
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 8,
-              }}
             >
               <Text
-                className="text-foreground"
-                style={{
-                  fontWeight: "500",
-                }}
+                className="text-foreground font-medium"
               >
                 View All Events
               </Text>
@@ -215,8 +190,8 @@ function EventCard({
   const scale = useSharedValue(1);
 
   // useThemeColor only for Ionicons (which don't support className)
-  const accent = useThemeColor("accent") || "#85b09a";
-  const muted = useThemeColor("muted") || "#666666";
+  const accent = useThemeColor("accent");
+  const muted = useThemeColor("muted");
 
   const animatedStyle = useAnimatedStyle(() => ({
     transform: [{ scale: scale.value }],
@@ -233,14 +208,11 @@ function EventCard({
   return (
     <Animated.View style={animatedStyle}>
       <Pressable
-        className={featured ? "bg-primary" : "bg-surface"}
+        className={cn(featured ? "bg-primary" : "bg-surface", "rounded-xl mb-4 overflow-hidden")}
         onPress={onPress}
         onPressIn={handlePressIn}
         onPressOut={handlePressOut}
         style={{
-          borderRadius: 12,
-          marginBottom: 16,
-          overflow: "hidden",
           shadowColor: "#000",
           shadowOffset: { width: 0, height: 2 },
           shadowOpacity: 0.1,
@@ -250,61 +222,36 @@ function EventCard({
       >
         {/* Event Image */}
         <Image
+          className="w-full h-[160px]"
           contentFit="cover"
           placeholder={{ blurhash: EVENT_BLURHASH }}
           source={event.image}
-          style={{ width: "100%", height: 160 }}
           transition={200}
         />
 
         {/* Event Details */}
-        <View style={{ padding: 16 }}>
+        <View className="p-4">
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "flex-start",
-            }}
+            className="flex-row justify-between items-start"
           >
-            <View style={{ flex: 1 }}>
+            <View className="flex-1">
               <Text
-                className={
-                  featured ? "text-primary-foreground" : "text-foreground"
-                }
-                style={{
-                  fontSize: 18,
-                  fontWeight: "600",
-                  marginBottom: 4,
-                }}
+                className={cn(featured ? "text-primary-foreground" : "text-foreground", "text-lg font-semibold mb-1")}
               >
                 {event.title}
               </Text>
               <Text
-                className={featured ? "text-accent" : "text-muted"}
-                style={{
-                  fontSize: 14,
-                  lineHeight: 20,
-                }}
+                className={cn(featured ? "text-accent" : "text-muted", "text-sm leading-5")}
               >
                 {event.description}
               </Text>
             </View>
             {featured && (
               <View
-                className="bg-accent"
-                style={{
-                  paddingHorizontal: 10,
-                  paddingVertical: 4,
-                  borderRadius: 12,
-                  marginLeft: 8,
-                }}
+                className="bg-accent px-2.5 py-1 rounded-xl ml-2"
               >
                 <Text
-                  className="text-foreground"
-                  style={{
-                    fontSize: 11,
-                    fontWeight: "600",
-                  }}
+                  className="text-foreground text-[11px] font-semibold"
                 >
                   Featured
                 </Text>
@@ -314,15 +261,10 @@ function EventCard({
 
           {/* Date and RSVP */}
           <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginTop: 16,
-            }}
+            className="flex-row justify-between items-center mt-4"
           >
             <View
-              style={{ flexDirection: "row", alignItems: "center", gap: 6 }}
+              className="flex-row items-center gap-1.5"
             >
               <Ionicons
                 color={featured ? accent : muted}
@@ -330,31 +272,17 @@ function EventCard({
                 size={16}
               />
               <Text
-                className={featured ? "text-accent" : "text-muted"}
-                style={{
-                  fontSize: 13,
-                }}
+                className={cn(featured ? "text-accent" : "text-muted", "text-[13px]")}
               >
                 {event.dateRange}
               </Text>
             </View>
 
             <View
-              className={featured ? "bg-primary-foreground" : "bg-primary"}
-              style={{
-                paddingHorizontal: 16,
-                paddingVertical: 8,
-                borderRadius: 6,
-              }}
+              className={cn(featured ? "bg-primary-foreground" : "bg-primary", "px-4 py-2 rounded-md")}
             >
               <Text
-                className={
-                  featured ? "text-primary" : "text-primary-foreground"
-                }
-                style={{
-                  fontSize: 13,
-                  fontWeight: "500",
-                }}
+                className={cn(featured ? "text-primary" : "text-primary-foreground", "text-[13px] font-medium")}
               >
                 RSVP
               </Text>

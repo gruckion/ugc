@@ -1,186 +1,174 @@
-import { Link } from "expo-router";
-import { Pressable, Text, View } from "react-native";
+import { cn } from "@/lib/utils";
 import { useResponsive } from "@/hooks/useResponsive";
+import { Link } from "expo-router";
+import type { ReactNode } from "react";
+import { Pressable, Text, View } from "react-native";
 
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-};
-
-export interface PromoBannerProps {
-	heading: string;
-	subheading: string;
-	ctaText: string;
-	ctaHref?: string;
-	onCtaPress?: () => void;
-	videoSrc: string;
-	backgroundColor: string;
-	variant?: "default" | "pro";
-	badge?: string;
-}
-
-export function PromoBanner({
-	heading,
-	subheading,
-	ctaText,
-	ctaHref,
-	onCtaPress,
-	videoSrc,
-	backgroundColor,
-	variant = "default",
-	badge,
-}: PromoBannerProps) {
+/* ── Root ── */
+export function PromoBannerRoot({
+	children,
+	className,
+}: { children: ReactNode; className?: string }) {
 	const { isMobile, isTablet } = useResponsive();
 	const isCompact = isMobile || isTablet;
 
-	// Text colors based on variant
-	const textColor = variant === "pro" ? THEME_COLORS.foreground : "#FFFFFF";
-	const subTextColor = variant === "pro" ? THEME_COLORS.muted : "rgba(255, 255, 255, 0.85)";
-	const buttonBg = variant === "pro" ? THEME_COLORS.foreground : "#FFFFFF";
-	const buttonTextColor = variant === "pro" ? "#FFFFFF" : THEME_COLORS.foreground;
-
-	const CTAButton = (
-		<Pressable
-			onPress={onCtaPress}
-			style={({ hovered }) => ({
-				backgroundColor: buttonBg,
-				paddingHorizontal: 32,
-				paddingVertical: 16,
-				borderRadius: 8,
-				opacity: hovered ? 0.9 : 1,
-				alignSelf: "flex-start",
-			})}
-		>
-			<Text
-				style={{
-					fontSize: 16,
-					fontWeight: "600",
-					color: buttonTextColor,
-				}}
-			>
-				{ctaText}
-			</Text>
-		</Pressable>
-	);
-
 	return (
-		<View
-			style={{
-				paddingVertical: 32,
-				paddingHorizontal: 24,
-			}}
-		>
+		<View className="px-6 py-8">
 			<View
-				style={{
-					maxWidth: 1200,
-					marginHorizontal: "auto",
-					width: "100%",
-					backgroundColor: backgroundColor,
-					borderRadius: 24,
-					overflow: "hidden",
-					flexDirection: isCompact ? "column" : "row",
-				}}
+				className={cn(
+					"mx-auto w-full max-w-[1200px] overflow-hidden rounded-3xl",
+					isCompact ? "flex-col" : "flex-row",
+					className,
+				)}
 			>
-				{/* Left Content */}
-				<View
-					style={{
-						flex: isCompact ? undefined : 0.6,
-						padding: isCompact ? 32 : 48,
-						justifyContent: "center",
-					}}
-				>
-					{/* Badge */}
-					{badge && (
-						<View style={{ marginBottom: 16 }}>
-							<Text
-								style={{
-									fontSize: 24,
-									fontWeight: "700",
-									color: textColor,
-								}}
-							>
-								<Text style={{ fontWeight: "800" }}>UGC</Text>
-								<Text style={{ fontWeight: "300" }}> pro.</Text>
-							</Text>
-						</View>
-					)}
-
-					{/* Heading */}
-					<Text
-						style={{
-							fontSize: isCompact ? 28 : 36,
-							fontWeight: "700",
-							color: textColor,
-							marginBottom: 16,
-							lineHeight: isCompact ? 36 : 44,
-						}}
-					>
-						{heading}
-					</Text>
-
-					{/* Subheading */}
-					<Text
-						style={{
-							fontSize: isCompact ? 14 : 16,
-							color: subTextColor,
-							marginBottom: 24,
-							lineHeight: isCompact ? 22 : 26,
-							maxWidth: 400,
-						}}
-					>
-						{subheading}
-					</Text>
-
-					{/* CTA Button */}
-					{ctaHref ? (
-						<Link asChild href={ctaHref as any}>
-							{CTAButton}
-						</Link>
-					) : (
-						CTAButton
-					)}
-				</View>
-
-				{/* Right Video */}
-				<View
-					style={{
-						flex: isCompact ? undefined : 0.4,
-						minHeight: isCompact ? 200 : 300,
-						padding: isCompact ? 16 : 24,
-						justifyContent: "center",
-						alignItems: "center",
-					}}
-				>
-					<View
-						style={{
-							width: "100%",
-							maxWidth: 400,
-							borderRadius: 16,
-							overflow: "hidden",
-							aspectRatio: 16 / 10,
-						}}
-					>
-						<video
-							autoPlay
-							loop
-							muted
-							playsInline
-							style={{
-								width: "100%",
-								height: "100%",
-								objectFit: "cover",
-							}}
-						>
-							<source src={videoSrc} type="video/mp4" />
-						</video>
-					</View>
-				</View>
+				{children}
 			</View>
 		</View>
 	);
 }
 
-export default PromoBanner;
+/* ── Content (left column) ── */
+export function PromoBannerContent({ children }: { children: ReactNode }) {
+	const { isMobile, isTablet } = useResponsive();
+	const isCompact = isMobile || isTablet;
+
+	return (
+		<View
+			className={cn(
+				"justify-center",
+				isCompact ? "p-8" : "flex-[0.6] p-12",
+			)}
+		>
+			{children}
+		</View>
+	);
+}
+
+/* ── Badge ── */
+export function PromoBannerBadge({
+	className,
+}: { className?: string }) {
+	return (
+		<View className="mb-4">
+			<Text className={cn("text-2xl font-bold", className)}>
+				<Text className="font-extrabold">UGC</Text>
+				<Text className="font-light"> pro.</Text>
+			</Text>
+		</View>
+	);
+}
+
+/* ── Heading ── */
+export function PromoBannerHeading({
+	children,
+	className,
+}: { children: ReactNode; className?: string }) {
+	const { isMobile, isTablet } = useResponsive();
+	const isCompact = isMobile || isTablet;
+
+	return (
+		<Text
+			className={cn(
+				"mb-4 font-bold",
+				isCompact ? "text-[28px] leading-9" : "text-4xl leading-[44px]",
+				className,
+			)}
+		>
+			{children}
+		</Text>
+	);
+}
+
+/* ── Description ── */
+export function PromoBannerDescription({
+	children,
+	className,
+}: { children: ReactNode; className?: string }) {
+	const { isMobile, isTablet } = useResponsive();
+	const isCompact = isMobile || isTablet;
+
+	return (
+		<Text
+			className={cn(
+				"mb-6 max-w-[400px]",
+				isCompact ? "text-sm leading-[22px]" : "text-base leading-[26px]",
+				className,
+			)}
+		>
+			{children}
+		</Text>
+	);
+}
+
+/* ── CTA Button ── */
+export function PromoBannerCTA({
+	label,
+	href,
+	onPress,
+	className,
+	textClassName,
+}: {
+	label: string;
+	href?: string;
+	onPress?: () => void;
+	className?: string;
+	textClassName?: string;
+}) {
+	const button = (
+		<Pressable
+			className={cn(
+				"self-start rounded-lg px-8 py-4 hover:opacity-90",
+				className,
+			)}
+			onPress={onPress}
+		>
+			<Text className={cn("text-base font-semibold", textClassName)}>
+				{label}
+			</Text>
+		</Pressable>
+	);
+
+	if (href) {
+		return (
+			<Link asChild href={href as any}>
+				{button}
+			</Link>
+		);
+	}
+
+	return button;
+}
+
+/* ── Media (right column) ── */
+export function PromoBannerMedia({ children }: { children: ReactNode }) {
+	const { isMobile, isTablet } = useResponsive();
+	const isCompact = isMobile || isTablet;
+
+	return (
+		<View
+			className={cn(
+				"items-center justify-center",
+				isCompact ? "min-h-[200px] p-4" : "min-h-[300px] flex-[0.4] p-6",
+			)}
+		>
+			{children}
+		</View>
+	);
+}
+
+/* ── Video ── */
+export function PromoBannerVideo({ src }: { src: string }) {
+	return (
+		<View className="aspect-[16/10] w-full max-w-[400px] overflow-hidden rounded-2xl">
+			<video
+				autoPlay
+				loop
+				muted
+				playsInline
+				className="h-full w-full object-cover"
+			>
+				<source src={src} type="video/mp4" />
+			</video>
+		</View>
+	);
+}

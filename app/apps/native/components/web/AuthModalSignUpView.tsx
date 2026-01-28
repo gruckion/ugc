@@ -5,15 +5,7 @@ import { ActivityIndicator, Pressable, Text, View } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { authClient } from "@/lib/auth-client";
 import { useAppleAuth, useGitHubAuth, useGoogleAuth } from "@/lib/oauth";
-
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-};
+import { cn } from "@/lib/utils";
 
 export function AuthModalSignUpView() {
   const { setView, close } = useAuthModal();
@@ -34,30 +26,21 @@ export function AuthModalSignUpView() {
   return (
     <View>
       {/* Heading */}
-      <View style={{ marginBottom: 32 }}>
-        <Text
-          style={{
-            fontSize: 28,
-            fontWeight: "700",
-            color: THEME_COLORS.foreground,
-            marginBottom: 8,
-          }}
-        >
+      <View className="mb-8">
+        <Text className="text-[28px] font-bold mb-2 text-foreground">
           Create a new account
         </Text>
-        <View style={{ flexDirection: "row", alignItems: "center", gap: 4 }}>
-          <Text style={{ fontSize: 15, color: THEME_COLORS.muted }}>
+        <View className="flex-row items-center gap-1">
+          <Text className="text-[15px] text-muted">
             Already have an account?
           </Text>
           <Pressable onPress={() => setView("signin")}>
             {({ hovered }) => (
               <Text
-                style={{
-                  fontSize: 15,
-                  fontWeight: "600",
-                  color: THEME_COLORS.primary,
-                  textDecorationLine: hovered ? "underline" : "none",
-                }}
+                className={cn(
+                  "text-[15px] font-semibold text-primary",
+                  hovered && "underline"
+                )}
               >
                 Sign in
               </Text>
@@ -67,7 +50,7 @@ export function AuthModalSignUpView() {
       </View>
 
       {/* OAuth Buttons */}
-      <View style={{ gap: 12, marginBottom: 24 }}>
+      <View className="gap-3 mb-6">
         <OAuthButton
           disabled={isLoading}
           icon="logo-google"
@@ -95,66 +78,26 @@ export function AuthModalSignUpView() {
       </View>
 
       {/* Divider */}
-      <View
-        style={{
-          flexDirection: "row",
-          alignItems: "center",
-          marginBottom: 24,
-        }}
-      >
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: THEME_COLORS.border,
-          }}
-        />
-        <Text
-          style={{
-            paddingHorizontal: 16,
-            fontSize: 13,
-            color: THEME_COLORS.muted,
-          }}
-        >
+      <View className="flex-row items-center mb-6">
+        <View className="flex-1 h-px bg-border" />
+        <Text className="px-4 text-[13px] text-muted">
           OR
         </Text>
-        <View
-          style={{
-            flex: 1,
-            height: 1,
-            backgroundColor: THEME_COLORS.border,
-          }}
-        />
+        <View className="flex-1 h-px bg-border" />
       </View>
 
       {/* Email Button */}
-      <View style={{ position: "relative" }}>
+      <View className="relative">
         <Pressable
+          className="flex-row items-center justify-center gap-3 py-3.5 rounded-lg border border-border bg-background hover:bg-hover-surface"
           onPress={() => setView("email-signup")}
-          style={({ hovered }) => ({
-            flexDirection: "row",
-            alignItems: "center",
-            justifyContent: "center",
-            gap: 12,
-            paddingVertical: 14,
-            borderRadius: 8,
-            borderWidth: 1,
-            borderColor: THEME_COLORS.border,
-            backgroundColor: hovered ? "#fafafa" : THEME_COLORS.background,
-          })}
         >
           <Ionicons
-            color={THEME_COLORS.foreground}
+            className="text-foreground"
             name="mail-outline"
             size={20}
           />
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: "500",
-              color: THEME_COLORS.foreground,
-            }}
-          >
+          <Text className="text-[15px] font-medium text-foreground">
             Continue with email
           </Text>
         </Pressable>
@@ -162,37 +105,23 @@ export function AuthModalSignUpView() {
       </View>
 
       {/* Terms */}
-      <Text
-        style={{
-          fontSize: 12,
-          color: THEME_COLORS.muted,
-          textAlign: "center",
-          marginTop: 32,
-          lineHeight: 18,
-        }}
-      >
+      <Text className="text-xs text-center mt-8 leading-[18px] text-muted">
         By joining, you agree to the UGC Marketplace{" "}
         <Text
+          className="underline text-primary"
           onPress={() => {
             close();
             router.push("/termsofservice" as any);
-          }}
-          style={{
-            textDecorationLine: "underline",
-            color: THEME_COLORS.primary,
           }}
         >
           Terms of Service
         </Text>{" "}
         and to occasionally receive emails from us. Please read our{" "}
         <Text
+          className="underline text-primary"
           onPress={() => {
             close();
             router.push("/privacypolicy" as any);
-          }}
-          style={{
-            textDecorationLine: "underline",
-            color: THEME_COLORS.primary,
           }}
         >
           Privacy Policy
@@ -219,35 +148,21 @@ function OAuthButton({
   disabled: boolean;
 }) {
   return (
-    <View style={{ position: "relative" }}>
+    <View className="relative">
       <Pressable
+        className={cn(
+          "flex-row items-center justify-center gap-3 py-3.5 rounded-lg border border-border bg-background hover:bg-hover-surface",
+          disabled && !isLoading && "opacity-70"
+        )}
         disabled={disabled}
         onPress={onPress}
-        style={({ hovered }) => ({
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: 12,
-          paddingVertical: 14,
-          borderRadius: 8,
-          borderWidth: 1,
-          borderColor: THEME_COLORS.border,
-          backgroundColor: hovered ? "#fafafa" : THEME_COLORS.background,
-          opacity: disabled && !isLoading ? 0.7 : 1,
-        })}
       >
         {isLoading ? (
-          <ActivityIndicator color={THEME_COLORS.foreground} size="small" />
+          <ActivityIndicator color="var(--foreground)" size="small" />
         ) : (
           <>
-            <Ionicons color={THEME_COLORS.foreground} name={icon} size={20} />
-            <Text
-              style={{
-                fontSize: 15,
-                fontWeight: "500",
-                color: THEME_COLORS.foreground,
-              }}
-            >
+            <Ionicons className="text-foreground" name={icon} size={20} />
+            <Text className="text-[15px] font-medium text-foreground">
               {label}
             </Text>
           </>
@@ -260,24 +175,8 @@ function OAuthButton({
 
 function LastUsedBadge() {
   return (
-    <View
-      style={{
-        position: "absolute",
-        top: -8,
-        right: -8,
-        backgroundColor: THEME_COLORS.primary,
-        paddingHorizontal: 8,
-        paddingVertical: 2,
-        borderRadius: 10,
-      }}
-    >
-      <Text
-        style={{
-          fontSize: 10,
-          fontWeight: "600",
-          color: THEME_COLORS.primaryForeground,
-        }}
-      >
+    <View className="absolute -top-2 -right-2 px-2 py-0.5 rounded-[10px] bg-primary">
+      <Text className="text-[10px] font-semibold text-primary-foreground">
         Last used
       </Text>
     </View>

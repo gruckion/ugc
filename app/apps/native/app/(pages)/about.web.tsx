@@ -4,17 +4,7 @@ import { Pressable, ScrollView, Text, View } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createWebPageJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  sectionBackground: "#fafafa",
-};
+import { cn } from "@/lib/utils";
 
 // Company values
 const VALUES = [
@@ -87,7 +77,7 @@ export default function AboutPage() {
   );
 
   return (
-    <ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+    <ScrollView className="flex-1 bg-background">
       <SEO
         title="About Us"
         description="Learn about UGC Marketplace and our mission to connect brands with talented creators. Discover our story, values, and the team building the future of authentic content creation."
@@ -103,41 +93,20 @@ export default function AboutPage() {
       />
 
       {/* Hero Section */}
-      <View
-        style={{
-          paddingTop: 48,
-          paddingBottom: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
-        }}
-      >
+      <View className="pt-12 pb-16 px-6 bg-neutral-50">
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="mx-auto w-full"
+          style={{ maxWidth: 1200 }}
         >
           <Text
-            style={{
-              fontSize: isMobile ? 32 : 48,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 16,
-            }}
+            className="font-bold text-foreground text-center mb-4"
+            style={{ fontSize: isMobile ? 32 : 48 }}
           >
             About Us
           </Text>
           <Text
-            style={{
-              fontSize: 18,
-              color: THEME_COLORS.muted,
-              textAlign: "center",
-              maxWidth: 700,
-              marginHorizontal: "auto",
-              lineHeight: 28,
-            }}
+            className="text-lg text-muted text-center mx-auto"
+            style={{ maxWidth: 700, lineHeight: 28 }}
           >
             We're building the future of brand-creator collaboration. Our
             mission is to make authentic content accessible to every brand and
@@ -147,47 +116,29 @@ export default function AboutPage() {
       </View>
 
       {/* Stats Section */}
-      <View
-        style={{
-          paddingVertical: 48,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.foreground,
-        }}
-      >
+      <View className="py-12 px-6 bg-foreground">
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="mx-auto w-full"
+          style={{ maxWidth: 1200 }}
         >
           <View
+            className="justify-around items-center"
             style={{
               flexDirection: isMobile ? "column" : "row",
-              justifyContent: "space-around",
-              alignItems: "center",
               gap: isMobile ? 32 : 16,
             }}
           >
             {STATS.map((stat) => (
-              <View key={stat.label} style={{ alignItems: "center" }}>
+              <View key={stat.label} className="items-center">
                 <Text
-                  style={{
-                    fontSize: 40,
-                    fontWeight: "700",
-                    color: THEME_COLORS.primary,
-                    marginBottom: 8,
-                  }}
+                  className="font-bold text-primary mb-2"
+                  style={{ fontSize: 40 }}
                 >
                   {stat.value}
                 </Text>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: "#a0a0a0",
-                    textTransform: "uppercase",
-                    letterSpacing: 1,
-                  }}
+                  className="text-sm uppercase text-muted"
+                  style={{ letterSpacing: 1 }}
                 >
                   {stat.label}
                 </Text>
@@ -198,37 +149,18 @@ export default function AboutPage() {
       </View>
 
       {/* Our Story Section */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-        }}
-      >
+      <View className="py-16 px-6">
         <View
-          style={{
-            maxWidth: 800,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="mx-auto w-full"
+          style={{ maxWidth: 800 }}
         >
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 32,
-            }}
-          >
+          <Text className="text-[28px] font-bold text-foreground text-center mb-8">
             Our Story
           </Text>
-          <View style={{ gap: 24 }}>
+          <View className="gap-6">
             <Text
-              style={{
-                fontSize: 16,
-                color: THEME_COLORS.muted,
-                lineHeight: 28,
-              }}
+              className="text-base text-muted"
+              style={{ lineHeight: 28 }}
             >
               We started this platform because we saw a broken system. Brands
               struggled to find authentic voices for their products, often
@@ -237,11 +169,8 @@ export default function AboutPage() {
               consistent work or fair compensation.
             </Text>
             <Text
-              style={{
-                fontSize: 16,
-                color: THEME_COLORS.muted,
-                lineHeight: 28,
-              }}
+              className="text-base text-muted"
+              style={{ lineHeight: 28 }}
             >
               We knew there had to be a better way. A platform that would make
               it easy for brands to post execution-ready briefs with secured
@@ -249,11 +178,8 @@ export default function AboutPage() {
               skills and interests.
             </Text>
             <Text
-              style={{
-                fontSize: 16,
-                color: THEME_COLORS.muted,
-                lineHeight: 28,
-              }}
+              className="text-base text-muted"
+              style={{ lineHeight: 28 }}
             >
               Today, we're proud to have helped thousands of brands create
               millions of pieces of authentic content, while paying out tens of
@@ -265,86 +191,45 @@ export default function AboutPage() {
       </View>
 
       {/* Values Section */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.sectionBackground,
-        }}
-      >
+      <View className="py-16 px-6 bg-neutral-50">
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="mx-auto w-full"
+          style={{ maxWidth: 1200 }}
         >
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 48,
-            }}
-          >
+          <Text className="text-[28px] font-bold text-foreground text-center mb-12">
             Our Values
           </Text>
 
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: 24,
-              justifyContent: "center",
-            }}
-          >
+          <View className="flex-row flex-wrap gap-6 justify-center">
             {VALUES.map((value) => (
               <View
                 key={value.title}
+                className="p-8 rounded-2xl bg-background border border-border"
                 style={{
                   width: isMobile ? "100%" : "48%",
                   maxWidth: 500,
-                  padding: 32,
-                  borderRadius: 16,
-                  backgroundColor: THEME_COLORS.background,
-                  borderWidth: 1,
-                  borderColor: THEME_COLORS.border,
                 }}
               >
                 <View
+                  className="items-center justify-center mb-5 bg-primary/5"
                   style={{
                     width: 56,
                     height: 56,
                     borderRadius: 28,
-                    backgroundColor: `${THEME_COLORS.primary}15`,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 20,
                   }}
                 >
                   <Ionicons
-                    color={THEME_COLORS.primary}
                     name={value.icon}
                     size={28}
+                    className="text-primary"
                   />
                 </View>
-                <Text
-                  style={{
-                    fontSize: 20,
-                    fontWeight: "700",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 12,
-                  }}
-                >
+                <Text className="text-xl font-bold text-foreground mb-3">
                   {value.title}
                 </Text>
                 <Text
-                  style={{
-                    fontSize: 15,
-                    color: THEME_COLORS.muted,
-                    lineHeight: 24,
-                  }}
+                  className="text-[15px] text-muted"
+                  style={{ lineHeight: 24 }}
                 >
                   {value.description}
                 </Text>
@@ -355,118 +240,53 @@ export default function AboutPage() {
       </View>
 
       {/* Team Section */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-        }}
-      >
+      <View className="py-16 px-6">
         <View
-          style={{
-            maxWidth: 1200,
-            marginHorizontal: "auto",
-            width: "100%",
-          }}
+          className="mx-auto w-full"
+          style={{ maxWidth: 1200 }}
         >
-          <Text
-            style={{
-              fontSize: 28,
-              fontWeight: "700",
-              color: THEME_COLORS.foreground,
-              textAlign: "center",
-              marginBottom: 16,
-            }}
-          >
+          <Text className="text-[28px] font-bold text-foreground text-center mb-4">
             Meet the Team
           </Text>
           <Text
-            style={{
-              fontSize: 16,
-              color: THEME_COLORS.muted,
-              textAlign: "center",
-              marginBottom: 48,
-              maxWidth: 600,
-              marginHorizontal: "auto",
-            }}
+            className="text-base text-muted text-center mb-12 mx-auto"
+            style={{ maxWidth: 600 }}
           >
             We're a team of creators, engineers, and marketers united by a
             shared mission
           </Text>
 
-          <View
-            style={{
-              flexDirection: "row",
-              flexWrap: "wrap",
-              gap: 24,
-              justifyContent: "center",
-            }}
-          >
+          <View className="flex-row flex-wrap gap-6 justify-center">
             {TEAM.map((member) => (
               <View
                 key={member.name}
-                style={{
-                  width: isMobile ? "100%" : 260,
-                  padding: 24,
-                  borderRadius: 12,
-                  backgroundColor: THEME_COLORS.background,
-                  borderWidth: 1,
-                  borderColor: THEME_COLORS.border,
-                  alignItems: "center",
-                }}
+                className="p-6 rounded-xl bg-background border border-border items-center"
+                style={{ width: isMobile ? "100%" : 260 }}
               >
                 <View
+                  className="items-center justify-center mb-4 bg-surface-raised"
                   style={{
                     width: 80,
                     height: 80,
                     borderRadius: 40,
-                    backgroundColor: THEME_COLORS.sectionBackground,
-                    alignItems: "center",
-                    justifyContent: "center",
-                    marginBottom: 16,
                   }}
                 >
-                  <Text
-                    style={{
-                      fontSize: 28,
-                      fontWeight: "600",
-                      color: THEME_COLORS.muted,
-                    }}
-                  >
+                  <Text className="text-[28px] font-semibold text-muted">
                     {member.name
                       .split(" ")
                       .map((n) => n[0])
                       .join("")}
                   </Text>
                 </View>
-                <Text
-                  style={{
-                    fontSize: 18,
-                    fontWeight: "600",
-                    color: THEME_COLORS.foreground,
-                    marginBottom: 4,
-                    textAlign: "center",
-                  }}
-                >
+                <Text className="text-lg font-semibold text-foreground mb-1 text-center">
                   {member.name}
                 </Text>
-                <Text
-                  style={{
-                    fontSize: 13,
-                    color: THEME_COLORS.primary,
-                    fontWeight: "500",
-                    marginBottom: 12,
-                    textAlign: "center",
-                  }}
-                >
+                <Text className="text-[13px] text-primary font-medium mb-3 text-center">
                   {member.role}
                 </Text>
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: THEME_COLORS.muted,
-                    textAlign: "center",
-                    lineHeight: 20,
-                  }}
+                  className="text-sm text-muted text-center"
+                  style={{ lineHeight: 20 }}
                 >
                   {member.bio}
                 </Text>
@@ -477,91 +297,43 @@ export default function AboutPage() {
       </View>
 
       {/* Join Us CTA */}
-      <View
-        style={{
-          paddingVertical: 64,
-          paddingHorizontal: 24,
-          backgroundColor: THEME_COLORS.foreground,
-        }}
-      >
+      <View className="py-16 px-6 bg-foreground">
         <View
-          style={{
-            maxWidth: 800,
-            marginHorizontal: "auto",
-            width: "100%",
-            alignItems: "center",
-          }}
+          className="mx-auto w-full items-center"
+          style={{ maxWidth: 800 }}
         >
           <Text
-            style={{
-              fontSize: isMobile ? 24 : 32,
-              fontWeight: "700",
-              color: THEME_COLORS.primaryForeground,
-              textAlign: "center",
-              marginBottom: 16,
-            }}
+            className="font-bold text-primary-foreground text-center mb-4"
+            style={{ fontSize: isMobile ? 24 : 32 }}
           >
             Join Our Mission
           </Text>
           <Text
-            style={{
-              fontSize: 16,
-              color: "#a0a0a0",
-              textAlign: "center",
-              marginBottom: 32,
-              lineHeight: 24,
-            }}
+            className="text-base text-center mb-8 text-muted"
+            style={{ lineHeight: 24 }}
           >
             We're always looking for talented people who share our passion for
             empowering creators
           </Text>
           <View
-            style={{
-              flexDirection: isMobile ? "column" : "row",
-              gap: 16,
-            }}
+            className="gap-4"
+            style={{ flexDirection: isMobile ? "column" : "row" }}
           >
             <Pressable
               onPress={() => openAuthModal("signup")}
-              style={({ hovered }) => ({
-                paddingHorizontal: 32,
-                paddingVertical: 14,
-                backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-                borderRadius: 8,
-              })}
+              className="px-8 rounded-lg bg-primary hover:bg-hover-primary"
+              style={{ paddingVertical: 14 }}
             >
-              <Text
-                style={{
-                  fontSize: 16,
-                  fontWeight: "600",
-                  color: THEME_COLORS.primaryForeground,
-                  textAlign: "center",
-                }}
-              >
+              <Text className="text-base font-semibold text-primary-foreground text-center">
                 Get Started
               </Text>
             </Pressable>
             <Link asChild href={"/contact" as any}>
               <Pressable
-                style={({ hovered }) => ({
-                  paddingHorizontal: 32,
-                  paddingVertical: 14,
-                  backgroundColor: "transparent",
-                  borderRadius: 8,
-                  borderWidth: 1,
-                  borderColor: hovered
-                    ? THEME_COLORS.primaryForeground
-                    : "#666",
-                })}
+                className="px-8 rounded-lg border border-muted hover:border-primary-foreground"
+                style={{ paddingVertical: 14 }}
               >
-                <Text
-                  style={{
-                    fontSize: 16,
-                    fontWeight: "600",
-                    color: THEME_COLORS.primaryForeground,
-                    textAlign: "center",
-                  }}
-                >
+                <Text className="text-base font-semibold text-primary-foreground text-center">
                   View Careers
                 </Text>
               </Pressable>

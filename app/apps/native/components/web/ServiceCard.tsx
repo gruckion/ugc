@@ -1,8 +1,7 @@
 import { Link } from "expo-router";
 import { Card } from "heroui-native";
 import { Pressable, Text, View } from "react-native";
-
-// Theme colors are now defined in global.css and accessed via Tailwind classes
+import { cn } from "@/lib/utils";
 
 export interface ServiceCardProps {
   name: string;
@@ -16,9 +15,10 @@ export function ServiceCard({ name, imageUrl, href }: ServiceCardProps) {
       <Pressable>
         {({ hovered }) => (
           <Card
-            className={`p-0 w-[200px] rounded-xl overflow-hidden ${
-              hovered ? "shadow-lg scale-[1.02]" : "shadow-md"
-            } transition-all`}
+            className={cn(
+              "p-0 w-[200px] rounded-xl overflow-hidden transition-all",
+              hovered ? "shadow-lg scale-[1.02]" : "shadow-md",
+            )}
           >
             {/* Header Section */}
             <View className="bg-green-900 py-5 px-4 min-h-20 justify-end">
@@ -31,15 +31,11 @@ export function ServiceCard({ name, imageUrl, href }: ServiceCardProps) {
             </View>
 
             {/* Image Section */}
-            <View className="h-[200px] bg-gray-100">
+            <View className="h-[200px] bg-surface-raised">
               <img
                 alt={name}
                 src={imageUrl}
-                style={{
-                  width: "100%",
-                  height: "100%",
-                  objectFit: "cover",
-                }}
+                className="w-full h-full object-cover"
               />
             </View>
           </Card>

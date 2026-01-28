@@ -2,15 +2,6 @@ import { Text, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 import { GalleryItem } from "./GalleryItem";
 
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	background: "#FFFFFF",
-};
-
 interface GalleryItemData {
 	id: string;
 	imageUrl: string;
@@ -147,45 +138,22 @@ export function MadeOnUGCGallery() {
 	});
 
 	return (
-		<View
-			style={{
-				paddingVertical: 64,
-				paddingHorizontal: 24,
-				backgroundColor: THEME_COLORS.background,
-			}}
-		>
-			<View
-				style={{
-					maxWidth: 1200,
-					marginHorizontal: "auto",
-					width: "100%",
-				}}
-			>
+		<View className="py-16 px-6 bg-background">
+			<View className="max-w-[1200px] mx-auto w-full">
 				{/* Section Header */}
-				<Text
-					style={{
-						fontSize: 28,
-						fontWeight: "700",
-						color: THEME_COLORS.foreground,
-						marginBottom: 32,
-					}}
-				>
+				<Text className="text-[28px] font-bold mb-8 text-foreground">
 					Made on UGC
 				</Text>
 
 				{/* Masonry Grid */}
 				<View
-					style={{
-						flexDirection: "row",
-						gap: gap,
-					}}
+					className="flex-row"
+					style={{ gap }}
 				>
 					{columns.map((column, columnIndex) => (
 						<View
 							key={columnIndex}
-							style={{
-								flex: 1,
-							}}
+							className="flex-1"
 						>
 							{column.map((item) => (
 								<GalleryItem

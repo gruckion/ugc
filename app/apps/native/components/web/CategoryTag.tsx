@@ -1,16 +1,7 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Link } from "expo-router";
 import { Pressable, Text, View } from "react-native";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-};
+import { cn } from "@/lib/utils";
 
 export interface CategoryTagProps {
   /** Display label for the tag */
@@ -66,56 +57,46 @@ export function CategoryTag({
 
   const isLight = variant === "light";
 
-  const getBackgroundColor = (hovered: boolean) => {
-    if (isActive || hovered) return THEME_COLORS.primary;
-    if (isLight) return "rgba(255, 255, 255, 0.15)";
-    return THEME_COLORS.background;
-  };
-
-  const getBorderColor = (hovered: boolean) => {
-    if (isActive || hovered) return THEME_COLORS.primary;
-    if (isLight) return "rgba(255, 255, 255, 0.3)";
-    return THEME_COLORS.border;
-  };
-
-  const getTextColor = (hovered: boolean) => {
-    if (isActive || hovered) return THEME_COLORS.primaryForeground;
-    if (isLight) return "#FFFFFF";
-    return THEME_COLORS.foreground;
-  };
-
-  const getIconColor = (hovered: boolean) => {
-    if (isActive || hovered) return THEME_COLORS.primaryForeground;
-    if (isLight) return "rgba(255, 255, 255, 0.8)";
-    return THEME_COLORS.muted;
-  };
-
   const TagContent = ({ hovered = false }: { hovered?: boolean }) => (
     <View
+      className={cn(
+        "flex-row items-center rounded-[20px] border",
+        isActive || hovered
+          ? "bg-primary border-primary"
+          : isLight
+            ? "bg-white/15 border-white/30"
+            : "bg-background border-border"
+      )}
       style={{
-        flexDirection: "row",
-        alignItems: "center",
         gap: currentSize.gap,
         paddingHorizontal: currentSize.paddingHorizontal,
         paddingVertical: currentSize.paddingVertical,
-        borderRadius: 20,
-        borderWidth: 1,
-        borderColor: getBorderColor(hovered),
-        backgroundColor: getBackgroundColor(hovered),
       }}
     >
       {icon && (
         <Ionicons
-          color={getIconColor(hovered)}
+          className={cn(
+            isActive || hovered
+              ? "text-primary-foreground"
+              : isLight
+                ? "text-white/80"
+                : "text-muted"
+          )}
           name={icon}
           size={currentSize.iconSize}
         />
       )}
       <Text
+        className={cn(
+          "font-medium",
+          isActive || hovered
+            ? "text-primary-foreground"
+            : isLight
+              ? "text-white"
+              : "text-foreground"
+        )}
         style={{
           fontSize: currentSize.fontSize,
-          fontWeight: "500",
-          color: getTextColor(hovered),
         }}
       >
         {label}

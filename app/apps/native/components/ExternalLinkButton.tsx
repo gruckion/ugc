@@ -1,5 +1,4 @@
 import { Ionicons } from "@expo/vector-icons";
-import { useThemeColor } from "heroui-native";
 import { Linking, Pressable, Text } from "react-native";
 
 interface ExternalLinkButtonProps {
@@ -8,22 +7,11 @@ interface ExternalLinkButtonProps {
   variant?: "primary" | "subtle";
 }
 
-// Fiverr-style theme colors
-// These match the CSS variables defined in global.css
-const THEME_COLORS = {
-  primary: "#1DBF73", // Fiverr green
-  primaryForeground: "#FFFFFF",
-};
-
 export function ExternalLinkButton({
   label,
   url,
   variant = "primary",
 }: ExternalLinkButtonProps) {
-  const foreground = useThemeColor("foreground");
-  const primary = THEME_COLORS.primary;
-  const primaryForeground = THEME_COLORS.primaryForeground;
-
   const handlePress = () => {
     Linking.openURL(url);
   };
@@ -31,55 +19,32 @@ export function ExternalLinkButton({
   if (variant === "subtle") {
     return (
       <Pressable
+        className="flex-row items-center justify-center py-4 gap-1.5"
         onPress={handlePress}
         style={({ pressed }) => ({
-          flexDirection: "row",
-          alignItems: "center",
-          justifyContent: "center",
-          paddingVertical: 16,
-          gap: 6,
           opacity: pressed ? 0.6 : 1,
         })}
       >
-        <Text
-          className="text-foreground"
-          style={{
-            fontSize: 14,
-            fontWeight: "500",
-          }}
-        >
+        <Text className="text-foreground text-sm font-medium">
           {label}
         </Text>
-        <Ionicons color={foreground} name="open-outline" size={16} />
+        <Ionicons className="text-foreground" name="open-outline" size={16} />
       </Pressable>
     );
   }
 
   return (
     <Pressable
+      className="bg-primary py-4 px-6 rounded-lg flex-row items-center justify-center gap-2"
       onPress={handlePress}
       style={({ pressed }) => ({
-        backgroundColor: primary,
-        paddingVertical: 16,
-        paddingHorizontal: 24,
-        borderRadius: 8,
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "center",
-        gap: 8,
         opacity: pressed ? 0.85 : 1,
       })}
     >
-      <Text
-        className="text-primary-foreground"
-        style={{
-          fontSize: 16,
-          fontWeight: "500",
-        }}
-      >
+      <Text className="text-primary-foreground text-base font-medium">
         {label}
       </Text>
-      <Ionicons color={primaryForeground} name="open-outline" size={18} />
+      <Ionicons className="text-primary-foreground" name="open-outline" size={18} />
     </Pressable>
   );
 }

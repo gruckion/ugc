@@ -165,7 +165,7 @@ export default function SignUpRoute() {
         value={confirmPassword}
       />
 
-      <View style={{ marginTop: 8 }}>
+      <View className="mt-2">
         <StyledButton
           isLoading={isLoading}
           label="Create Account"
@@ -173,57 +173,22 @@ export default function SignUpRoute() {
         />
       </View>
 
-      <Text
-        className="text-center text-muted"
-        style={{
-          fontSize: 13,
-          lineHeight: 20,
-          paddingHorizontal: 20,
-        }}
-      >
+      <Text className="text-center text-muted text-[13px] leading-5 px-5">
         By signing up, you agree to our{" "}
         <Link asChild href="/termsofservice">
-          <Text
-            className="text-foreground"
-            style={{ textDecorationLine: "underline" }}
-          >
-            Terms of Service
-          </Text>
+          <Text className="text-foreground underline">Terms of Service</Text>
         </Link>{" "}
         and{" "}
         <Link asChild href="/privacypolicy">
-          <Text
-            className="text-foreground"
-            style={{ textDecorationLine: "underline" }}
-          >
-            Privacy Policy
-          </Text>
+          <Text className="text-foreground underline">Privacy Policy</Text>
         </Link>
       </Text>
 
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "center",
-          alignItems: "center",
-          marginTop: 8,
-          gap: 4,
-        }}
-      >
-        <Text className="text-muted" style={{ fontSize: 14 }}>
-          Already have an account?
-        </Text>
+      <View className="flex-row justify-center items-center mt-2 gap-1">
+        <Text className="text-muted text-sm">Already have an account?</Text>
         <Link asChild href="/(auth)/email/signin" replace>
           <Pressable>
-            <Text
-              className="text-accent"
-              style={{
-                fontSize: 14,
-                fontWeight: "600",
-              }}
-            >
-              Sign In
-            </Text>
+            <Text className="text-accent text-sm font-semibold">Sign In</Text>
           </Pressable>
         </Link>
       </View>

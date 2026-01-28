@@ -1,18 +1,11 @@
 import { Ionicons } from "@expo/vector-icons";
 import { Tabs } from "expo-router";
-import { useThemeColor } from "heroui-native";
-
-// Fiverr-style theme colors for tab bar
-// These match the CSS variables defined in global.css
-const THEME_COLORS = {
-  primary: "#1DBF73", // Fiverr green
-  primaryForeground: "#FFFFFF",
-};
 
 export default function TabLayout() {
-  const accent = useThemeColor("accent");
-  const primary = THEME_COLORS.primary;
-  const primaryForeground = THEME_COLORS.primaryForeground;
+  // Native tab bar requires string colors - CSS variables aren't available here
+  const primary = "#1DBF73";
+  const primaryForeground = "#FFFFFF";
+  const accent = "#a0a0a0";
 
   return (
     <Tabs

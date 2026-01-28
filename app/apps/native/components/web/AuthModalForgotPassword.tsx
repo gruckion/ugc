@@ -9,16 +9,7 @@ import {
 } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { authClient } from "@/lib/auth-client";
-
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  error: "#dc2626",
-};
+import { cn } from "@/lib/utils";
 
 export function AuthModalForgotPassword() {
   const { setView } = useAuthModal();
@@ -61,74 +52,31 @@ export function AuthModalForgotPassword() {
       <View>
         {/* Back Button */}
         <Pressable
+          className="flex-row items-center gap-2 mb-6 self-start p-1 -ml-1 rounded hover:bg-hover-surface"
           onPress={handleBack}
-          style={({ hovered }) => ({
-            flexDirection: "row",
-            alignItems: "center",
-            gap: 8,
-            marginBottom: 24,
-            alignSelf: "flex-start",
-            padding: 4,
-            marginLeft: -4,
-            borderRadius: 4,
-            backgroundColor: hovered ? "#f5f5f5" : "transparent",
-          })}
         >
-          <Ionicons color={THEME_COLORS.foreground} name="arrow-back" size={20} />
-          <Text
-            style={{
-              fontSize: 15,
-              fontWeight: "500",
-              color: THEME_COLORS.foreground,
-            }}
-          >
+          <Ionicons className="text-foreground" name="arrow-back" size={20} />
+          <Text className="text-[15px] font-medium text-foreground">
             Back
           </Text>
         </Pressable>
 
         {/* Success Message */}
-        <View
-          style={{
-            backgroundColor: "#f0fdf4",
-            borderWidth: 1,
-            borderColor: "#bbf7d0",
-            borderRadius: 8,
-            padding: 16,
-            marginBottom: 24,
-          }}
-        >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-              color: "#166534",
-              marginBottom: 8,
-            }}
-          >
+        <View className="bg-success-bg border border-success-border rounded-lg p-4 mb-6">
+          <Text className="text-base font-semibold text-success-text mb-2">
             Check your email
           </Text>
-          <Text style={{ fontSize: 14, color: "#166534", lineHeight: 20 }}>
+          <Text className="text-sm text-success-text leading-5">
             If an account exists with {email}, you'll receive a verification code
             shortly. Check your inbox and spam folder.
           </Text>
         </View>
 
         <Pressable
+          className="py-4 rounded-lg items-center bg-primary hover:bg-hover-primary"
           onPress={handleBack}
-          style={({ hovered }) => ({
-            backgroundColor: hovered ? "#19a463" : THEME_COLORS.primary,
-            paddingVertical: 16,
-            borderRadius: 8,
-            alignItems: "center",
-          })}
         >
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-              color: THEME_COLORS.primaryForeground,
-            }}
-          >
+          <Text className="text-base font-semibold text-primary-foreground">
             Back to Sign In
           </Text>
         </Pressable>
@@ -140,67 +88,29 @@ export function AuthModalForgotPassword() {
     <View>
       {/* Back Button */}
       <Pressable
+        className="flex-row items-center gap-2 mb-6 self-start p-1 -ml-1 rounded hover:bg-hover-surface"
         onPress={handleBack}
-        style={({ hovered }) => ({
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 8,
-          marginBottom: 24,
-          alignSelf: "flex-start",
-          padding: 4,
-          marginLeft: -4,
-          borderRadius: 4,
-          backgroundColor: hovered ? "#f5f5f5" : "transparent",
-        })}
       >
-        <Ionicons color={THEME_COLORS.foreground} name="arrow-back" size={20} />
-        <Text
-          style={{
-            fontSize: 15,
-            fontWeight: "500",
-            color: THEME_COLORS.foreground,
-          }}
-        >
+        <Ionicons className="text-foreground" name="arrow-back" size={20} />
+        <Text className="text-[15px] font-medium text-foreground">
           Back
         </Text>
       </Pressable>
 
       {/* Heading */}
-      <Text
-        style={{
-          fontSize: 24,
-          fontWeight: "700",
-          color: THEME_COLORS.foreground,
-          marginBottom: 12,
-        }}
-      >
+      <Text className="text-2xl font-bold mb-3 text-foreground">
         Reset password
       </Text>
 
-      <Text
-        style={{
-          fontSize: 15,
-          color: THEME_COLORS.muted,
-          marginBottom: 32,
-          lineHeight: 22,
-        }}
-      >
+      <Text className="text-[15px] mb-8 leading-[22px] text-muted">
         Enter your email address and we'll send you a link to reset your password.
       </Text>
 
       {/* Error Message */}
-      <View style={{ minHeight: 48, marginBottom: 16 }}>
+      <View className="min-h-[48px] mb-4">
         {error && (
-          <View
-            style={{
-              backgroundColor: "#fef2f2",
-              borderWidth: 1,
-              borderColor: "#fecaca",
-              borderRadius: 8,
-              padding: 12,
-            }}
-          >
-            <Text style={{ fontSize: 14, color: THEME_COLORS.error }}>
+          <View className="bg-error-bg border border-error-border rounded-lg p-3">
+            <Text className="text-sm text-error-text">
               {error}
             </Text>
           </View>
@@ -208,34 +118,23 @@ export function AuthModalForgotPassword() {
       </View>
 
       {/* Email Field */}
-      <View style={{ marginBottom: 24 }}>
-        <Text
-          style={{
-            fontSize: 14,
-            fontWeight: "500",
-            color: THEME_COLORS.foreground,
-            marginBottom: 8,
-          }}
-        >
+      <View className="mb-6">
+        <Text className="text-sm font-medium mb-2 text-foreground">
           Email
         </Text>
         <TextInput
           autoCapitalize="none"
           autoComplete="email"
           autoCorrect={false}
+          className="border border-input-border rounded-lg p-3.5 text-[15px]"
           keyboardType="email-address"
           onChangeText={setEmail}
           onSubmitEditing={handleResetPassword}
           placeholder="name@email.com"
-          placeholderTextColor={THEME_COLORS.muted}
+          placeholderTextColor="var(--muted)"
           returnKeyType="go"
           style={{
-            borderWidth: 1,
-            borderColor: THEME_COLORS.border,
-            borderRadius: 8,
-            padding: 14,
-            fontSize: 15,
-            color: THEME_COLORS.foreground,
+            color: "var(--foreground)",
           }}
           textContentType="emailAddress"
           value={email}
@@ -244,29 +143,19 @@ export function AuthModalForgotPassword() {
 
       {/* Submit Button */}
       <Pressable
+        className={cn(
+          "py-4 rounded-lg items-center",
+          isLoading
+            ? "bg-border"
+            : "bg-primary hover:bg-hover-primary"
+        )}
         disabled={isLoading}
         onPress={handleResetPassword}
-        style={({ hovered }) => ({
-          backgroundColor: isLoading
-            ? THEME_COLORS.border
-            : hovered
-              ? "#19a463"
-              : THEME_COLORS.primary,
-          paddingVertical: 16,
-          borderRadius: 8,
-          alignItems: "center",
-        })}
       >
         {isLoading ? (
-          <ActivityIndicator color={THEME_COLORS.primaryForeground} />
+          <ActivityIndicator color="var(--primary-foreground)" />
         ) : (
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-              color: THEME_COLORS.primaryForeground,
-            }}
-          >
+          <Text className="text-base font-semibold text-primary-foreground">
             Reset password
           </Text>
         )}

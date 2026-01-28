@@ -3,15 +3,6 @@ import { Pressable, Text, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 import { GuideCard } from "./GuideCard";
 
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	background: "#FFFFFF",
-};
-
 interface GuideData {
 	id: string;
 	title: string;
@@ -67,54 +58,17 @@ export function GuidesSection() {
 	const columnCount = getColumnCount();
 
 	return (
-		<View
-			style={{
-				paddingVertical: 64,
-				paddingHorizontal: 24,
-				backgroundColor: "#fafafa",
-			}}
-		>
-			<View
-				style={{
-					maxWidth: 1200,
-					marginHorizontal: "auto",
-					width: "100%",
-				}}
-			>
+		<View className="py-16 px-6 bg-surface-raised">
+			<View className="max-w-[1200px] mx-auto w-full">
 				{/* Section Header */}
-				<View
-					style={{
-						flexDirection: "row",
-						justifyContent: "space-between",
-						alignItems: "center",
-						marginBottom: 32,
-					}}
-				>
-					<Text
-						style={{
-							fontSize: 28,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-						}}
-					>
+				<View className="flex-row justify-between items-center mb-8">
+					<Text className="text-[28px] font-bold text-foreground">
 						Guides to help you grow
 					</Text>
 
 					<Link asChild href={"/guides" as any}>
-						<Pressable
-							style={{
-								flexDirection: "row",
-								alignItems: "center",
-								gap: 4,
-							}}
-						>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "600",
-									color: THEME_COLORS.primary,
-								}}
-							>
+						<Pressable className="flex-row items-center gap-1">
+							<Text className="text-base font-semibold text-primary">
 								See more guides
 							</Text>
 						</Pressable>
@@ -122,18 +76,12 @@ export function GuidesSection() {
 				</View>
 
 				{/* Guides Grid */}
-				<View
-					style={{
-						flexDirection: "row",
-						flexWrap: "wrap",
-						gap: 24,
-					}}
-				>
+				<View className="flex-row flex-wrap gap-6">
 					{FEATURED_GUIDES.slice(0, columnCount).map((guide) => (
 						<View
 							key={guide.id}
+							className="flex-1"
 							style={{
-								flex: 1,
 								minWidth: isMobile ? "100%" : 280,
 								maxWidth: isMobile ? "100%" : `${100 / columnCount - 2}%`,
 							}}

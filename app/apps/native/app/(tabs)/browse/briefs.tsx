@@ -2,18 +2,11 @@ import { Text, View } from "react-native";
 
 export default function BrowseBriefsPage() {
   return (
-    <View
-      style={{
-        flex: 1,
-        justifyContent: "center",
-        alignItems: "center",
-        padding: 24,
-      }}
-    >
-      <Text style={{ fontSize: 24, fontWeight: "600", marginBottom: 8 }}>
+    <View className="flex-1 justify-center items-center p-6 bg-background">
+      <Text className="text-2xl font-semibold mb-2 text-foreground">
         Briefs
       </Text>
-      <Text style={{ fontSize: 16, color: "#666", textAlign: "center" }}>
+      <Text className="text-base text-muted text-center">
         Browse execution-ready briefs on the web version.
       </Text>
     </View>

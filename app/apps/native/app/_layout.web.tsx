@@ -59,14 +59,7 @@ function AuthGate({ children }: { children: React.ReactNode }) {
 
   if (!ready) {
     return (
-      <View
-        style={{
-          flex: 1,
-          backgroundColor: "#FFFFFF",
-          alignItems: "center",
-          justifyContent: "center",
-        }}
-      >
+      <View className="flex-1 bg-background items-center justify-center">
         {/* Simple loading state for web */}
       </View>
     );

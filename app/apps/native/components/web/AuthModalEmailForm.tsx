@@ -10,16 +10,7 @@ import {
 } from "react-native";
 import { useAuthModal } from "@/contexts/auth-modal-context";
 import { authClient } from "@/lib/auth-client";
-
-const THEME_COLORS = {
-  primary: "#1DBF73",
-  primaryForeground: "#FFFFFF",
-  foreground: "#222325",
-  muted: "#62646a",
-  border: "#e4e5e7",
-  background: "#FFFFFF",
-  error: "#dc2626",
-};
+import { cn } from "@/lib/utils";
 
 interface AuthModalEmailFormProps {
   mode: "signin" | "signup";
@@ -192,60 +183,24 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
       {/* Back Button */}
       <Pressable
         onPress={handleBack}
-        style={({ hovered }) => ({
-          flexDirection: "row",
-          alignItems: "center",
-          gap: 8,
-          marginBottom: 24,
-          alignSelf: "flex-start",
-          padding: 4,
-          marginLeft: -4,
-          borderRadius: 4,
-          backgroundColor: hovered ? "#f5f5f5" : "transparent",
-        })}
+        className="flex-row items-center gap-2 mb-6 self-start p-1 -ml-1 rounded hover:bg-hover-surface"
       >
-        <Ionicons color={THEME_COLORS.foreground} name="arrow-back" size={20} />
-        <Text
-          style={{
-            fontSize: 15,
-            fontWeight: "500",
-            color: THEME_COLORS.foreground,
-          }}
-        >
+        <Ionicons className="text-foreground" name="arrow-back" size={20} />
+        <Text className="text-[15px] font-medium text-foreground">
           Back
         </Text>
       </Pressable>
 
       {/* Heading */}
-      <Text
-        style={{
-          fontSize: 24,
-          fontWeight: "700",
-          color: THEME_COLORS.foreground,
-          marginBottom: 32,
-        }}
-      >
+      <Text className="text-2xl font-bold mb-8 text-foreground">
         {isSignIn ? "Continue with your email" : "Create your account"}
       </Text>
 
       {/* Error Message - reserved height to prevent layout shift */}
-      <View
-        style={{
-          minHeight: 48,
-          marginBottom: 16,
-        }}
-      >
+      <View className="min-h-[48px] mb-4">
         {error && (
-          <View
-            style={{
-              backgroundColor: "#fef2f2",
-              borderWidth: 1,
-              borderColor: "#fecaca",
-              borderRadius: 8,
-              padding: 12,
-            }}
-          >
-            <Text style={{ fontSize: 14, color: THEME_COLORS.error }}>
+          <View className="bg-error-bg border border-error-border rounded-lg p-3">
+            <Text className="text-sm text-error-text">
               {error}
             </Text>
           </View>
@@ -253,18 +208,11 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
       </View>
 
       {/* Form Fields */}
-      <View style={{ gap: 20 }}>
+      <View className="gap-5">
         {/* Name (signup only) */}
         {!isSignIn && (
           <View>
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: THEME_COLORS.foreground,
-                marginBottom: 8,
-              }}
-            >
+            <Text className="text-sm font-medium mb-2 text-foreground">
               Full Name
             </Text>
             <TextInput
@@ -273,15 +221,11 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
               onChangeText={setName}
               onSubmitEditing={() => emailRef.current?.focus()}
               placeholder="Enter your full name"
-              placeholderTextColor={THEME_COLORS.muted}
+              placeholderTextColor="var(--muted)"
               returnKeyType="next"
+              className="border border-input-border rounded-lg p-3.5 text-[15px]"
               style={{
-                borderWidth: 1,
-                borderColor: THEME_COLORS.border,
-                borderRadius: 8,
-                padding: 14,
-                fontSize: 15,
-                color: THEME_COLORS.foreground,
+                color: "var(--foreground)",
               }}
               textContentType="name"
               value={name}
@@ -291,14 +235,7 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
 
         {/* Email */}
         <View>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "500",
-              color: THEME_COLORS.foreground,
-              marginBottom: 8,
-            }}
-          >
+          <Text className="text-sm font-medium mb-2 text-foreground">
             Email
           </Text>
           <TextInput
@@ -309,16 +246,12 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
             onChangeText={setEmail}
             onSubmitEditing={() => passwordRef.current?.focus()}
             placeholder="Enter your email"
-            placeholderTextColor={THEME_COLORS.muted}
+            placeholderTextColor="var(--muted)"
             ref={emailRef}
             returnKeyType="next"
+            className="border border-input-border rounded-lg p-3.5 text-[15px]"
             style={{
-              borderWidth: 1,
-              borderColor: THEME_COLORS.border,
-              borderRadius: 8,
-              padding: 14,
-              fontSize: 15,
-              color: THEME_COLORS.foreground,
+              color: "var(--foreground)",
             }}
             textContentType="emailAddress"
             value={email}
@@ -327,17 +260,10 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
 
         {/* Password */}
         <View>
-          <Text
-            style={{
-              fontSize: 14,
-              fontWeight: "500",
-              color: THEME_COLORS.foreground,
-              marginBottom: 8,
-            }}
-          >
+          <Text className="text-sm font-medium mb-2 text-foreground">
             Password
           </Text>
-          <View style={{ position: "relative" }}>
+          <View className="relative">
             <TextInput
               autoComplete={isSignIn ? "password" : "new-password"}
               onChangeText={setPassword}
@@ -347,34 +273,23 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
               placeholder={
                 isSignIn ? "Enter your password" : "Create a password"
               }
-              placeholderTextColor={THEME_COLORS.muted}
+              placeholderTextColor="var(--muted)"
               ref={passwordRef}
               returnKeyType={isSignIn ? "go" : "next"}
               secureTextEntry={!showPassword}
+              className="border border-input-border rounded-lg p-3.5 pr-12 text-[15px]"
               style={{
-                borderWidth: 1,
-                borderColor: THEME_COLORS.border,
-                borderRadius: 8,
-                padding: 14,
-                paddingRight: 48,
-                fontSize: 15,
-                color: THEME_COLORS.foreground,
+                color: "var(--foreground)",
               }}
               textContentType={isSignIn ? "password" : "newPassword"}
               value={password}
             />
             <Pressable
               onPress={() => setShowPassword(!showPassword)}
-              style={{
-                position: "absolute",
-                right: 12,
-                top: 0,
-                bottom: 0,
-                justifyContent: "center",
-              }}
+              className="absolute right-3 top-0 bottom-0 justify-center"
             >
               <Ionicons
-                color={THEME_COLORS.muted}
+                className="text-muted"
                 name={showPassword ? "eye-off-outline" : "eye-outline"}
                 size={20}
               />
@@ -383,15 +298,14 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
           {isSignIn && (
             <Pressable
               onPress={() => setView("forgot-password")}
-              style={{ alignSelf: "flex-end", marginTop: 8 }}
+              className="self-end mt-2"
             >
               {({ hovered }) => (
                 <Text
-                  style={{
-                    fontSize: 14,
-                    color: THEME_COLORS.primary,
-                    textDecorationLine: hovered ? "underline" : "none",
-                  }}
+                  className={cn(
+                    "text-sm text-primary",
+                    hovered && "underline"
+                  )}
                 >
                   Forgot password?
                 </Text>
@@ -403,14 +317,7 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
         {/* Confirm Password (signup only) */}
         {!isSignIn && (
           <View>
-            <Text
-              style={{
-                fontSize: 14,
-                fontWeight: "500",
-                color: THEME_COLORS.foreground,
-                marginBottom: 8,
-              }}
-            >
+            <Text className="text-sm font-medium mb-2 text-foreground">
               Confirm Password
             </Text>
             <TextInput
@@ -418,17 +325,13 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
               onChangeText={setConfirmPassword}
               onSubmitEditing={handleSubmit}
               placeholder="Confirm your password"
-              placeholderTextColor={THEME_COLORS.muted}
+              placeholderTextColor="var(--muted)"
               ref={confirmPasswordRef}
               returnKeyType="go"
               secureTextEntry={!showPassword}
+              className="border border-input-border rounded-lg p-3.5 text-[15px]"
               style={{
-                borderWidth: 1,
-                borderColor: THEME_COLORS.border,
-                borderRadius: 8,
-                padding: 14,
-                fontSize: 15,
-                color: THEME_COLORS.foreground,
+                color: "var(--foreground)",
               }}
               textContentType="newPassword"
               value={confirmPassword}
@@ -441,53 +344,31 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
       <Pressable
         disabled={isLoading}
         onPress={handleSubmit}
-        style={({ hovered }) => ({
-          backgroundColor: isLoading
-            ? THEME_COLORS.border
-            : hovered
-              ? "#19a463"
-              : THEME_COLORS.primary,
-          paddingVertical: 16,
-          borderRadius: 8,
-          alignItems: "center",
-          marginTop: 32,
-        })}
+        className={cn(
+          "py-4 rounded-lg items-center mt-8",
+          isLoading
+            ? "bg-border"
+            : "bg-primary hover:bg-hover-primary"
+        )}
       >
         {isLoading ? (
-          <ActivityIndicator color={THEME_COLORS.primaryForeground} />
+          <ActivityIndicator color="var(--primary-foreground)" />
         ) : (
-          <Text
-            style={{
-              fontSize: 16,
-              fontWeight: "600",
-              color: THEME_COLORS.primaryForeground,
-            }}
-          >
+          <Text className="text-base font-semibold text-primary-foreground">
             {isSignIn ? "Sign In" : "Create Account"}
           </Text>
         )}
       </Pressable>
 
       {/* Terms */}
-      <Text
-        style={{
-          fontSize: 12,
-          color: THEME_COLORS.muted,
-          textAlign: "center",
-          marginTop: 24,
-          lineHeight: 18,
-        }}
-      >
+      <Text className="text-xs text-center mt-6 leading-[18px] text-muted">
         By joining, you agree to the UGC Marketplace{" "}
         <Text
           onPress={() => {
             close();
             router.push("/termsofservice" as any);
           }}
-          style={{
-            textDecorationLine: "underline",
-            color: THEME_COLORS.primary,
-          }}
+          className="underline text-primary"
         >
           Terms of Service
         </Text>{" "}
@@ -497,10 +378,7 @@ export function AuthModalEmailForm({ mode }: AuthModalEmailFormProps) {
             close();
             router.push("/privacypolicy" as any);
           }}
-          style={{
-            textDecorationLine: "underline",
-            color: THEME_COLORS.primary,
-          }}
+          className="underline text-primary"
         >
           Privacy Policy
         </Text>{" "}

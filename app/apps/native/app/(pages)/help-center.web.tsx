@@ -4,17 +4,7 @@ import { useState } from "react";
 import { Pressable, ScrollView, Text, TextInput, View } from "react-native";
 import { useResponsive } from "@/hooks/useResponsive";
 import { SEO, createWebPageJsonLd } from "@/components/web/SEO";
-
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-	sectionBackground: "#fafafa",
-};
+import { cn } from "@/lib/utils";
 
 // Help topics with icons
 const HELP_TOPICS = [
@@ -127,7 +117,7 @@ export default function HelpCenterPage() {
 	);
 
 	return (
-		<ScrollView style={{ flex: 1, backgroundColor: THEME_COLORS.background }}>
+		<ScrollView className="flex-1 bg-background">
 			<SEO
 				title="Help Center"
 				description="Find answers to your questions about UGC Marketplace. Browse help topics, FAQs, and get support for accounts, payments, content creation, and more."
@@ -143,80 +133,47 @@ export default function HelpCenterPage() {
 			/>
 
 			{/* Hero Section with Search */}
-			<View
-				style={{
-					paddingTop: 64,
-					paddingBottom: 80,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.foreground,
-				}}
-			>
-				<View
-					style={{
-						maxWidth: 800,
-						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-					}}
-				>
+			<View className="px-6 pt-16 pb-20 bg-foreground">
+				<View className="w-full items-center" style={{ maxWidth: 800, marginHorizontal: "auto" }}>
 					<View
+						className="items-center justify-center mb-6"
 						style={{
 							width: 72,
 							height: 72,
 							borderRadius: 36,
-							backgroundColor: `${THEME_COLORS.primary}20`,
-							alignItems: "center",
-							justifyContent: "center",
-							marginBottom: 24,
+							backgroundColor: "rgba(29,191,115,0.125)",
 						}}
 					>
 						<Ionicons
-							color={THEME_COLORS.primary}
+							className="text-primary"
 							name="help-buoy-outline"
 							size={36}
 						/>
 					</View>
 					<Text
+						className="font-bold text-center mb-3 text-primary-foreground"
 						style={{
 							fontSize: isMobile ? 32 : 44,
-							fontWeight: "700",
-							color: THEME_COLORS.primaryForeground,
-							textAlign: "center",
-							marginBottom: 12,
 						}}
 					>
 						How can we help you?
 					</Text>
-					<Text
-						style={{
-							fontSize: 18,
-							color: "#a0a0a0",
-							textAlign: "center",
-							marginBottom: 32,
-						}}
-					>
+					<Text className="text-lg text-center mb-8 text-muted">
 						Search our knowledge base or browse topics below
 					</Text>
 
 					{/* Search Bar */}
 					<View
+						className={cn(
+							"w-full flex-row items-center bg-background rounded-xl px-5 py-1",
+							searchFocused ? "border-2 border-primary" : "border-2 border-transparent"
+						)}
 						style={{
-							width: "100%",
 							maxWidth: 600,
-							flexDirection: "row",
-							alignItems: "center",
-							backgroundColor: THEME_COLORS.background,
-							borderRadius: 12,
-							paddingHorizontal: 20,
-							paddingVertical: 4,
-							borderWidth: 2,
-							borderColor: searchFocused
-								? THEME_COLORS.primary
-								: "transparent",
 						}}
 					>
 						<Ionicons
-							color={THEME_COLORS.muted}
+							className="text-muted"
 							name="search-outline"
 							size={22}
 						/>
@@ -225,16 +182,9 @@ export default function HelpCenterPage() {
 							onChangeText={setSearchQuery}
 							onFocus={() => setSearchFocused(true)}
 							placeholder="Search for articles, guides, and more..."
-							placeholderTextColor={THEME_COLORS.muted}
+							placeholderTextColor="#62646a"
+							className="flex-1 py-4 px-3 text-base text-foreground"
 							style={[
-								{
-									flex: 1,
-									paddingVertical: 16,
-									paddingHorizontal: 12,
-									fontSize: 16,
-									color: THEME_COLORS.foreground,
-								},
-								// Remove native focus outline since container has custom focus indicator
 								{ outline: "none" } as any,
 							]}
 							value={searchQuery}
@@ -242,7 +192,7 @@ export default function HelpCenterPage() {
 						{searchQuery.length > 0 && (
 							<Pressable onPress={() => setSearchQuery("")}>
 								<Ionicons
-									color={THEME_COLORS.muted}
+									className="text-muted"
 									name="close-circle"
 									size={20}
 								/>
@@ -254,91 +204,60 @@ export default function HelpCenterPage() {
 
 			{/* Quick Actions */}
 			<View
-				style={{
-					paddingHorizontal: 24,
-					marginTop: -40,
-				}}
+				className="px-6"
+				style={{ marginTop: -40 }}
 			>
 				<View
+					className="w-full gap-4"
 					style={{
 						maxWidth: 900,
 						marginHorizontal: "auto",
-						width: "100%",
 						flexDirection: isMobile ? "column" : "row",
-						gap: 16,
 					}}
 				>
 					{QUICK_ACTIONS.map((action) => (
 						<Link asChild href={action.href as any} key={action.title}>
-							<Pressable
-								style={{
-									flex: 1,
-									backgroundColor: THEME_COLORS.background,
-									borderRadius: 12,
-									borderWidth: 1,
-									borderColor: THEME_COLORS.border,
-									overflow: "hidden",
-								}}
-							>
+							<Pressable className="flex-1 bg-background rounded-xl border border-border overflow-hidden">
 								{({ hovered }) => (
 									<View
-										style={{
-											flexDirection: "row",
-											alignItems: "center",
-											padding: 20,
-											gap: 16,
-											backgroundColor: hovered
-												? THEME_COLORS.sectionBackground
-												: THEME_COLORS.background,
-											borderWidth: hovered ? 0 : 0,
-										}}
+										className={cn(
+											"flex-row items-center p-5 gap-4",
+											hovered ? "bg-surface-raised" : "bg-background"
+										)}
 									>
 										<View
+											className={cn(
+												"items-center justify-center rounded-xl",
+												hovered ? "bg-primary" : "bg-chip-bg"
+											)}
 											style={{
 												width: 48,
 												height: 48,
-												borderRadius: 12,
-												backgroundColor: hovered
-													? THEME_COLORS.primary
-													: `${THEME_COLORS.primary}15`,
-												alignItems: "center",
-												justifyContent: "center",
 											}}
 										>
 											<Ionicons
-												color={
-													hovered
-														? THEME_COLORS.primaryForeground
-														: THEME_COLORS.primary
-												}
+												className={cn(
+													hovered ? "text-primary-foreground" : "text-primary"
+												)}
 												name={action.icon}
 												size={24}
 											/>
 										</View>
-										<View style={{ flex: 1 }}>
-											<Text
-												style={{
-													fontSize: 16,
-													fontWeight: "600",
-													color: THEME_COLORS.foreground,
-													marginBottom: 4,
-												}}
-											>
+										<View className="flex-1">
+											<Text className="text-base font-semibold text-foreground mb-1">
 												{action.title}
 											</Text>
 											<Text
-												style={{
-													fontSize: 13,
-													color: THEME_COLORS.muted,
-												}}
+												className="text-muted"
+												style={{ fontSize: 13 }}
 											>
 												{action.description}
 											</Text>
 										</View>
 										<Ionicons
-											color={
-												hovered ? THEME_COLORS.primary : THEME_COLORS.muted
-											}
+											className={cn(
+												hovered ? "text-primary" : "text-muted"
+											)}
 											name="chevron-forward"
 											size={20}
 										/>
@@ -351,73 +270,38 @@ export default function HelpCenterPage() {
 			</View>
 
 			{/* Browse Topics */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-				}}
-			>
+			<View className="py-16 px-6">
 				<View
-					style={{
-						maxWidth: 1200,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
+					className="w-full"
+					style={{ maxWidth: 1200, marginHorizontal: "auto" }}
 				>
-					<Text
-						style={{
-							fontSize: 28,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
-					>
+					<Text className="text-foreground font-bold text-center mb-3" style={{ fontSize: 28 }}>
 						Browse by Topic
 					</Text>
-					<Text
-						style={{
-							fontSize: 16,
-							color: THEME_COLORS.muted,
-							textAlign: "center",
-							marginBottom: 40,
-						}}
-					>
+					<Text className="text-base text-muted text-center mb-10">
 						Find answers organized by category
 					</Text>
 
-					<View
-						style={{
-							flexDirection: "row",
-							flexWrap: "wrap",
-							gap: 20,
-							justifyContent: "center",
-						}}
-					>
+					<View className="flex-row flex-wrap justify-center" style={{ gap: 20 }}>
 						{HELP_TOPICS.map((topic) => (
 							<Pressable
 								key={topic.title}
+								className="bg-background border border-border rounded-2xl"
 								style={({ hovered }) => ({
 									width: isMobile ? "100%" : isTablet ? "47%" : "31%",
 									maxWidth: 380,
 									padding: 28,
-									borderRadius: 16,
-									backgroundColor: THEME_COLORS.background,
-									borderWidth: 1,
-									borderColor: hovered ? topic.color : THEME_COLORS.border,
+									borderColor: hovered ? topic.color : undefined,
 								})}
 							>
 								{({ hovered }) => (
 									<>
 										<View
+											className="items-center justify-center rounded-2xl mb-5"
 											style={{
 												width: 56,
 												height: 56,
-												borderRadius: 16,
 												backgroundColor: `${topic.color}15`,
-												alignItems: "center",
-												justifyContent: "center",
-												marginBottom: 20,
 											}}
 										>
 											<Ionicons
@@ -426,59 +310,36 @@ export default function HelpCenterPage() {
 												size={28}
 											/>
 										</View>
-										<Text
-											style={{
-												fontSize: 20,
-												fontWeight: "600",
-												color: THEME_COLORS.foreground,
-												marginBottom: 8,
-											}}
-										>
+										<Text className="text-xl font-semibold text-foreground mb-2">
 											{topic.title}
 										</Text>
 										<Text
-											style={{
-												fontSize: 14,
-												color: THEME_COLORS.muted,
-												lineHeight: 22,
-												marginBottom: 16,
-											}}
+											className="text-sm text-muted mb-4"
+											style={{ lineHeight: 22 }}
 										>
 											{topic.description}
 										</Text>
-										<View
-											style={{
-												flexDirection: "row",
-												alignItems: "center",
-												justifyContent: "space-between",
-											}}
-										>
+										<View className="flex-row items-center justify-between">
 											<Text
-												style={{
-													fontSize: 13,
-													color: THEME_COLORS.muted,
-												}}
+												className="text-muted"
+												style={{ fontSize: 13 }}
 											>
 												{topic.articles} articles
 											</Text>
-											<View
-												style={{
-													flexDirection: "row",
-													alignItems: "center",
-													gap: 4,
-												}}
-											>
+											<View className="flex-row items-center gap-1">
 												<Text
+													className="text-sm font-medium"
 													style={{
-														fontSize: 14,
-														fontWeight: "500",
-														color: hovered ? topic.color : THEME_COLORS.primary,
+														color: hovered ? topic.color : undefined,
 													}}
 												>
-													Browse
+													<Text className={cn(!hovered && "text-primary")}>
+														Browse
+													</Text>
 												</Text>
 												<Ionicons
-													color={hovered ? topic.color : THEME_COLORS.primary}
+													color={hovered ? topic.color : undefined}
+													className={cn(!hovered && "text-primary")}
 													name="arrow-forward"
 													size={16}
 												/>
@@ -493,62 +354,30 @@ export default function HelpCenterPage() {
 			</View>
 
 			{/* Popular Articles */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-					backgroundColor: THEME_COLORS.sectionBackground,
-				}}
-			>
+			<View className="py-16 px-6 bg-surface-raised">
 				<View
-					style={{
-						maxWidth: 800,
-						marginHorizontal: "auto",
-						width: "100%",
-					}}
+					className="w-full"
+					style={{ maxWidth: 800, marginHorizontal: "auto" }}
 				>
-					<Text
-						style={{
-							fontSize: 28,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
-					>
+					<Text className="text-foreground font-bold text-center mb-3" style={{ fontSize: 28 }}>
 						Popular Articles
 					</Text>
-					<Text
-						style={{
-							fontSize: 16,
-							color: THEME_COLORS.muted,
-							textAlign: "center",
-							marginBottom: 40,
-						}}
-					>
+					<Text className="text-base text-muted text-center mb-10">
 						Most viewed help articles this week
 					</Text>
 
-					<View
-						style={{
-							backgroundColor: THEME_COLORS.background,
-							borderRadius: 16,
-							borderWidth: 1,
-							borderColor: THEME_COLORS.border,
-							overflow: "hidden",
-						}}
-					>
+					<View className="bg-background rounded-2xl border border-border overflow-hidden">
 						{POPULAR_ARTICLES.map((article, index) => (
 							<Pressable
 								key={article.title}
+								className="border-border"
 								style={({ hovered }) => ({
 									padding: 20,
 									borderBottomWidth:
 										index < POPULAR_ARTICLES.length - 1 ? 1 : 0,
-									borderBottomColor: THEME_COLORS.border,
 									backgroundColor: hovered
-										? THEME_COLORS.sectionBackground
-										: THEME_COLORS.background,
+										? "#fafafa"
+										: undefined,
 									flexDirection: "row",
 									alignItems: "center",
 									gap: 16,
@@ -557,62 +386,44 @@ export default function HelpCenterPage() {
 								{({ hovered }) => (
 									<>
 										<View
+											className="items-center justify-center bg-chip-bg"
 											style={{
 												width: 40,
 												height: 40,
 												borderRadius: 20,
-												backgroundColor: `${THEME_COLORS.primary}15`,
-												alignItems: "center",
-												justifyContent: "center",
 											}}
 										>
 											<Ionicons
-												color={THEME_COLORS.primary}
+												className="text-primary"
 												name="document-text-outline"
 												size={20}
 											/>
 										</View>
-										<View style={{ flex: 1 }}>
-											<Text
-												style={{
-													fontSize: 16,
-													fontWeight: "500",
-													color: THEME_COLORS.foreground,
-													marginBottom: 4,
-												}}
-											>
+										<View className="flex-1">
+											<Text className="text-base font-medium text-foreground mb-1">
 												{article.title}
 											</Text>
-											<View
-												style={{
-													flexDirection: "row",
-													alignItems: "center",
-													gap: 12,
-												}}
-											>
+											<View className="flex-row items-center gap-3">
 												<Text
+													className="font-medium text-primary"
 													style={{
 														fontSize: 13,
-														color: THEME_COLORS.primary,
-														fontWeight: "500",
 													}}
 												>
 													{article.category}
 												</Text>
 												<Text
-													style={{
-														fontSize: 13,
-														color: THEME_COLORS.muted,
-													}}
+													className="text-muted"
+													style={{ fontSize: 13 }}
 												>
 													{article.views} views
 												</Text>
 											</View>
 										</View>
 										<Ionicons
-											color={
-												hovered ? THEME_COLORS.primary : THEME_COLORS.muted
-											}
+											className={cn(
+												hovered ? "text-primary" : "text-muted"
+											)}
 											name="chevron-forward"
 											size={20}
 										/>
@@ -625,70 +436,37 @@ export default function HelpCenterPage() {
 			</View>
 
 			{/* Still Need Help CTA */}
-			<View
-				style={{
-					paddingVertical: 64,
-					paddingHorizontal: 24,
-				}}
-			>
+			<View className="py-16 px-6">
 				<View
+					className="w-full items-center p-10 bg-chip-bg border border-primary/20 rounded-[20px]"
 					style={{
 						maxWidth: 600,
 						marginHorizontal: "auto",
-						width: "100%",
-						alignItems: "center",
-						padding: 40,
-						borderRadius: 20,
-						backgroundColor: `${THEME_COLORS.primary}08`,
-						borderWidth: 1,
-						borderColor: `${THEME_COLORS.primary}20`,
 					}}
 				>
 					<Ionicons
-						color={THEME_COLORS.primary}
+						className="text-primary mb-5"
 						name="chatbubble-ellipses-outline"
 						size={48}
-						style={{ marginBottom: 20 }}
 					/>
-					<Text
-						style={{
-							fontSize: 24,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-							textAlign: "center",
-							marginBottom: 12,
-						}}
-					>
+					<Text className="text-2xl font-bold text-foreground text-center mb-3">
 						Still need help?
 					</Text>
 					<Text
-						style={{
-							fontSize: 16,
-							color: THEME_COLORS.muted,
-							textAlign: "center",
-							marginBottom: 24,
-							lineHeight: 24,
-						}}
+						className="text-base text-muted text-center mb-6"
+						style={{ lineHeight: 24 }}
 					>
 						Our support team is available 24/7 to assist you with any questions
 						or issues.
 					</Text>
 					<Link asChild href={"/contact" as any}>
 						<Pressable
-							style={({ hovered }) => ({
-								paddingHorizontal: 32,
+							className="px-8 rounded-lg bg-primary hover:bg-hover-primary"
+							style={{
 								paddingVertical: 14,
-								backgroundColor: hovered ? "#19a864" : THEME_COLORS.primary,
-								borderRadius: 8,
-							})}
+							}}
 						>
-							<Text
-								style={{
-									fontSize: 16,
-									fontWeight: "600",
-									color: THEME_COLORS.primaryForeground,
-								}}
-							>
+							<Text className="text-base font-semibold text-primary-foreground">
 								Contact Support
 							</Text>
 						</Pressable>

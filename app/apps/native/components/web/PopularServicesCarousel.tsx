@@ -10,16 +10,6 @@ import {
 import { useResponsive } from "@/hooks/useResponsive";
 import { ServiceCard } from "./ServiceCard";
 
-// Fiverr-style theme colors
-const THEME_COLORS = {
-	primary: "#1DBF73",
-	primaryForeground: "#FFFFFF",
-	foreground: "#222325",
-	muted: "#62646a",
-	border: "#e4e5e7",
-	background: "#FFFFFF",
-};
-
 interface Service {
 	id: string;
 	name: string;
@@ -95,80 +85,33 @@ export function PopularServicesCarousel() {
 	};
 
 	return (
-		<View
-			style={{
-				paddingVertical: 64,
-				paddingHorizontal: 24,
-				backgroundColor: "#fafafa",
-			}}
-		>
-			<View
-				style={{
-					maxWidth: 1200,
-					marginHorizontal: "auto",
-					width: "100%",
-				}}
-			>
+		<View className="py-16 px-6 bg-surface-raised">
+			<View className="max-w-[1200px] mx-auto w-full">
 				{/* Header */}
-				<View
-					style={{
-						flexDirection: "row",
-						justifyContent: "space-between",
-						alignItems: "center",
-						marginBottom: 24,
-					}}
-				>
-					<Text
-						style={{
-							fontSize: 28,
-							fontWeight: "700",
-							color: THEME_COLORS.foreground,
-						}}
-					>
+				<View className="flex-row justify-between items-center mb-6">
+					<Text className="text-[28px] font-bold text-foreground">
 						Popular services
 					</Text>
 
 					{/* Navigation Arrows */}
 					{isDesktop && POPULAR_SERVICES.length > 4 && (
-						<View style={{ flexDirection: "row", gap: 8 }}>
+						<View className="flex-row gap-2">
 							<Pressable
+								className="w-10 h-10 rounded-full border border-border items-center justify-center hover:border-primary hover:bg-chip-bg"
 								onPress={scrollLeft}
-								style={({ hovered }) => ({
-									width: 40,
-									height: 40,
-									borderRadius: 20,
-									borderWidth: 1,
-									borderColor: hovered
-										? THEME_COLORS.primary
-										: THEME_COLORS.border,
-									alignItems: "center",
-									justifyContent: "center",
-									backgroundColor: hovered ? "#f0fdf4" : "transparent",
-								})}
 							>
 								<Ionicons
-									color={THEME_COLORS.foreground}
+									className="text-foreground"
 									name="chevron-back"
 									size={20}
 								/>
 							</Pressable>
 							<Pressable
+								className="w-10 h-10 rounded-full border border-border items-center justify-center hover:border-primary hover:bg-chip-bg"
 								onPress={scrollRight}
-								style={({ hovered }) => ({
-									width: 40,
-									height: 40,
-									borderRadius: 20,
-									borderWidth: 1,
-									borderColor: hovered
-										? THEME_COLORS.primary
-										: THEME_COLORS.border,
-									alignItems: "center",
-									justifyContent: "center",
-									backgroundColor: hovered ? "#f0fdf4" : "transparent",
-								})}
 							>
 								<Ionicons
-									color={THEME_COLORS.foreground}
+									className="text-foreground"
 									name="chevron-forward"
 									size={20}
 								/>
@@ -179,7 +122,8 @@ export function PopularServicesCarousel() {
 
 				{/* Cards */}
 				<ScrollView
-					contentContainerStyle={{ gap, paddingVertical: 8, paddingHorizontal: 4 }}
+					contentContainerClassName="py-2 px-1"
+					contentContainerStyle={{ gap }}
 					horizontal
 					ref={scrollViewRef}
 					showsHorizontalScrollIndicator={false}
