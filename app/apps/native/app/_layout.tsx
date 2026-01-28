@@ -58,6 +58,14 @@ function StackLayout() {
         }}
       />
 
+      {/* Content pages - pushed on top of tabs (tab bar hidden) */}
+      <Stack.Screen
+        name="(pages)"
+        options={{
+          headerShown: false,
+        }}
+      />
+
       {/* Auth screens - presented as fullscreen modal */}
       <Stack.Screen
         name="(auth)"
